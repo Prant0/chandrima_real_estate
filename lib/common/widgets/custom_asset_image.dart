@@ -7,8 +7,7 @@ class CustomAssetImage extends StatelessWidget {
   final double? width;
   final BoxFit? fit;
   final Color? color;
-
-  const CustomAssetImage(this.image, {super.key, this.height, this.width, this.fit = BoxFit.cover, this.color});
+  const CustomAssetImage({super.key, required this.image, this.height, this.width, this.fit = BoxFit.cover, this.color});
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 
 typedef Validator = String? Function(String? value);
 
-// Function to combine multiple validators
 String? multiValidator(String? value, List<Validator> validators) {
   for (final validator in validators) {
     final result = validator(value);

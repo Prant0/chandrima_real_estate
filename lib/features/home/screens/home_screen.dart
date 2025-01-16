@@ -1,40 +1,19 @@
- import 'package:carousel_slider/carousel_slider.dart';
-import 'package:chandrima_real_estate/features/home/controller/home_controller.dart';
-import 'package:chandrima_real_estate/routes/routes_name.dart';
-import 'package:chandrima_real_estate/utils/app_constants.dart';
-import 'package:chandrima_real_estate/utils/dimensions.dart';
-import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-
-class Homepage extends StatefulWidget {
-  const Homepage({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<Homepage> createState() => _HomepageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomepageState extends State<Homepage> {
-
-  int _currentIndex = 0;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    Get.find<HomeController>().getSlidersData();
-    Get.find<HomeController>().getCategoryData();
-    Get.find<HomeController>().getAllProductData();
-    super.initState();
-  }
-
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
- )
+    return Scaffold(
+      body: Center(
+        child: Text('Home Screen', style: TextStyle(fontSize: 24)),
+      ),
     );
   }
 }
-
-

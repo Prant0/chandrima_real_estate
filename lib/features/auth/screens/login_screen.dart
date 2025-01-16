@@ -1,14 +1,13 @@
+import 'package:chandrima_real_estate/common/widgets/custom_text_field.dart';
+import 'package:chandrima_real_estate/utils/app_color.dart';
+import 'package:chandrima_real_estate/utils/dimensions.dart';
+import 'package:chandrima_real_estate/utils/images.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_button.dart';
-import 'package:chandrima_real_estate/common/widgets/default_app_bar_view.dart';
-import 'package:chandrima_real_estate/features/auth/controller/auth_controller.dart';
-import 'package:chandrima_real_estate/helper/validators.dart';
 import 'package:chandrima_real_estate/routes/routes_name.dart';
-import 'package:chandrima_real_estate/utils/dimensions.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,7 +17,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _selectedRole = 'Member';
@@ -26,146 +25,110 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
 
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+                SizedBox(height: constraints.maxHeight * 0.1),
 
-              SizedBox(height: 50.0),
-
-              RichText(
-                text: TextSpan(
-                  text: "Let's ",
-                  style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontSize: 26,
+                Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
+                    child: Image.asset(Images.logo, height: 80),
                   ),
-                  children: const [
-                    TextSpan(
-                      text: 'Sign In',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 26,
-                        decoration: TextDecoration.none,
+                ),
+                const SizedBox(height: 20),
+
+                RichText(
+                  text: TextSpan(
+                    text: "Let's ",
+                    style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeTwentySix, color: AppColors.black),
+                    children: [
+                      TextSpan(
+                        text: 'Sign In',
+                        style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeTwentySix, color: AppColors.primary),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-               SizedBox(height: 12.0),
-              Text(
-                'Sign in with the Chandrima Real Estate to explore our all services',
-                style: GoogleFonts.poppins(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
-              ),
-              SizedBox(height: 56.0),
-              // DropdownButtonFormField<String>(
+                const SizedBox(height: 12),
 
-              const SizedBox(height: 16.0),
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey[200],
+                Text(
+                  'Sign in with the Chandrima Real Estate to explore our all services',
+                  style: poppinsRegular.copyWith(color: AppColors.grey),
+                ),
+                SizedBox(height: constraints.maxHeight * 0.08),
+
+                CustomTextField(
+                  controller: _emailController,
                   hintText: 'Enter Your Email',
-                  prefixIcon: const Icon(TablerIcons.mail, color: Colors.black),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16), // Rounded corners
-                    borderSide: BorderSide.none, // No border outline
-                  ),
+                  prefixIcon: TablerIcons.mail,
                 ),
-                validator: (value) => multiValidator(
-                  value,
-                  [
-                    requiredValidator,
-                    //emailValidator,
-                  ],
-                ),
-              ),
-              SizedBox(height: 12.0),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey[200],
+                const SizedBox(height: 15),
+
+                CustomTextField(
+                  controller: _passwordController,
                   hintText: 'Enter Your Password',
-                  prefixIcon: const Icon(TablerIcons.lock, color: Colors.black),
-                  suffixIcon: const Icon(Icons.visibility_off, color: Colors.black),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16), // Rounded corners
-                    borderSide: BorderSide.none, // No border outline
-                  ),
+                  prefixIcon: TablerIcons.lock,
+                  isPassword: true,
                 ),
-                validator: (value) => multiValidator(
-                  value,
-                  [
-                    requiredValidator,
+
+                Row(
+                  children: [
+                    Text("Member", style: poppinsMedium),
+                    Radio<String>(
+                      value: 'Member',
+                      groupValue: _selectedRole,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedRole = value!;
+                        });
+                      },
+                    ),
+                    const SizedBox(width: 22),
+
+                    Text("Developer", style: poppinsMedium),
+                    Radio<String>(
+                      value: 'Developer',
+                      groupValue: _selectedRole,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedRole = value!;
+                        });
+                      },
+                    ),
                   ],
                 ),
-              ),
+                SizedBox(height: constraints.maxHeight * 0.07),
 
-              Row(
-                children: [
-                  Text("Member",style: robotoMedium,),
-                  Radio<String>(
-                    value: 'Member',
-                    groupValue: _selectedRole,
-                    onChanged: (String? value) {
-                      setState(() {
-                        _selectedRole = value!;
-                      });
+                CustomButton(
+                  buttonText: 'Sign In',
+                  onPressed: (){
+                    Get.toNamed(RoutesName.getDashboardScreen());
+                  },
+                ),
+                const SizedBox(height: 10),
+
+                Center(
+                  child: TextButton(
+                    onPressed: () {
+
                     },
-                  ),
-                  SizedBox(width: 22,),
-                  Text("Developer",style: robotoMedium,),
-                  Radio<String>(
-                    value: 'Developer',
-                    groupValue: _selectedRole,
-                    onChanged: (String? value) {
-                      setState(() {
-                        _selectedRole = value!;
-                      });
-                    },
-                  ),
-                ],
-              ),
-
-              SizedBox(height: 55.0),
-
-              CustomButton(
-                buttonText: 'Sign In',
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-               // isLoading: authController.isLoading,
-                onPressed: (){
-                  Get.toNamed(RoutesName.getNavBarScreen());
-                },
-              ),
-              SizedBox(height: 20,),
-              Center(
-                child: InkWell(
-                  onTap: () {},
-                  child: Text(
-                    'Forgot Password?',
-                    style: GoogleFonts.poppins(
-                      color: Colors.blue,
-                      fontSize: 14,
+                    child: Text(
+                      'Forgot Password?',
+                      style: poppinsRegular.copyWith(color: AppColors.primary),
                     ),
                   ),
                 ),
-              ),
-
-
-              SizedBox(height: 40.0),
-            ],
-          ),
-        ),
+              ],
+            ),
+          );
+        }
       ),
     );
   }

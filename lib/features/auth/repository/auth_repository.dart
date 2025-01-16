@@ -1,6 +1,4 @@
-import 'package:get/get.dart';
 import 'package:chandrima_real_estate/data/api/api_client.dart';
-import 'package:chandrima_real_estate/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepository {

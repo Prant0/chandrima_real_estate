@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:chandrima_real_estate/features/home/screens/home_screen.dart';
 import 'package:chandrima_real_estate/routes/routes.dart';
 import 'package:chandrima_real_estate/routes/routes_name.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
@@ -11,10 +9,7 @@ import 'helper/get_di.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Map<String, Map<String, String>> languages = await di.init();
-  if (kDebugMode) {
-    print(languages);
-  }
+  await di.init();
 
   runApp(const MyApp());
 }
@@ -41,10 +36,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary).copyWith(),
         useMaterial3: true,
       ),
-
-       initialRoute: RoutesName.getLoginScreen(),
+      initialRoute: RoutesName.getLoginScreen(),
       getPages: AppRoutes.appRoutes(),
       defaultTransition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 500),
     );
   }
 }

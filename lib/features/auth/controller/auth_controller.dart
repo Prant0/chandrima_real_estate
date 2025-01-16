@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:chandrima_real_estate/data/api/api_checker.dart';
 import 'package:chandrima_real_estate/features/auth/repository/auth_repository.dart';
 
 class AuthController extends GetxController implements GetxService {

@@ -1,28 +1,36 @@
-import 'package:get/get.dart';
-
 class Dimensions {
-  static double fontSizeOverSmall = Get.context!.width >= 1300 ? 10 : 8;
-  static double fontSizeExtraSmall = Get.context!.width >= 1300 ? 12 : 10;
-  static double fontSizeSmall = Get.context!.width >= 1300 ? 14 : 12;
-  static double fontSizeDefault = Get.context!.width >= 1300 ? 16 : 14;
-  static double fontSizeLarge = Get.context!.width >= 1300 ? 18 : 16;
-  static double fontSizeExtraLarge = Get.context!.width >= 1300 ? 20 : 18;
-  static double fontSizeOverLarge = Get.context!.width >= 1300 ? 26 : 24;
+  static double fontSizeTen = 10;
+  static double fontSizeTwelve = 12;
+  static double fontSizeFourteen = 14;
+  static double fontSizeFifteen = 15;
+  static double fontSizeSixteen = 16;
+  static double fontSizeEighteen = 18;
+  static double fontSizeTwenty = 20;
+  static double fontSizeTwentyFour = 24;
+  static double fontSizeTwentySix = 26;
+  static const double fontSizeThirty = 30;
 
-  static const double defaultNumericValue = 5.0;
-  static const double paddingSizeExtraSmall = 5.0;
-  static   double paddingSizeSmall = Get.context!.width >= 1300? 10.0:8;
-  static const double paddingSizeDefault = 16.0;
-  static const double paddingSizeLarge = 20.0;
-  static const double paddingSizeExtraLarge = 25.0;
-  static const double paddingSizeExtremeLarge = 30.0;
-  static const double paddingSizeExtraOverLarge = 35.0;
+  static const double paddingSizeFive = 5;
+  static const double paddingSizeTen = 10;
+  static const double paddingSizeFifteen = 15;
+  static const double paddingSizeTwenty = 20;
+  static const double paddingSizeTwentyFive = 25;
+  static const double paddingSizeThirty = 30;
 
-  static const double radiusSmall = 5.0;
-  static const double radiusDefault = 10.0;
-  static const double radiusLarge = 15.0;
-  static const double radiusExtraLarge = 20.0;
-  static const double radiusOverLarge = 30.0;
+  static const double marginSizeFive = 5;
+  static const double marginSizeTen = 10;
+  static const double marginSizeFifteen = 15;
+  static const double marginSizeTwenty = 20;
+  static const double marginSizeTwentyFive = 25;
+  static const double marginSizeThirty = 30;
 
-  static const double webMaxWidth = 1170;
+  static const double radiusFive = 5;
+  static const double radiusEight = 8;
+  static const double radiusTen = 10;
+  static const double radiusTwelve = 12;
+  static const double radiusFifteen = 15;
+  static const double radiusTwenty = 20;
+  static const double radiusTwentyFive = 25;
+  static const double radiusThirty = 30;
+  static const double radiusFifty = 50;
 }

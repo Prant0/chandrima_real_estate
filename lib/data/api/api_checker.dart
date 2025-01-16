@@ -1,5 +1,5 @@
-import 'package:get/get.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_snackbar.dart';
+import 'package:get/get.dart';
 
 class ApiChecker {
   static void checkApi(Response response, {bool showToaster = true}) {

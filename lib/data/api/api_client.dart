@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:chandrima_real_estate/data/api/error_response.dart';
+import 'package:chandrima_real_estate/utils/app_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:chandrima_real_estate/data/api/error_response.dart';
-import 'package:chandrima_real_estate/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -42,7 +42,7 @@ class ApiClient extends GetxService {
   Future<Response> getData(String uri, {Map<String, dynamic>? query, Map<String, String>? headers}) async {
     try {
       if(kDebugMode) {
-        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
+        log('====> API Call: $uri\nHeader: $_mainHeaders');
       }
       http.Response response = await http.get(
         Uri.parse(appBaseUrl+uri,),
