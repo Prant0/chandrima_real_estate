@@ -32,18 +32,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
-      appBar: AppBar(
-        title: Text("Chandrima Housing"),
-        actions: [
-          IconButton(
-            onPressed: () {
-
-            },
-            icon: const Icon(Icons.shopping_cart),
-          ),
-        ],
-      ),)
+ )
     );
   }
 }

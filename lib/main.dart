@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary).copyWith(),
         useMaterial3: true,
       ),
-      //home: HomePage(),
-       initialRoute: RoutesName.getNavBarScreen(),
+
+       initialRoute: RoutesName.getLoginScreen(),
       getPages: AppRoutes.appRoutes(),
       defaultTransition: Transition.fadeIn,
     );
