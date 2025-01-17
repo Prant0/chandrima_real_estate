@@ -1,3 +1,6 @@
+import 'package:chandrima_real_estate/features/profile/widgets/family_member_tab.dart';
+import 'package:chandrima_real_estate/features/profile/widgets/general_info_tab.dart';
+import 'package:chandrima_real_estate/features/profile/widgets/land_information_tab.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +12,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -46,49 +50,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             DocumentTab(),
           ],
         ),
-      ),
-    );
-  }
-}
-
-// Individual widgets for each tab's content
-class GeneralInfoTab extends StatelessWidget {
-  const GeneralInfoTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'General Info Content',
-        style: TextStyle(fontSize: 18),
-      ),
-    );
-  }
-}
-
-class LandInformationTab extends StatelessWidget {
-  const LandInformationTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Land Information Content',
-        style: TextStyle(fontSize: 18),
-      ),
-    );
-  }
-}
-
-class FamilyMemberTab extends StatelessWidget {
-  const FamilyMemberTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Family Member Content',
-        style: TextStyle(fontSize: 18),
       ),
     );
   }

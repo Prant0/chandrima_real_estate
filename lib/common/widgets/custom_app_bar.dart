@@ -14,7 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title, style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeSixteen, fontWeight: FontWeight.w600)),
+      title: Text(title, style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen, fontWeight: FontWeight.w600)),
       centerTitle: true,
       leading: backButton ? IconButton(
         icon: const Icon(Icons.arrow_back_ios),

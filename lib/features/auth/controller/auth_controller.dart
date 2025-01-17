@@ -1,3 +1,7 @@
+import 'package:chandrima_real_estate/data/api/api_checker.dart';
+import 'package:chandrima_real_estate/features/dashboard/screens/dashboard_screen.dart';
+import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
+import 'package:chandrima_real_estate/routes/routes_name.dart';
 import 'package:get/get.dart';
 import 'package:chandrima_real_estate/features/auth/repository/auth_repository.dart';
 
@@ -8,40 +12,20 @@ class AuthController extends GetxController implements GetxService {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
- /* Future<void> login({required String email, required String password}) async {
+  Future<void> login({required String phone, required String password}) async {
     _isLoading = true;
     update();
 
     Map<String, dynamic> data = {
-      "username": email,
+      "mobile": phone,
       "password": password,
     };
 
     Response response = await authRepository.login(data);
     if(response.statusCode == 200) {
-      final token = response.body['access'];
+      final token = response.body['token'];
       await authRepository.saveUserToken(token);
-      Get.offAll(() => const DashboardScreen(pageIndex: 0));
-    } else {
-      ApiChecker.checkApi(response);
-    }
-    _isLoading = false;
-    update();
-  }
-
-  Future<void> register({required String email, required String password}) async {
-    _isLoading = true;
-    update();
-
-    Map<String, dynamic> data = {
-      "username": email,
-      "password": password,
-    };
-
-    Response response = await authRepository.register(data);
-    if(response.statusCode == 200) {
-      final token = response.body['access'];
-      await authRepository.saveUserToken(token);
+      Get.find<ProfileController>().getProfileDetails();
       Get.offAll(() => const DashboardScreen(pageIndex: 0));
     } else {
       ApiChecker.checkApi(response);
@@ -54,13 +38,24 @@ class AuthController extends GetxController implements GetxService {
     return authRepository.isLoggedIn();
   }
 
-  Future<void> removeToken() async {
-    await authRepository.removeToken();
+  Future<void> logout() async {
+    _isLoading = true;
+    update();
+
+    Response response = await authRepository.logout();
+    if(response.statusCode == 200) {
+      await removeToken();
+      Get.offAllNamed(RoutesName.getLoginScreen());
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    _isLoading = false;
+    update();
   }
 
-  */
-
-
-
+  Future<void> removeToken() async {
+    await authRepository.removeToken();
+    Get.offAllNamed(RoutesName.getLoginScreen());
+  }
 
 }

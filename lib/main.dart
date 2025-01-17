@@ -1,3 +1,4 @@
+import 'package:chandrima_real_estate/features/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -28,19 +29,21 @@ class MyApp extends StatelessWidget {
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
 
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: AppConstants.appName,
-      theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.white,
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary).copyWith(),
-        useMaterial3: true,
-      ),
-      initialRoute: RoutesName.getLoginScreen(),
-      getPages: AppRoutes.appRoutes(),
-      defaultTransition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
-    );
+    return GetBuilder<AuthController>(builder: (authController) {
+      return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: AppConstants.appName,
+        theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.white,
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary).copyWith(),
+          useMaterial3: true,
+        ),
+        initialRoute: authController.isLoggedIn() ? RoutesName.getDashboardScreen() : RoutesName.getLoginScreen(),
+        getPages: AppRoutes.appRoutes(),
+        defaultTransition: Transition.fadeIn,
+        transitionDuration: const Duration(milliseconds: 500),
+      );
+    });
   }
 }
 

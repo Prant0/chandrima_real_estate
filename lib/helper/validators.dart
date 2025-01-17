@@ -1,3 +1,4 @@
+import 'package:chandrima_real_estate/common/widgets/custom_snackbar.dart';
 import 'package:get/get.dart';
 
 typedef Validator = String? Function(String? value);
@@ -93,4 +94,32 @@ String? urlValidator(String? value) {
     return 'Please enter a valid URL';
   }
   return null;
+}
+
+class Validators {
+
+  static bool phoneValidator(String value) {
+    if (value.isEmpty) {
+      showCustomSnackBar('Please enter your phone number');
+      return false;
+    }
+    if (!GetUtils.isPhoneNumber(value)) {
+      showCustomSnackBar('Please enter a valid phone number');
+      return false;
+    }
+    return true;
+  }
+
+  static bool passwordValidator(String value) {
+    if (value.isEmpty) {
+      showCustomSnackBar('Please enter your password');
+      return false;
+    }
+    if (value.length < 6) {
+      showCustomSnackBar('Password must be at least 6 characters');
+      return false;
+    }
+    return true;
+  }
+
 }

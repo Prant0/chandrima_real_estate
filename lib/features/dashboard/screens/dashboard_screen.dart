@@ -2,11 +2,13 @@ import 'package:chandrima_real_estate/features/complain/screens/complain_screen.
 import 'package:chandrima_real_estate/features/home/screens/home_screen.dart';
 import 'package:chandrima_real_estate/features/invoice/screens/invoice_screen.dart';
 import 'package:chandrima_real_estate/features/payment/screens/payment_screen.dart';
+import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/features/profile/screens/profile_screen.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DashboardScreen extends StatefulWidget {
   final int pageIndex;
@@ -22,6 +24,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
+    ProfileController profileController = Get.find<ProfileController>();
+    profileController.getProfileDetails();
+
     _selectedIndex = widget.pageIndex;
   }
 
