@@ -142,7 +142,10 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
                 CustomDropdownButton(
                   hintText: 'Select Relation',
                   items: const ['Owner Family', 'Care Taker', 'Driver', 'Buya'],
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    profileController.setSelectedRelation(value!);
+                  },
+                  selectedValue: profileController.selectedRelation,
                 ),
 
               ]),

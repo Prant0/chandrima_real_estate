@@ -68,7 +68,9 @@ class ProfileController extends GetxController implements GetxService{
 
     Response response = await profileRepository.addFamilyMember(body: body, image: _pickedFile);
     if(response.statusCode == 200){
-      showCustomSnackBar('Family member added successfully');
+      getProfileDetails();
+      Get.back();
+      showCustomSnackBar('Family member added successfully', isError: false);
     }else{
       ApiChecker.checkApi(response);
     }
