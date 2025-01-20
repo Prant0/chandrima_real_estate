@@ -1,6 +1,7 @@
 import 'package:chandrima_real_estate/features/profile/widgets/family_member_tab.dart';
 import 'package:chandrima_real_estate/features/profile/widgets/general_info_tab.dart';
 import 'package:chandrima_real_estate/features/profile/widgets/land_information_tab.dart';
+import 'package:chandrima_real_estate/features/profile/widgets/tenant_tab.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -50,20 +51,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             DocumentTab(),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class TenantTab extends StatelessWidget {
-  const TenantTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Tenant Content',
-        style: TextStyle(fontSize: 18),
       ),
     );
   }

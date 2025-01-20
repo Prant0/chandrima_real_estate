@@ -1,6 +1,7 @@
 import 'package:chandrima_real_estate/features/auth/screens/login_screen.dart';
 import 'package:chandrima_real_estate/features/dashboard/screens/dashboard_screen.dart';
 import 'package:chandrima_real_estate/features/profile/screens/add_family_member_screen.dart';
+import 'package:chandrima_real_estate/features/profile/screens/add_tenant_screen.dart';
 import 'package:chandrima_real_estate/routes/routes_name.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +21,11 @@ class AppRoutes {
     GetPage(
       name: RoutesName.addFamilyMember,
       page: () => const AddFamilyMemberScreen(),
+    ),
+
+    GetPage(
+      name: RoutesName.addTenant,
+      page: () => const AddTenantScreen(),
     ),
 
   ];

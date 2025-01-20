@@ -24,12 +24,14 @@ class Data {
   List<Plots>? plots;
   List<FamilyMembers>? familyMembers;
   List<Tenants>? tenants;
+  List<Events>? events;
 
   Data({
     this.member,
     this.plots,
     this.familyMembers,
     this.tenants,
+    this.events,
   });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -52,6 +54,12 @@ class Data {
         tenants!.add(Tenants.fromJson(v));
       });
     }
+    if (json['events'] != null) {
+      events = <Events>[];
+      json['events'].forEach((v) {
+        events!.add(Events.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -67,6 +75,9 @@ class Data {
     }
     if (tenants != null) {
       data['tenants'] = tenants!.map((v) => v.toJson()).toList();
+    }
+    if (events != null) {
+      data['events'] = events!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -500,6 +511,64 @@ class Tenants {
     data['nid_number'] = nidNumber;
     data['nid_image'] = nidImage;
     data['address'] = address;
+    data['status'] = status;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    return data;
+  }
+}
+
+class Events {
+  int? id;
+  String? title;
+  String? description;
+  String? startDate;
+  String? endDate;
+  String? eventTo;
+  String? userId;
+  String? notifyVia;
+  String? status;
+  String? createdAt;
+  String? updatedAt;
+
+  Events({
+    this.id,
+    this.title,
+    this.description,
+    this.startDate,
+    this.endDate,
+    this.eventTo,
+    this.userId,
+    this.notifyVia,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  Events.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    description = json['description'];
+    startDate = json['start_date'];
+    endDate = json['end_date'];
+    eventTo = json['event_to'];
+    userId = json['user_id'];
+    notifyVia = json['notify_via'];
+    status = json['status'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['description'] = description;
+    data['start_date'] = startDate;
+    data['end_date'] = endDate;
+    data['event_to'] = eventTo;
+    data['user_id'] = userId;
+    data['notify_via'] = notifyVia;
     data['status'] = status;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
