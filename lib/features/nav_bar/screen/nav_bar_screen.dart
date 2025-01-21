@@ -27,10 +27,8 @@ class _NavBarScreenState extends State<NavBarScreen> {
 
   final List<Widget> _pages = [
     Homepage(),
-    Homepage(),
     SizedBox(width: 20,),
     Center(child: Text('Calender', style: TextStyle(fontSize: 24))),
-    Center(child: Text('Profile', style: TextStyle(fontSize: 24))),
   ];
 
   void _onItemTapped(int index) {
@@ -42,7 +40,6 @@ class _NavBarScreenState extends State<NavBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: _pages[_selectedIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
