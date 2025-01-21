@@ -1,8 +1,7 @@
+import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
-import 'package:chandrima_real_estate/utils/styles.dart';
 
 class CustomButton extends StatelessWidget {
   final double? height;
@@ -31,8 +30,8 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           gradient: const LinearGradient(
             colors: [
-              Color(0xff1990eb),
-              Color(0xff52aaf7),
+              AppColors.primary,
+              AppColors.secondary,
             ],
           ),
         ),
@@ -41,16 +40,16 @@ class CustomButton extends StatelessWidget {
             const SizedBox(
               height: 15, width: 15,
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
                 strokeWidth: 2,
               ),
             ),
-            const SizedBox(width: Dimensions.paddingSizeDefault),
+            const SizedBox(width: 14),
 
-            Text('Loading', style: GoogleFonts.poppins(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
+            Text('Loading', style: poppinsMedium.copyWith(color: AppColors.white, fontSize: Dimensions.fontSizeSixteen)),
           ]) : Text(
             buttonText,
-            style: GoogleFonts.poppins(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+            style: poppinsMedium.copyWith(color: textColor ?? AppColors.white, fontSize: Dimensions.fontSizeSixteen),
             textAlign: TextAlign.center,
           ),
         ),

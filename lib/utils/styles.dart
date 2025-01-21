@@ -2,22 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
 
-final robotoRegular = GoogleFonts.roboto(
+final poppinsRegular = GoogleFonts.poppins(
   fontWeight: FontWeight.w400,
-  fontSize: Dimensions.fontSizeDefault,
+  fontSize: Dimensions.fontSizeFourteen,
 );
 
-final robotoMedium = GoogleFonts.roboto(
-  fontWeight: FontWeight.w600,
-  fontSize: Dimensions.fontSizeDefault,
+final poppinsMedium = GoogleFonts.poppins(
+  fontWeight: FontWeight.w500,
+  fontSize: Dimensions.fontSizeFourteen,
 );
 
-final robotoBold = GoogleFonts.roboto(
+final poppinsSemiMedium = GoogleFonts.poppins(
+  fontWeight: FontWeight.w500,
+  fontSize: Dimensions.fontSizeFourteen,
+);
+
+final poppinsBold = GoogleFonts.poppins(
   fontWeight: FontWeight.w700,
-  fontSize: Dimensions.fontSizeDefault,
+  fontSize: Dimensions.fontSizeFourteen,
 );
 
-final robotoBlack = GoogleFonts.roboto(
+final poppinsBlack = GoogleFonts.poppins(
   fontWeight: FontWeight.w900,
-  fontSize: Dimensions.fontSizeDefault,
+  fontSize: Dimensions.fontSizeFourteen,
 );

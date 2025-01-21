@@ -1,18 +1,14 @@
-import 'package:get/get.dart';
 import 'package:chandrima_real_estate/data/api/api_client.dart';
 import 'package:chandrima_real_estate/utils/app_constants.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepository {
   final ApiClient apiClient;
   final SharedPreferences sharedPreferences;
   AuthRepository({required this.apiClient, required this.sharedPreferences});
-/*
-  Future<Response> login(Map<String, dynamic> data) async {
-return    return apiClient.postData(AppConstants.loginUri, data);
-  }
 
-  Future<Response> register(Map<String, dynamic> data) async {
+  Future<Response> login(Map<String, dynamic> data) async {
     return apiClient.postData(AppConstants.loginUri, data);
   }
 
@@ -26,9 +22,13 @@ return    return apiClient.postData(AppConstants.loginUri, data);
     return sharedPreferences.containsKey(AppConstants.token);
   }
 
+  Future<Response> logout() async {
+    return apiClient.getData(AppConstants.logoutUri);
+  }
+
   Future<void> removeToken() async {
     await sharedPreferences.remove(AppConstants.token);
     apiClient.token = '';
-  }*/
+  }
 
 }
