@@ -39,7 +39,7 @@ class LandInformationTab extends StatelessWidget {
 
                 BuildDetailsRow(title: 'Land Condition', value: plot.landCondition),
                 BuildDetailsRow(title: 'Net Land', value: '${plot.netLand} sq ft'),
-                BuildDetailsRow(title: 'Deed No', value: '${plot.deedNo}'),
+                BuildDetailsRow(title: 'Deed No', value: '${plot.deedNo??"N/A"}'),
                 BuildDetailsRow(title: 'House No', value: plot.houseNumber),
                 BuildDetailsRow(title: 'Road No', value: plot.roadNumber),
                 BuildDetailsRow(title: 'Block No', value: plot.blockNumber),

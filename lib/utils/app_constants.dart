@@ -8,6 +8,8 @@ class AppConstants  {
   static const String logoutUri = '/member/logout';
   static const String memberDetailsUri = '/member/details';
   static const String addFamilyMember = '/member/family/store';
+  static const String addTenantMember = '/member/tenant/store';
+  static const String userInvoiceList = '/invoice/list';
 
 
   static const String token = 'chandrima_token';

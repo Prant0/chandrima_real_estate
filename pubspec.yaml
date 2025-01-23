@@ -24,6 +24,7 @@ dependencies:
   flutter_tabler_icons: ^1.43.0
   intl: ^0.20.1
   dropdown_button2: ^2.3.9
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:

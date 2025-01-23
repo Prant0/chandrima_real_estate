@@ -15,7 +15,7 @@ class BuildDetailsRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Text(title, style: poppinsRegular.copyWith(color: AppColors.grey)),
+            child: Text(title, style: poppinsRegular.copyWith(color: AppColors.grey,fontWeight: FontWeight.w900)),
           ),
 
           Text(': ', style: poppinsRegular.copyWith(color: AppColors.grey)),

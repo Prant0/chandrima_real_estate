@@ -202,8 +202,8 @@ class Plots {
   int? projectId;
   String? plotNo;
   String? landCondition;
-  int? netLand;
-  int? deedNo;
+  dynamic? netLand;
+  dynamic? deedNo;
   String? houseNumber;
   String? roadNumber;
   String? blockNumber;
