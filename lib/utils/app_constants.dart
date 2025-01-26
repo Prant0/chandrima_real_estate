@@ -10,6 +10,8 @@ class AppConstants  {
   static const String addFamilyMember = '/member/family/store';
   static const String addTenantMember = '/member/tenant/store';
   static const String userInvoiceList = '/invoice/list';
+  static const String advertisementList = '/advertises';
+  static const String advertisementDetails = '/advertise/details';
 
 
   static const String token = 'chandrima_token';
