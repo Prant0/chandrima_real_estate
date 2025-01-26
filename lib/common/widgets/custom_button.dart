@@ -28,12 +28,13 @@ class CustomButton extends StatelessWidget {
         margin: margin,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          gradient: const LinearGradient(
+          color: color,
+          /*gradient: const LinearGradient(
             colors: [
               AppColors.primary,
               AppColors.secondary,
             ],
-          ),
+          ),*/
         ),
         child: Center(
           child: isLoading ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [

@@ -19,10 +19,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return DefaultTabController(
       length: 7, // Number of tabs
       child: Scaffold(
+        backgroundColor: AppColors.background,
         appBar: AppBar(
           toolbarHeight: 10,
           automaticallyImplyLeading: false,
-          backgroundColor: AppColors.secondary,
+          backgroundColor: AppColors.purpleColor,
           bottom: TabBar(
             tabAlignment: TabAlignment.start,
             isScrollable: true,

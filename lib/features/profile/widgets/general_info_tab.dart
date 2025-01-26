@@ -65,9 +65,8 @@ class GeneralInfoTab extends StatelessWidget {
 
             CustomCard(
               child: Column(children: [
-                BuildDetailsRow(title: 'Member ID', value: member.memberType),
+                BuildDetailsRow(title: 'ID', value: member.memberType),
                 BuildDetailsRow(title: 'Member Name', value: member.name),
-                BuildDetailsRow(title: 'Gender', value: member.gender),
                 BuildDetailsRow(title: 'Mobile', value: member.mobile),
                 BuildDetailsRow(title: 'Email', value: member.email),
 
