@@ -54,7 +54,7 @@ class Data {
 
 class UserInvoiceList {
   int? id;
-  String? memberId;
+  dynamic? memberId;
   String? invoiceId;
   List<Service>? services;
   dynamic serviceType;

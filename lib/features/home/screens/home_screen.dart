@@ -182,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-                  Row(
+                  homeController.advertisesList==null?SizedBox():  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: homeController.advertisesList!.data!.map((url) {
                       int? index = homeController.advertisesList?.data?.indexOf(url);

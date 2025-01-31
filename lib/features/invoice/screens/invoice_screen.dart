@@ -7,9 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class InvoiceScreen extends StatelessWidget {
+class InvoiceScreen extends StatefulWidget {
   const InvoiceScreen({super.key});
 
+  @override
+  State<InvoiceScreen> createState() => _InvoiceScreenState();
+}
+
+class _InvoiceScreenState extends State<InvoiceScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    //Get.find<ProfileController>().getUserInvoiceList();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
