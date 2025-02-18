@@ -1,3 +1,4 @@
+import 'package:chandrima_real_estate/features/complain/screens/complain_screen.dart';
 import 'package:chandrima_real_estate/features/profile/widgets/family_member_tab.dart';
 import 'package:chandrima_real_estate/features/profile/widgets/general_info_tab.dart';
 import 'package:chandrima_real_estate/features/profile/widgets/land_information_tab.dart';
@@ -41,14 +42,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         ),
-        body: const TabBarView(
+        body:   TabBarView(
           children: [
             GeneralInfoTab(),
             LandInformationTab(),
             FamilyMemberTab(),
             TenantTab(),
             PaymentsTab(),
-            ComplaintTab(),
+            ComplainScreen(isShowAppBar: false),
             DocumentTab(),
           ],
         ),

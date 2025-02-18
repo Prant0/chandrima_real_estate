@@ -95,7 +95,7 @@ class Member {
   String? permanentAddress;
   String? landQty;
   String? totalLand;
-  int? nidNumber;
+  dynamic? nidNumber;
   String? nidPhoto;
   List<Documents>? documents;
   String? nameOfPower;

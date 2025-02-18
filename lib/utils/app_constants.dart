@@ -12,6 +12,9 @@ class AppConstants  {
   static const String userInvoiceList = '/invoice/list';
   static const String advertisementList = '/advertises';
   static const String advertisementDetails = '/advertise/details';
+  static const String complainList = '/complaints';
+  static const String addComplain = '/complaint/store';
+  static const String complainCategoryList = '/complaint/categories';
 
 
   static const String token = 'chandrima_token';

@@ -39,7 +39,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const HomeScreen(),
     const InvoiceScreen(),
    // const PaymentScreen(),*/
-    const ComplainScreen(),
+      ComplainScreen(  isShowAppBar: true,),
     const ProfileScreen(),
   ];
 
