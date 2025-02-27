@@ -25,6 +25,7 @@ class Data {
   List<FamilyMembers>? familyMembers;
   List<Tenants>? tenants;
   List<Events>? events;
+  bool ?isExpanded = true;
 
   Data({
     this.member,
@@ -32,6 +33,7 @@ class Data {
     this.familyMembers,
     this.tenants,
     this.events,
+    this.isExpanded,
   });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -212,6 +214,7 @@ class Plots {
   String? createdAt;
   String? updatedAt;
   List<GetFlats>? getFlats;
+  bool ?isExpanded = true;
 
   Plots({
     this.id,
@@ -230,6 +233,7 @@ class Plots {
     this.createdAt,
     this.updatedAt,
     this.getFlats,
+    this.isExpanded
   });
 
   Plots.fromJson(Map<String, dynamic> json) {

@@ -10,6 +10,9 @@ class ComplainRepository{
   Future<Response> getComplainList() async {
     return await apiClient.getData(AppConstants.complainList);
   }
+  Future<Response> deleteComplain(String id) async {
+    return await apiClient.getData("/complaint/delete/$id");
+  }
 
   Future<Response> addComplain({required Map<String, String> body, List<XFile>? image}) async{
     /*return await apiClient.postMultipartData(AppConstants.addFamilyMember, body,

@@ -7,7 +7,9 @@ import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+    ProfileScreen({super.key,required this.initialIndex});
+  int initialIndex;
+
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -19,6 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 7, // Number of tabs
+      initialIndex: widget.initialIndex,
       child: Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
@@ -72,19 +75,7 @@ class PaymentsTab extends StatelessWidget {
   }
 }
 
-class ComplaintTab extends StatelessWidget {
-  const ComplaintTab({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Complaint Content',
-        style: TextStyle(fontSize: 18),
-      ),
-    );
-  }
-}
 
 class DocumentTab extends StatelessWidget {
   const DocumentTab({super.key});

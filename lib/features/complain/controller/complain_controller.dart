@@ -16,6 +16,20 @@ class ComplainController extends GetxController implements GetxService {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  Future<void> deleteComplainList(String id, int index) async {
+    Response response = await complainRepository.deleteComplain(id);
+    if (response.statusCode == 200) {
+      _complainModel?.data?.complaints?.removeAt(index);
+      update();
+
+    }else{
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
+
+
+
   Future<void> getComplainList() async {
     Response response = await complainRepository.getComplainList();
     if (response.statusCode == 200) {

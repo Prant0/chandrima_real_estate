@@ -113,7 +113,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                       Text('Created at : ${DateFormat('M-d-yyyy').format(DateTime.parse("${data?.createdAt}"))}', style: poppinsRegular),
                                     ]),
                                   ),
-                                  Column(
+                                  /*Column(
                                     children: [
                                       InkWell(
                                         child: Icon(Icons.delete, color: AppColors.red),
@@ -133,7 +133,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                                   ),
                                                   TextButton(
                                                     onPressed: () {
-                                                      // Add your delete logic here
+                                                      complainController.deleteComplainList(data!.id.toString(), index);
                                                       Navigator.of(context).pop(); // Close the dialog
                                                     },
                                                     child: Text('Yes'),
@@ -144,10 +144,14 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                           );
                                         },
                                       ),
-                                      SizedBox(height: 18,),
-                                      Icon(Icons.edit,color: AppColors.primary,),
+                                     *//* SizedBox(height: 18,),
+                                      InkWell(
+                                          onTap: (){
+
+                                          },
+                                          child: Icon(Icons.edit,color: AppColors.primary,)),*//*
                                     ],
-                                  ),
+                                  ),*/
                                 ],
                               ),
                             ),

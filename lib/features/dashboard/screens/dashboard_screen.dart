@@ -15,8 +15,8 @@ import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
 
 class DashboardScreen extends StatefulWidget {
-  final int pageIndex;
-  const DashboardScreen({super.key, required this.pageIndex});
+  final int pageIndex;  int? profilePageIndex;
+    DashboardScreen({super.key, required this.pageIndex,required this.profilePageIndex});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -25,6 +25,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
   bool _canExit = false;
+  int _profileIndex = 0;
 
   @override
   void initState() {
@@ -33,14 +34,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     profileController.getProfileDetails();
     profileController.getUserInvoiceList();
     _selectedIndex = widget.pageIndex;
+    _profileIndex=widget.profilePageIndex??0;
   }
 
-  final List<Widget> _pages = [
-    const HomeScreen(),
-    const InvoiceScreen(),
-   // const PaymentScreen(),*/
-      ComplainScreen(  isShowAppBar: true,),
-    const ProfileScreen(),
+    List<Widget> _pages = [
+      HomeScreen(),
+      InvoiceScreen(),
+      ComplainScreen(isShowAppBar: true,),
+      ProfileScreen(initialIndex:0),
   ];
 
   void _onItemTapped(int index) {
@@ -81,7 +82,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
         }
       },
       child: Scaffold(
-        body: _pages[_selectedIndex],
+      //  body: _pages[_selectedIndex],
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: [
+            HomeScreen(),
+            InvoiceScreen(),
+            ComplainScreen(isShowAppBar: true,),
+            ProfileScreen(initialIndex:_profileIndex),
+          ],
+        ),
         bottomNavigationBar: Container(
           decoration: const BoxDecoration(
             color: AppColors.primary,

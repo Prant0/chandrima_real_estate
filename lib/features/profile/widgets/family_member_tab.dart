@@ -60,7 +60,7 @@ class FamilyMemberTab extends StatelessWidget {
                 );
               },
             ),
-          ) : const Expanded(child: Center(child: Text("No land information available."))),
+          ) : const Expanded(child: Center(child: Text("No Family Member available."))),
 
           Align(
             alignment: Alignment.bottomRight,
