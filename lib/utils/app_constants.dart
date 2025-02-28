@@ -16,6 +16,11 @@ class AppConstants  {
   static const String addComplain = '/complaint/store';
   static const String complainCategoryList = '/complaint/categories';
 
+  /// Gate Pass
+  static const String gatePassList = '/gate-pass/list';
+  static const String addGatePass = '/gate-pass/store';
+  static const String deleteGatePass = '/gate-pass/delete';
+  static const String gatePassDownload = '/gate-pass/download';
 
   static const String token = 'chandrima_token';
 }

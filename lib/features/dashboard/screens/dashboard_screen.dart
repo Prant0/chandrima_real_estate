@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:chandrima_real_estate/features/complain/screens/complain_screen.dart';
 import 'package:chandrima_real_estate/features/home/screens/home_screen.dart';
 import 'package:chandrima_real_estate/features/invoice/screens/invoice_screen.dart';
-import 'package:chandrima_real_estate/features/payment/screens/payment_screen.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/features/profile/screens/profile_screen.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
@@ -15,8 +13,9 @@ import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
 
 class DashboardScreen extends StatefulWidget {
-  final int pageIndex;  int? profilePageIndex;
-    DashboardScreen({super.key, required this.pageIndex,required this.profilePageIndex});
+  final int pageIndex;
+  final int? profilePageIndex;
+  const DashboardScreen({super.key, required this.pageIndex,required this.profilePageIndex});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();

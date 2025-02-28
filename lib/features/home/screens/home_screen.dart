@@ -6,6 +6,7 @@ import 'package:chandrima_real_estate/features/home/controller/home_controller.d
 import 'package:chandrima_real_estate/features/home/screens/advertises_details_screen.dart';
 import 'package:chandrima_real_estate/features/invoice/screens/invoice_details.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
+import 'package:chandrima_real_estate/routes/routes_name.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/images.dart';
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Stack(clipBehavior: Clip.none, children: [
                 Container(
                   height: 220,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xff4B50CA),
                     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
                   ),
@@ -80,27 +81,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 20),
 
                     Text('Welcome to Chandrima Real Estate', style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.white), textAlign: TextAlign.center),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       Expanded(
                         child: InkWell(
                           onTap: () {
-                            print("Gate pass");
-                            Get.offAll(DashboardScreen(pageIndex: 3,profilePageIndex: 1,));
+                            Get.offAll(const DashboardScreen(pageIndex: 3,profilePageIndex: 1,));
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
                             decoration: BoxDecoration(
                               color: AppColors.white,
                               borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                             // boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
                             ),
                             child: Column(children: [
                               Image.asset(Images.land_info, height: 40),
-                               // Icon(Icons.garage_outlined, color: AppColors.purpleColor, size: 25),
                               const SizedBox(height: 10),
 
                               Text('Land/Flat', style: poppinsRegular.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeFourteen - 1),textAlign: TextAlign.center),
@@ -109,50 +105,42 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const SizedBox(width: 10),
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                print("Family member");
-                                Get.offAll(DashboardScreen(pageIndex: 3,profilePageIndex: 2,));
 
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                                  // boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
-                                ),
-                                child: Column(children: [
-                                  Image.asset(Images.family, height: 40),
-                                  // const Icon(Icons.payment, color: AppColors.purpleColor, size: 25),
-                                  const SizedBox(height: 10),
-
-                                  Center(child: Text('Family Member', style: poppinsRegular.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeFourteen - 1,),textAlign: TextAlign.center,)),
-                                ]),
-                              ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Get.offAll(const DashboardScreen(pageIndex: 3, profilePageIndex: 2));
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(Dimensions.radiusTen),
                             ),
-                          ),
+                            child: Column(children: [
+                              Image.asset(Images.family, height: 40),
+                              const SizedBox(height: 10),
 
+                              Center(child: Text('Family Member', style: poppinsRegular.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeFourteen - 1,),textAlign: TextAlign.center,)),
+                            ]),
+                          ),
+                        ),
+                      ),
                       const SizedBox(width: 10),
 
                       Expanded(
                         child: InkWell(
                           onTap: () {
-
-                            Get.offAll(DashboardScreen(pageIndex: 2,profilePageIndex: 0,));
-
+                            Get.offAll(const DashboardScreen(pageIndex: 2, profilePageIndex: 0));
                           },
                           child: Container(
                             padding: const EdgeInsets.all(Dimensions.paddingSizeTwenty),
                             decoration: BoxDecoration(
                               color: AppColors.white,
                               borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                             // boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
                             ),
                             child: Column(children: [
                               Image.asset(Images.complaign, height: 40),
-                               // Icon(Icons.add_chart_sharp, color: AppColors.purpleColor, size: 25),
                               const SizedBox(height: 10),
 
                               Center(child: Text('Complain', style: poppinsRegular.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeFourteen - 1),textAlign: TextAlign.center)),
@@ -160,106 +148,78 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-
                     ]),
-                    SizedBox(height: 20),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                print("psodifgjhdsbfds");
-                                //Get.offAll(DashboardScreen(pageIndex: 1));
-                                print("object");
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                                  // boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
-                                ),
-                                child: Column(children: [
-                                  Image.asset(Images.gate_pass, height: 40),
-                                  // Icon(Icons.garage_outlined, color: AppColors.purpleColor, size: 25),
-                                  const SizedBox(height: 10),
-
-                                  Text('Gate Pass', style: poppinsRegular.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeFourteen - 1),textAlign: TextAlign.center),
-                                ]),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                                  // boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
-                                ),
-                                child: Column(children: [
-                                  Image.asset(Images.payment, height: 40),
-                                  // const Icon(Icons.payment, color: AppColors.purpleColor, size: 25),
-                                  const SizedBox(height: 10),
-
-                                  Text('Payment', style: poppinsRegular.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeFourteen - 1)),
-                                ]),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-
-                          Expanded(
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                padding: const EdgeInsets.all(Dimensions.paddingSizeTwenty),
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                                  // boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 1, blurRadius: 5)],
-                                ),
-                                child: Column(children: [
-                                  Image.asset(Images.event, height: 40),
-                                  // Icon(Icons.add_chart_sharp, color: AppColors.purpleColor, size: 25),
-                                  const SizedBox(height: 10),
-
-                                  Text('Events', style: poppinsRegular.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeFourteen - 1)),
-                                ]),
-                              ),
-                            ),
-                          ),
-
-                        ]),
 
                   ]),
                 ),
               ]),
-              const SizedBox(height: 185),
+              const SizedBox(height: 65),
 
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeTwenty),
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(RoutesName.getGatePassScreen());
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(Dimensions.radiusTen),
+                        ),
+                        child: Column(children: [
+                          Image.asset(Images.gate_pass, height: 40),
+                          const SizedBox(height: 10),
 
+                          Text('Gate Pass', style: poppinsRegular.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeFourteen - 1),textAlign: TextAlign.center),
+                        ]),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
 
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(Dimensions.radiusTen),
+                        ),
+                        child: Column(children: [
+                          Image.asset(Images.payment, height: 40),
+                          const SizedBox(height: 10),
 
+                          Text('Payment', style: poppinsRegular.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeFourteen - 1)),
+                        ]),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
 
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.all(Dimensions.paddingSizeTwenty),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(Dimensions.radiusTen),
+                        ),
+                        child: Column(children: [
+                          Image.asset(Images.event, height: 40),
+                          const SizedBox(height: 10),
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+                          Text('Events', style: poppinsRegular.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeFourteen - 1)),
+                        ]),
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
 
               Padding(
                 padding: const EdgeInsets.all(Dimensions.paddingSizeTwenty),
@@ -292,7 +252,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-                  homeController.advertisesList==null?SizedBox():  Row(
+
+                  homeController.advertisesList == null ? const SizedBox() : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: homeController.advertisesList!.data!.map((url) {
                       int? index = homeController.advertisesList?.data?.indexOf(url);
@@ -307,8 +268,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }).toList(),
                   ),
-
-
                   const SizedBox(height: 15),
 
                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -320,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ]),
                   const SizedBox(height: 12),
 
-                  profileController.userInvoiceModel==null?SizedBox(): ListView.builder(
+                  profileController.userInvoiceModel == null ? const SizedBox() : ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: profileController.userInvoiceModel!.data!.data!.length,
@@ -336,18 +295,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             color: AppColors.white,
                             borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                            // boxShadow:  [BoxShadow(color: Colors.black12, spreadRadius: 0.5, blurRadius: 5)],
                           ),
                           child: Column(children: [
-                            /* ClipRRect(
-                              borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                              child: const CustomNetworkImage(
-                                height: 50, width: 50,
-                                image: 'https://easy-peasy.ai/cdn-cgi/image/quality=80,format=auto,width=700/https://fdczvxmwwjwpwbeeqcth.supabase.co/storage/v1/object/public/images/50dab922-5d48-4c6b-8725-7fd0755d9334/3a3f2d35-8167-4708-9ef0-bdaa980989f9.png',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            const SizedBox(width: 10),*/
 
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -355,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text('Invoice #${data.invoiceId}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen)),
 
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                   decoration: BoxDecoration(
                                     color: Colors.orange.withOpacity(0.8),
                                     borderRadius: BorderRadius.circular(Dimensions.radiusTen),
@@ -366,7 +315,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                               ],
                             ),
-                            SizedBox(height: 8,),
+                            const SizedBox(height: 8),
 
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -376,8 +325,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text('Due Date: ${DateFormat('M-d-yyyy').format(DateTime.parse(data.createdAt.toString()))}', style: poppinsRegular),
                               ],
                             ),
-
-
 
                           ]),
                         ),
