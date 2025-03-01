@@ -14,14 +14,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title, style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen, fontWeight: FontWeight.w600)),
+      title: Text(title, style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeEighteen, fontWeight: FontWeight.w800,color: Colors.white)),
       centerTitle: true,
       leading: backButton ? IconButton(
-        icon: const Icon(Icons.arrow_back_ios),
+        icon: const Icon(Icons.arrow_back_ios,color: Colors.white,),
         color: Theme.of(context).textTheme.bodyLarge!.color,
         onPressed: () => onBackPressed != null ? onBackPressed!() : Navigator.pop(context),
       ) : const SizedBox(),
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.primary,
       surfaceTintColor: AppColors.white,
       shadowColor: Theme.of(context).disabledColor.withOpacity(0.5),
       elevation: 2,

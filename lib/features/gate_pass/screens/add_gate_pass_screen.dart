@@ -19,18 +19,18 @@ class AddGatePassScreen extends StatefulWidget {
 }
 
 class _AddGatePassScreenState extends State<AddGatePassScreen> {
-  final TextEditingController _gatePassTypeController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _visitPurposeController = TextEditingController();
-  final TextEditingController _vehicleTypeController = TextEditingController();
-  final TextEditingController _vehicleNumberController = TextEditingController();
-  final TextEditingController _vehicleModelController = TextEditingController();
-  final TextEditingController _drivingLicenseController = TextEditingController();
-  final TextEditingController _paymentMethodController = TextEditingController();
-  final TextEditingController _paymentDetailsController = TextEditingController();
-  final TextEditingController _noteController = TextEditingController();
+  final TextEditingController _gatePassTypeController = TextEditingController(text: "Visitor");
+  final TextEditingController _nameController = TextEditingController(text: "John Doe");
+  final TextEditingController _phoneController = TextEditingController( text: "01712345678");
+  final TextEditingController _addressController = TextEditingController( text: "Dhaka, Bangladesh");
+  final TextEditingController _visitPurposeController = TextEditingController(  text: "Meeting");
+  final TextEditingController _vehicleTypeController = TextEditingController( text: "Car");
+  final TextEditingController _vehicleNumberController = TextEditingController( text: "Dhaka Metro 1234");
+  final TextEditingController _vehicleModelController = TextEditingController( text: "Toyota");
+  final TextEditingController _drivingLicenseController = TextEditingController( text: "1234567890");
+  final TextEditingController _paymentMethodController = TextEditingController( text: "Cash");
+  final TextEditingController _paymentDetailsController = TextEditingController( text: "Paid");
+  final TextEditingController _noteController = TextEditingController( text: "Note");
 
   String? entryDate = '';
   String? expiredDate = '';

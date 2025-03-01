@@ -82,7 +82,7 @@ class Complaints {
   String? document;
   String? date;
   String? status;
-  Null? resolution;
+  dynamic? resolution;
   String? createdBy;
   String? createdAt;
   String? updatedAt;
