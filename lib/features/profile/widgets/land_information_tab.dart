@@ -57,7 +57,62 @@ class _LandInformationTabState extends State<LandInformationTab> {
                 ),
                 const SizedBox(height: 8),
 
-               plot.isExpanded!=true? Column(
+               index==0? Column(
+                 children: [
+                   BuildDetailsRow(title: 'Plot No', value: plot.plotNo),
+                   BuildDetailsRow(title: 'Land Condition', value: plot.landCondition),
+                   BuildDetailsRow(title: 'Net Land', value: '${plot.netLand} sq ft'),
+                   BuildDetailsRow(title: 'Deed No', value: '${plot.deedNo??"N/A"}'),
+                   BuildDetailsRow(title: 'House No', value: plot.houseNumber),
+                   BuildDetailsRow(title: 'Road No', value: plot.roadNumber),
+                   BuildDetailsRow(title: 'Block No', value: plot.blockNumber),
+                   BuildDetailsRow(title: 'Date', value: plot.date),
+
+                   // Flats Information
+                   if (plot.getFlats != null && plot.getFlats!.isNotEmpty)
+                     Padding(
+                       padding: const EdgeInsets.only(top: Dimensions.paddingSizeFifteen),
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           Text(
+                             'Flats:',
+                             style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen),
+                           ),
+                           const SizedBox(height: 8),
+
+                           ...plot.getFlats!.map((flat) {
+                             return Container(
+                               margin: EdgeInsets.only(bottom: plot.getFlats!.last == flat ? 0 : Dimensions.paddingSizeTen),
+                               decoration: BoxDecoration(
+                                 color: AppColors.grey.withOpacity(0.1),
+                                 borderRadius: BorderRadius.circular(Dimensions.radiusEight),
+                               ),
+                               child: Padding(
+                                 padding: const EdgeInsets.all(8.0),
+                                 child: Column(
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   children: [
+                                     BuildDetailsRow(title: 'Flat No', value: flat.flatNo),
+                                     BuildDetailsRow(title: 'Flat Type', value: flat.flatType),
+                                     BuildDetailsRow(title: 'Flat Size', value: flat.flatSize),
+                                     // BuildDetailsRow(title: 'CS Record', value: flat.csRecord),
+                                     //BuildDetailsRow(title: 'RS Record', value: flat.rsRecord),
+                                     //BuildDetailsRow(title: 'BS Record', value: flat.bsRecord),
+                                     BuildDetailsRow(title: 'Sell Status', value: "flat"),
+                                   ],
+                                 ),
+                               ),
+                             );
+                           }),
+                         ],
+                       ),
+                     ),
+                 ],
+               ):SizedBox(height: 1,),
+
+
+               plot.isExpanded!=true && index!=0? Column(
                   children: [
                     BuildDetailsRow(title: 'Plot No', value: plot.plotNo),
                     BuildDetailsRow(title: 'Land Condition', value: plot.landCondition),
@@ -96,10 +151,10 @@ class _LandInformationTabState extends State<LandInformationTab> {
                                       BuildDetailsRow(title: 'Flat No', value: flat.flatNo),
                                       BuildDetailsRow(title: 'Flat Type', value: flat.flatType),
                                       BuildDetailsRow(title: 'Flat Size', value: flat.flatSize),
-                                      BuildDetailsRow(title: 'CS Record', value: flat.csRecord),
-                                      BuildDetailsRow(title: 'RS Record', value: flat.rsRecord),
-                                      BuildDetailsRow(title: 'BS Record', value: flat.bsRecord),
-                                      BuildDetailsRow(title: 'Mutation Number', value: flat.mutationNumber),
+                                     // BuildDetailsRow(title: 'CS Record', value: flat.csRecord),
+                                      //BuildDetailsRow(title: 'RS Record', value: flat.rsRecord),
+                                      //BuildDetailsRow(title: 'BS Record', value: flat.bsRecord),
+                                      BuildDetailsRow(title: 'Sell Status', value: "flat"),
                                     ],
                                   ),
                                 ),

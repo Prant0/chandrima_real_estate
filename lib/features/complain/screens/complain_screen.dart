@@ -38,9 +38,11 @@ class _ComplainScreenState extends State<ComplainScreen> {
       ),
       backgroundColor:AppColors.background,
       appBar: widget.isShowAppBar==true?AppBar(
-        /*leading: IconButton(
+       /* leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Get.back(),
+          onPressed: (){
+            Navigator.of(context).pop();
+          }
         ),*/
         centerTitle: true,
         title:   Text('My Complaints',style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeTwenty,color: Colors.white),),
@@ -49,7 +51,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
       body: GetBuilder<ComplainController>(
           builder: (complainController) {
             return Padding(
-              padding: const EdgeInsets.all(Dimensions.paddingSizeTwenty),
+              padding: const EdgeInsets.all(Dimensions.paddingSizeTen),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -73,6 +75,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                 // boxShadow:  [BoxShadow(color: Colors.black12, spreadRadius: 0.5, blurRadius: 5)],
                               ),
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
                                     child: Column(
@@ -80,8 +83,18 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                         children: [
                                       Text("Sl No: ${index+1}", style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.primary,fontWeight: FontWeight.w700),),
                                       SizedBox(height: 4,),
-                                      Text('${data?.title}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,fontWeight: FontWeight.w800) ,maxLines: 3,),
-
+                                        RichText(
+                                            text: TextSpan(
+                                              text: 'Title : ',
+                                              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                  text: '${data?.title}',
+                                                  style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                       SizedBox(height: 4,),
                                       RichText(
                                             text: TextSpan(
@@ -95,7 +108,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                               ],
                                             ),
                                           ),
-                                      SizedBox(height: 4,),
+                                     /* SizedBox(height: 4,),
                                       RichText(
                                             text: TextSpan(
                                               text: 'Status : ',
@@ -107,12 +120,34 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                                 ),
                                               ],
                                             ),
-                                          ),
+                                          ),*/
 
                                       SizedBox(height: 4,),
-                                      Text('Created at : ${DateFormat('M-d-yyyy').format(DateTime.parse("${data?.createdAt}"))}', style: poppinsRegular),
-                                    ]),
+                                          RichText(
+                                            text: TextSpan(
+                                              text: 'Date : ',
+                                              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                  text: '${DateFormat('M-d-yyyy').format(DateTime.parse("${data?.createdAt}"))}',
+                                                  style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                     ]),
                                   ),
+
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeTen, vertical: Dimensions.paddingSizeFive),
+                                    decoration: BoxDecoration(
+                                      color: data?.status == 'In Progress' ? Colors.blue : data?.status == 'On Hold' ? AppColors.red : data?.status == 'Resolved' ?Colors.green: data?.status == 'Completed' ?Colors.green:data?.status == 'Open' ?Colors.orange: AppColors.grey,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Text("${data?.status}", style: poppinsRegular.copyWith(color: Colors.white),),
+                                  )
+
+
                                   /*Column(
                                     children: [
                                       InkWell(

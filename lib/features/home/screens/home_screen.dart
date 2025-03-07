@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
-import 'package:chandrima_real_estate/features/auth/controller/auth_controller.dart';
 import 'package:chandrima_real_estate/features/dashboard/screens/dashboard_screen.dart';
 import 'package:chandrima_real_estate/features/home/controller/home_controller.dart';
 import 'package:chandrima_real_estate/features/home/screens/advertises_details_screen.dart';
+import 'package:chandrima_real_estate/features/home/screens/events_screen.dart';
 import 'package:chandrima_real_estate/features/invoice/screens/invoice_details.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/routes/routes_name.dart';
@@ -39,9 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: GetBuilder<ProfileController>(builder: (profileController) {
         return GetBuilder<HomeController>(builder: (homeController) {
           return SingleChildScrollView(
-            child: Column(children: [
-
-              Stack(clipBehavior: Clip.none, children: [
+            child: Column(
+                children: [
+              Stack(
+                  clipBehavior: Clip.none,
+                  children: [
                 Container(
                   height: 220,
                   decoration: const BoxDecoration(
@@ -73,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       InkWell(
                         onTap: () {
-                          Get.find<AuthController>().removeToken();
+                          //Get.find<AuthController>().removeToken();
                         },
                         child: const Icon(Icons.notifications, color: AppColors.white),
                       ),
@@ -134,9 +136,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             Get.offAll(const DashboardScreen(pageIndex: 2, profilePageIndex: 0));
                           },
                           child: Container(
-                            padding: const EdgeInsets.all(Dimensions.paddingSizeTwenty),
+                            padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
                             decoration: BoxDecoration(
-
                               color: AppColors.white,
                               borderRadius: BorderRadius.circular(Dimensions.radiusTen),
                             ),
@@ -183,7 +184,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   Expanded(
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.offAll(const DashboardScreen(pageIndex: 3, profilePageIndex: 4));
+
+                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
                         decoration: BoxDecoration(
@@ -203,9 +207,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   Expanded(
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(EventsScreen());
+                      },
                       child: Container(
-                        padding: const EdgeInsets.all(Dimensions.paddingSizeTwenty),
+                        padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
                         decoration: BoxDecoration(
                           color: AppColors.white,
                           borderRadius: BorderRadius.circular(Dimensions.radiusTen),
@@ -213,7 +219,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(children: [
                           Image.asset(Images.event, height: 40),
                           const SizedBox(height: 10),
-
                           Text('Events', style: poppinsRegular.copyWith(color: AppColors.textColor,fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeFourteen - 1)),
                         ]),
                       ),
@@ -292,6 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Get.to(InvoiceDetails(userInvoice: data));
                         },
                         child: Container(
+                          margin: EdgeInsets.only(bottom: index == profileController.userInvoiceModel!.data!.data!.length - 1 ? 0 : Dimensions.paddingSizeTen),
                           padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
                           decoration: BoxDecoration(
                             color: AppColors.white,

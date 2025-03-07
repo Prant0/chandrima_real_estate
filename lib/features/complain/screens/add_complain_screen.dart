@@ -16,7 +16,7 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 class AddComplainScreen extends StatefulWidget {
     AddComplainScreen({super.key,required this.complaintCategories});
-  List<ComplaintCategories>? complaintCategories;
+  List<ComplaintCategory>? complaintCategories;
   @override
   State<AddComplainScreen> createState() => _AddComplainScreenState();
 }
@@ -57,7 +57,7 @@ class _AddComplainScreenState extends State<AddComplainScreen> {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          DropdownButtonFormField<ComplaintCategories>(
+                          DropdownButtonFormField<ComplaintCategory>(
                             validator: (value) {
                               if (value == null) {
                                 return 'Please select a category';
@@ -73,13 +73,13 @@ class _AddComplainScreenState extends State<AddComplainScreen> {
                               filled: true,
                               fillColor:  AppColors.grey.withOpacity(0.2),
                             ),
-                            items: widget.complaintCategories?.map((ComplaintCategories category) {
-                              return DropdownMenuItem<ComplaintCategories>(
+                            items: widget.complaintCategories?.map((ComplaintCategory category) {
+                              return DropdownMenuItem<ComplaintCategory>(
                                 value: category,
                                 child: Text(category.name.toString()), // Assuming ComplaintCategories has a 'name' property
                               );
                             }).toList(),
-                            onChanged: (ComplaintCategories? newValue) {
+                            onChanged: (ComplaintCategory? newValue) {
                               // Handle change
                               categoryId=newValue!.id.toString();
                             },

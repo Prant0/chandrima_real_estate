@@ -2,6 +2,7 @@ import 'package:chandrima_real_estate/features/complain/screens/complain_screen.
 import 'package:chandrima_real_estate/features/profile/widgets/family_member_tab.dart';
 import 'package:chandrima_real_estate/features/profile/widgets/general_info_tab.dart';
 import 'package:chandrima_real_estate/features/profile/widgets/land_information_tab.dart';
+import 'package:chandrima_real_estate/features/profile/widgets/payments_tab.dart';
 import 'package:chandrima_real_estate/features/profile/widgets/tenant_tab.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 7, // Number of tabs
+      length: 6, // Number of tabs
       initialIndex: widget.initialIndex,
       child: Scaffold(
         backgroundColor: AppColors.background,
@@ -41,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Tab(text: 'Tenant'),
               Tab(text: 'Payments'),
               Tab(text: 'Complaint'),
-              Tab(text: 'Document'),
+              //Tab(text: 'Document'),
             ],
           ),
         ),
@@ -53,23 +54,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             TenantTab(),
             PaymentsTab(),
             ComplainScreen(isShowAppBar: false),
-            DocumentTab(),
+           // DocumentTab(),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class PaymentsTab extends StatelessWidget {
-  const PaymentsTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Payments Content',
-        style: TextStyle(fontSize: 18),
       ),
     );
   }

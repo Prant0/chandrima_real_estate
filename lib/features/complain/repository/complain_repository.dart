@@ -20,7 +20,7 @@ class ComplainRepository{
 
     */
 
-    List<MultipartBody> multipartImages = image?.map((img) => MultipartBody('documents', img))?.toList() ?? [];
+    List<MultipartBody> multipartImages = image?.map((img) => MultipartBody('documents[]', img))?.toList() ?? [];
     return await apiClient.postMultipartData(AppConstants.addComplain, body, multipartImages);
 
 

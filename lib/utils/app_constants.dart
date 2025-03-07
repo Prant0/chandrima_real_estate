@@ -18,6 +18,7 @@ class AppConstants  {
 
   /// Gate Pass
   static const String gatePassList = '/gate-pass/list';
+  static const String gatePassType = '/gate-pass/create';
   static const String addGatePass = '/gate-pass/store';
   static const String deleteGatePass = '/gate-pass/delete';
   static const String gatePassDownload = '/gate-pass/download';

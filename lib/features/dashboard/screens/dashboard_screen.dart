@@ -109,7 +109,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 _buildNavItem(icon: Icons.home, label: 'Home', index: 0),
                 _buildNavItem(icon: Icons.receipt, label: 'Invoice', index: 1),
                // _buildNavItem(icon: Icons.payment, label: 'Payment', index: 2),
-                 _buildNavItem(icon: Icons.error, label: 'Notice', index: 2),
+                 _buildNavItem(icon: Icons.error, label: 'Complaint', index: 2),
                 _buildNavItem(icon: Icons.person, label: 'Profile', index: 3),
               ],
             ),

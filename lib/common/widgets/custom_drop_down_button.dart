@@ -47,6 +47,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
         filled: true,
         fillColor: AppColors.grey.withOpacity(0.2),
       ),
+
       hint: Text(widget.hintText ?? 'Select an option'),
       value: widget.selectedValue,
       items: (widget.dropdownMenuItems ?? widget.items?.map((item) => DropdownMenuItem<String>(
@@ -69,6 +70,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.only(right: 8),
       ),
+
       iconStyleData: const IconStyleData(
         icon: Icon(Icons.arrow_drop_down, color: AppColors.black, size: 30),
       ),

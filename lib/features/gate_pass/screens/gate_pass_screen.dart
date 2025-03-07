@@ -20,7 +20,10 @@ class _GatePassScreenState extends State<GatePassScreen> {
   void initState() {
     super.initState();
     Get.find<GatePassController>().getGatePassList();
+    Get.find<GatePassController>().getGatePassType();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,19 +78,88 @@ class _GatePassScreenState extends State<GatePassScreen> {
                         )
                       ],
                     ),
-                    Text('Visitor Name: ${gatePass.visitorName}', style: poppinsMedium),
-                    Text('Phone: ${gatePass.visitorPhone}', style: poppinsMedium),
-                    Text('Address: ${gatePass.visitorAddress}', style: poppinsMedium),
-                    Text('Purpose: ${gatePass.visitPurpose}', style: poppinsMedium),
-                    Text('Entry Date: ${getFormattedDate(gatePass.entryDate!)}', style: poppinsMedium),
-                    Text('Expiry Date: ${getFormattedDate(gatePass.expiredDate!)}', style: poppinsMedium),
-                     /* Text(
-                        'Status: ${gatePass.status}',
-                        style: poppinsRegular.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: gatePass.status == 'approve' ? Colors.green : gatePass.status == 'pending' ? Colors.orange : Colors.red,
-                        ),
-                      ),*/
+                    RichText(
+                      text: TextSpan(
+                        text: 'Type: ',
+                        style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '${gatePass.gatepassType}',
+                            style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                          ),
+                        ],
+                      ),
+                    ),RichText(
+                      text: TextSpan(
+                        text: 'Name: ',
+                        style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '${gatePass.visitorName}',
+                            style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                          ),
+                        ],
+                      ),
+                    ),RichText(
+                      text: TextSpan(
+                        text: 'Phone: ',
+                        style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '${gatePass.visitorPhone}',
+                            style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'Address: ',
+                        style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '${gatePass.visitorAddress}',
+                            style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                          ),
+                        ],
+                      ),),
+
+                    gatePass.visitPurpose==null?SizedBox(): RichText(
+                      text: TextSpan(
+                        text: 'Purpose: ',
+                        style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '${gatePass.visitPurpose}',
+                            style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'Entry Date: ',
+                        style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '${getFormattedDate(gatePass.entryDate!.toString())}',
+                            style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                          ),
+                        ],
+                      ),),
+
+                    RichText(
+                      text: TextSpan(
+                        text: 'Expiry Date: ',
+                        style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: '${getFormattedDate(gatePass.expiredDate!.toString())}',
+                            style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                          ),
+                        ],
+                      ),
+                    ),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -120,9 +192,10 @@ class _GatePassScreenState extends State<GatePassScreen> {
                             );
                            // gatePassController.deleteGatePass(gatePassId: gatePass.id!);
                           },
-                          icon: const Icon(Icons.delete, color: AppColors.red),
+                          icon: const Icon(Icons.delete_sweep_sharp, color: AppColors.red,size: 33,),
                         ),
 
+                        SizedBox(width: 10,),
                         IconButton(
                           onPressed: () {
                             if (gatePass.status == 'pending') {
@@ -132,7 +205,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
                             }
                             //gatePassController.downloadGatePass(gatePassId: gatePass.id!);
                           },
-                          icon: const Icon(Icons.download, color: AppColors.purpleColor),
+                          icon: const Icon(Icons.download, color: AppColors.purpleColor,size: 33,),
                         ),
                       ],
                     ),

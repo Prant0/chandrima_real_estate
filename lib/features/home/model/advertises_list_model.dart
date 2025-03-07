@@ -1,50 +1,65 @@
+// To parse this JSON data, do
+//
+//     final advertisesListModel = advertisesListModelFromJson(jsonString);
+
+import 'dart:convert';
+
+AdvertisesListModel advertisesListModelFromJson(String str) => AdvertisesListModel.fromJson(json.decode(str));
+
+String advertisesListModelToJson(AdvertisesListModel data) => json.encode(data.toJson());
+
 class AdvertisesListModel {
   bool? status;
   List<Advertises>? data;
 
-  AdvertisesListModel({this.status, this.data});
+  AdvertisesListModel({
+    this.status,
+    this.data,
+  });
 
-  AdvertisesListModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    if (json['data'] != null) {
-      data = <Advertises>[];
-      json['data'].forEach((v) {
-        data!.add(Advertises.fromJson(v));
-      });
-    }
-  }
+  factory AdvertisesListModel.fromJson(Map<String, dynamic> json) => AdvertisesListModel(
+    status: json["status"],
+    data: json["data"] == null ? [] : List<Advertises>.from(json["data"]!.map((x) => Advertises.fromJson(x))),
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "status": status,
+    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+  };
 }
 
 class Advertises {
   int? id;
+  String? adType;
   String? title;
   String? image;
+  String? video;
   String? description;
 
-  Advertises({this.id, this.title, this.image, this.description});
+  Advertises({
+    this.id,
+    this.adType,
+    this.title,
+    this.image,
+    this.video,
+    this.description,
+  });
 
-  Advertises.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    image = json['image'];
-    description = json['description'];
-  }
+  factory Advertises.fromJson(Map<String, dynamic> json) => Advertises(
+    id: json["id"],
+    adType: json["ad_type"],
+    title: json["title"],
+    image: json["image"],
+    video: json["video"],
+    description: json["description"],
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['title'] = title;
-    data['image'] = image;
-    data['description'] = description;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "ad_type": adType,
+    "title": title,
+    "image": image,
+    "video": video,
+    "description": description,
+  };
 }

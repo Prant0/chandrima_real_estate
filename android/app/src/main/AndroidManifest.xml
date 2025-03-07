@@ -5,7 +5,8 @@
 
 
     <application
-        android:label="chandrima_real_estate"
+        android:extractNativeLibs="true"
+        android:label="Chandrima Real Estate"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

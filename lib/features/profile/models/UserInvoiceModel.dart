@@ -126,7 +126,7 @@ class UserInvoiceList {
     "payment_details": paymentDetails,
     "payment_documents": paymentDocuments,
     "note": note,
-    "payment_status": paymentStatus,
+    "payment_status": paymentStatus??"N/A",
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
   };
@@ -134,7 +134,7 @@ class UserInvoiceList {
 
 class Service {
   String? serviceName;
-  String? serviceCharge;
+  dynamic? serviceCharge;
 
   Service({
     this.serviceName,

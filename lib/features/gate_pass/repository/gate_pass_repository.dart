@@ -11,8 +11,15 @@ class GatePassRepository {
     return await apiClient.getData(AppConstants.gatePassList);
   }
 
-  Future<Response> addGatePass(Map<String, String> data, XFile? paymentDocument) async {
-    return await apiClient.postMultipartData(AppConstants.addGatePass, data, [MultipartBody('payment_documents[]', paymentDocument)]);
+
+  Future<Response> getGatePassType() async {
+    return await apiClient.getData(AppConstants.gatePassType);
+  }
+
+  Future<Response> addGatePass(Map<String, String> data, List<XFile>? image) async {
+
+    List<MultipartBody> paymentDocument = image?.map((img) => MultipartBody('payment_documents[]', img))?.toList() ?? [];
+    return await apiClient.postMultipartData(AppConstants.addGatePass, data, paymentDocument);
   }
 
   Future<Response> deleteGatePass({required int gatePassId}) async {

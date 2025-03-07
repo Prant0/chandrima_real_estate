@@ -34,7 +34,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
       body: GetBuilder<ProfileController>(
         builder: (profileController) {
           return Padding(
-            padding: const EdgeInsets.all(Dimensions.paddingSizeTwenty),
+            padding: const EdgeInsets.all(Dimensions.paddingSizeTen),
             child: SingleChildScrollView(
               child: Column(
                 children: [

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:chandrima_real_estate/common/widgets/custom_snackbar.dart';
 import 'package:chandrima_real_estate/data/api/api_checker.dart';
 import 'package:chandrima_real_estate/features/gate_pass/model/gate_pass_list_model.dart';
+import 'package:chandrima_real_estate/features/gate_pass/model/gate_pass_type_model.dart';
 import 'package:chandrima_real_estate/features/gate_pass/repository/gate_pass_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -16,8 +17,8 @@ class GatePassController extends GetxController implements GetxService{
   List<GatePassData>? _gatePassList;
   List<GatePassData>? get gatePassList => _gatePassList;
 
-  XFile? _paymentDocument;
-  XFile? get paymentDocument => _paymentDocument;
+
+
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -34,6 +35,24 @@ class GatePassController extends GetxController implements GetxService{
     update();
   }
 
+
+  GatePassTypeModel? _gatePassTypeModel;
+  GatePassTypeModel? get gatePassTypeModel => _gatePassTypeModel;
+
+
+  Future<void> getGatePassType() async {
+    _isLoading = true;
+    final response = await gatePassRepository.getGatePassType();
+
+    if(response.statusCode == 200){
+      _isLoading = false;
+      _gatePassTypeModel = GatePassTypeModel.fromJson(response.body);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
+
   Future<void> addGatePass(Map<String, String> data) async {
     _isLoading = true;
     update();
@@ -44,6 +63,7 @@ class GatePassController extends GetxController implements GetxService{
       showCustomSnackBar('Gate Pass added successfully', isError: false);
       getGatePassList();
     }else{
+      getGatePassList();
       ApiChecker.checkApi(response);
     }
 
@@ -62,10 +82,7 @@ class GatePassController extends GetxController implements GetxService{
     update();
   }
 
-  void pickPaymentDocument() async {
-    _paymentDocument = await ImagePicker().pickImage(source: ImageSource.gallery);
-    update();
-  }
+
 
   Future<void> downloadGatePass({required int gatePassId}) async {
     final response = await gatePassRepository.downloadGatePass(gatePassId: gatePassId);
@@ -95,6 +112,14 @@ class GatePassController extends GetxController implements GetxService{
     } else {
       ApiChecker.checkApi(response);
     }
+  }
+
+
+  List<XFile>? _paymentDocument;
+  List<XFile>? get paymentDocument => _paymentDocument;
+  void pickPaymentDocument() async {
+    _paymentDocument = await ImagePicker().pickMultiImage();
+    update();
   }
 
 }

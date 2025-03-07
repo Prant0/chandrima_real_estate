@@ -9,14 +9,6 @@ class ProfileModel {
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
 }
 
 class Data {
@@ -25,6 +17,7 @@ class Data {
   List<FamilyMembers>? familyMembers;
   List<Tenants>? tenants;
   List<Events>? events;
+  List<Payments>? payments;
   bool ?isExpanded = true;
 
   Data({
@@ -34,6 +27,7 @@ class Data {
     this.tenants,
     this.events,
     this.isExpanded,
+    this.payments
   });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -62,27 +56,14 @@ class Data {
         events!.add(Events.fromJson(v));
       });
     }
+    if (json['payments'] != null) {
+      payments = <Payments>[];
+      json['payments'].forEach((v) {
+        payments!.add(Payments.fromJson(v));
+      });
+    }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (member != null) {
-      data['member'] = member!.toJson();
-    }
-    if (plots != null) {
-      data['plots'] = plots!.map((v) => v.toJson()).toList();
-    }
-    if (familyMembers != null) {
-      data['familyMembers'] = familyMembers!.map((v) => v.toJson()).toList();
-    }
-    if (tenants != null) {
-      data['tenants'] = tenants!.map((v) => v.toJson()).toList();
-    }
-    if (events != null) {
-      data['events'] = events!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
 }
 
 class Member {
@@ -260,28 +241,7 @@ class Plots {
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['member_id'] = memberId;
-    data['develop_by'] = developBy;
-    data['project_id'] = projectId;
-    data['plot_no'] = plotNo;
-    data['land_condition'] = landCondition;
-    data['net_land'] = netLand;
-    data['deed_no'] = deedNo;
-    data['house_number'] = houseNumber;
-    data['road_number'] = roadNumber;
-    data['block_number'] = blockNumber;
-    data['date'] = date;
-    data['documents'] = documents;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    if (getFlats != null) {
-      data['get_flats'] = getFlats!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+
 }
 
 class GetFlats {
@@ -301,6 +261,7 @@ class GetFlats {
   String? mutationDocument;
   String? createdAt;
   String? updatedAt;
+  dynamic getPurchasedBy;
 
   GetFlats({
     this.id,
@@ -319,6 +280,7 @@ class GetFlats {
     this.mutationDocument,
     this.createdAt,
     this.updatedAt,
+    this.getPurchasedBy
   });
 
   GetFlats.fromJson(Map<String, dynamic> json) {
@@ -338,28 +300,10 @@ class GetFlats {
     mutationDocument = json['mutation_document'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    getPurchasedBy=json['get_purchased_by'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['member_id'] = memberId;
-    data['plot_id'] = plotId;
-    data['flat_size'] = flatSize;
-    data['flat_no'] = flatNo;
-    data['flat_type'] = flatType;
-    data['cs_record'] = csRecord;
-    data['cs_files'] = csFiles;
-    data['rs_record'] = rsRecord;
-    data['rs_files'] = rsFiles;
-    data['bs_record'] = bsRecord;
-    data['bs_files'] = bsFiles;
-    data['mutation_number'] = mutationNumber;
-    data['mutation_document'] = mutationDocument;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    return data;
-  }
+
 }
 
 class FamilyMembers {
@@ -524,58 +468,208 @@ class Tenants {
 
 class Events {
   int? id;
+  dynamic userId;
   String? title;
   String? description;
-  String? startDate;
-  String? endDate;
+  String? eventSending;
+  DateTime? sendingDate;
+  String? block;
   String? eventTo;
-  String? userId;
+  dynamic startDate;
+  dynamic endDate;
   String? notifyVia;
   String? status;
-  String? createdAt;
-  String? updatedAt;
+  int? createdBy;
+  int? updatedBy;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   Events({
     this.id,
+    this.userId,
     this.title,
     this.description,
+    this.eventSending,
+    this.sendingDate,
+    this.block,
+    this.eventTo,
     this.startDate,
     this.endDate,
-    this.eventTo,
-    this.userId,
     this.notifyVia,
     this.status,
+    this.createdBy,
+    this.updatedBy,
     this.createdAt,
     this.updatedAt,
   });
 
-  Events.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    description = json['description'];
-    startDate = json['start_date'];
-    endDate = json['end_date'];
-    eventTo = json['event_to'];
-    userId = json['user_id'];
-    notifyVia = json['notify_via'];
-    status = json['status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
+  factory Events.fromJson(Map<String, dynamic> json) => Events(
+    id: json["id"],
+    userId: json["user_id"],
+    title: json["title"],
+    description: json["description"],
+    eventSending: json["event_sending"],
+    sendingDate: json["sending_date"] == null ? null : DateTime.parse(json["sending_date"]),
+    block: json["block"],
+    eventTo: json["event_to"],
+    startDate: json["start_date"],
+    endDate: json["end_date"],
+    notifyVia: json["notify_via"],
+    status: json["status"],
+    createdBy: json["created_by"],
+    updatedBy: json["updated_by"],
+    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['title'] = title;
-    data['description'] = description;
-    data['start_date'] = startDate;
-    data['end_date'] = endDate;
-    data['event_to'] = eventTo;
-    data['user_id'] = userId;
-    data['notify_via'] = notifyVia;
-    data['status'] = status;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "user_id": userId,
+    "title": title,
+    "description": description,
+    "event_sending": eventSending,
+    "sending_date": sendingDate?.toIso8601String(),
+    "block": block,
+    "event_to": eventTo,
+    "start_date": startDate,
+    "end_date": endDate,
+    "notify_via": notifyVia,
+    "status": status,
+    "created_by": createdBy,
+    "updated_by": updatedBy,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+  };
+}
+
+class Payments {
+  int? id;
+  String? memberId;
+  String? invoiceId;
+  dynamic name;
+  dynamic phone;
+  dynamic details;
+  List<Service>? services;
+  String? invoiceType;
+  String? invoiceFor;
+  int? totalDiscount;
+  int? paidAmount;
+  int? totalAmount;
+  int? partialPayment;
+  DateTime? paymentDate;
+  dynamic paymentMonths;
+  String? paymentMethod;
+  String? paymentDetails;
+  dynamic paymentDocuments;
+  String? note;
+  String? paymentStatus;
+  int? createdBy;
+  dynamic updatedBy;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  Payments({
+    this.id,
+    this.memberId,
+    this.invoiceId,
+    this.name,
+    this.phone,
+    this.details,
+    this.services,
+    this.invoiceType,
+    this.invoiceFor,
+    this.totalDiscount,
+    this.paidAmount,
+    this.totalAmount,
+    this.partialPayment,
+    this.paymentDate,
+    this.paymentMonths,
+    this.paymentMethod,
+    this.paymentDetails,
+    this.paymentDocuments,
+    this.note,
+    this.paymentStatus,
+    this.createdBy,
+    this.updatedBy,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory Payments.fromJson(Map<String, dynamic> json) => Payments(
+    id: json["id"],
+    memberId: json["member_id"],
+    invoiceId: json["invoice_id"],
+    name: json["name"],
+    phone: json["phone"],
+    details: json["details"],
+    services: json["services"] == null ? [] : List<Service>.from(json["services"]!.map((x) => Service.fromJson(x))),
+    invoiceType: json["invoice_type"],
+    invoiceFor: json["invoice_for"],
+    totalDiscount: json["total_discount"],
+    paidAmount: json["paid_amount"],
+    totalAmount: json["total_amount"],
+    partialPayment: json["partial_payment"],
+    paymentDate: json["payment_date"] == null ? null : DateTime.parse(json["payment_date"]),
+    paymentMonths: json["payment_months"],
+    paymentMethod: json["payment_method"],
+    paymentDetails: json["payment_details"],
+    paymentDocuments: json["payment_documents"],
+    note: json["note"],
+    paymentStatus: json["payment_status"],
+    createdBy: json["created_by"],
+    updatedBy: json["updated_by"],
+    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "member_id": memberId,
+    "invoice_id": invoiceId,
+    "name": name,
+    "phone": phone,
+    "details": details,
+    "services": services == null ? [] : List<dynamic>.from(services!.map((x) => x.toJson())),
+    "invoice_type": invoiceType,
+    "invoice_for": invoiceFor,
+    "total_discount": totalDiscount,
+    "paid_amount": paidAmount,
+    "total_amount": totalAmount,
+    "partial_payment": partialPayment,
+    "payment_date": "${paymentDate!.year.toString().padLeft(4, '0')}-${paymentDate!.month.toString().padLeft(2, '0')}-${paymentDate!.day.toString().padLeft(2, '0')}",
+    "payment_months": paymentMonths,
+    "payment_method": paymentMethod,
+    "payment_details": paymentDetails,
+    "payment_documents": paymentDocuments,
+    "note": note,
+    "payment_status": paymentStatus,
+    "created_by": createdBy,
+    "updated_by": updatedBy,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+  };
+}
+
+class Service {
+  String? serviceName;
+  int? serviceCharge;
+  String? discount;
+
+  Service({
+    this.serviceName,
+    this.serviceCharge,
+    this.discount,
+  });
+
+  factory Service.fromJson(Map<String, dynamic> json) => Service(
+    serviceName: json["service_name"],
+    serviceCharge: json["service_charge"],
+    discount: json["discount"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "service_name": serviceName,
+    "service_charge": serviceCharge,
+    "discount": discount,
+  };
 }
