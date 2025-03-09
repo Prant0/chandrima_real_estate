@@ -78,7 +78,7 @@ class InvoiceDetails extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(Dimensions.radiusTen),
                                         border: Border.all(color: Colors.greenAccent,width: 1),
                                       ),
-                                      child: Text('${userInvoice.paymentStatus}'.toUpperCase(), style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeFourteen,color: Colors.white,)),
+                                      child: Text('${userInvoice.paymentStatus=="null"?"Pending":userInvoice.paymentStatus}'.toUpperCase(), style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeFourteen,color: Colors.white,)),
                                     ),
                                   ],
                                 ),
@@ -196,7 +196,7 @@ class InvoiceDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text('Payment Status :', style: poppinsMedium.copyWith(fontWeight: FontWeight.w800 )),
-                                Text('${userInvoice.paymentStatus}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.textColor)),
+                                Text('${userInvoice.paymentStatus=="null"?"N/A":userInvoice.paymentStatus}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.textColor)),
                               ],
                             ),Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

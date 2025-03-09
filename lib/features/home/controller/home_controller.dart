@@ -1,5 +1,6 @@
 import 'package:chandrima_real_estate/data/api/api_checker.dart';
 import 'package:chandrima_real_estate/features/home/model/advertises_list_model.dart';
+import 'package:chandrima_real_estate/features/home/model/notification_model.dart';
 import 'package:get/get.dart';
 import 'package:chandrima_real_estate/features/home/repository/home_repository.dart';
 
@@ -22,6 +23,21 @@ class HomeController extends GetxController implements GetxService {
     }
     update();
   }
+
+  NotificationModel? _notificationModel;
+  NotificationModel? get notificationModel => _notificationModel;
+
+  Future<void> getNotification() async {
+    Response response = await homeRepository.getNotificationList();
+    print("Notification Response: ${response.body}");
+    if (response.statusCode == 200) {
+      _notificationModel = NotificationModel.fromJson(response.body);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
+
 
   Future<void> getAdvertiseDetails(int id) async {
     Response response = await homeRepository.getAdvertiseDetails(id);

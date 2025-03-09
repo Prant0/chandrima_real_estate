@@ -11,6 +11,7 @@ class AppConstants  {
   static const String addTenantMember = '/member/tenant/store';
   static const String userInvoiceList = '/invoice/list';
   static const String advertisementList = '/advertises';
+  static const String notificationsList = '/notifications';
   static const String advertisementDetails = '/advertise/details';
   static const String complainList = '/complaints';
   static const String addComplain = '/complaint/store';

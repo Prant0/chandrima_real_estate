@@ -4,6 +4,7 @@ import 'package:chandrima_real_estate/features/dashboard/screens/dashboard_scree
 import 'package:chandrima_real_estate/features/home/controller/home_controller.dart';
 import 'package:chandrima_real_estate/features/home/screens/advertises_details_screen.dart';
 import 'package:chandrima_real_estate/features/home/screens/events_screen.dart';
+import 'package:chandrima_real_estate/features/home/screens/notification_screen.dart';
 import 'package:chandrima_real_estate/features/invoice/screens/invoice_details.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/routes/routes_name.dart';
@@ -30,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     HomeController homeController = Get.find<HomeController>();
     homeController.getAdvertisesList();
+    homeController.getNotification();
   }
 
   @override
@@ -75,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       InkWell(
                         onTap: () {
+                          Get.to(NotificationScreen());
                           //Get.find<AuthController>().removeToken();
                         },
                         child: const Icon(Icons.notifications, color: AppColors.white),
@@ -317,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(Dimensions.radiusTen),
                                     border: Border.all(color: Colors.deepOrange,width: 1),
                                   ),
-                                  child: Text('${data.paymentStatus}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeFourteen,color: Colors.white)),
+                                  child: Text('${data.paymentStatus=="null"?"Pending":data.paymentStatus}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeFourteen,color: Colors.white)),
                                 ),
 
                               ],

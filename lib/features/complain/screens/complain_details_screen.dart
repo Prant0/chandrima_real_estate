@@ -52,6 +52,11 @@ class _ComplainDetailsScreenState extends State<ComplainDetailsScreen> {
             ),
             SizedBox(height: Dimensions.paddingSizeTen),
             Text(
+              'Date: ${DateFormat('M-d-yyyy').format(DateTime.parse("${widget.complaints?.createdAt ?? ''}"))}',
+              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.black),
+            ),
+            SizedBox(height: Dimensions.paddingSizeTen),
+            Text(
               'Description :',
               style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary),
             ),
@@ -60,7 +65,7 @@ class _ComplainDetailsScreenState extends State<ComplainDetailsScreen> {
 
             Text(
               '${widget.complaints?.description ?? ''}',
-              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeFourteen, color: AppColors.black),
+              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.black),
             ),
             SizedBox(height: Dimensions.paddingSizeTen),
             widget.complaints!.resolution!=null?
@@ -80,11 +85,7 @@ class _ComplainDetailsScreenState extends State<ComplainDetailsScreen> {
                 SizedBox(height: Dimensions.paddingSizeFive),
               ],
             ):SizedBox(),
-            Text(
-              'Date: ${DateFormat('M-d-yyyy').format(DateTime.parse("${widget.complaints?.createdAt ?? ''}"))}',
-              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeFourteen, color: AppColors.black),
-            ),
-            SizedBox(height: Dimensions.paddingSizeTen),
+
 
 
             widget.complaints?.document!=null?  Column(

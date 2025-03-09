@@ -1,3 +1,4 @@
+import 'package:chandrima_real_estate/common/widgets/custom_app_bar.dart';
 import 'package:chandrima_real_estate/features/invoice/screens/invoice_details.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
@@ -27,10 +28,9 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:AppColors.background,
-      appBar: AppBar(
-        title:   Text('Invoice',style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeTwenty,color: Colors.white),),
-        backgroundColor: AppColors.purpleColor,
-      ),
+      appBar:CustomAppBar(title: 'Invoice',
+
+      backButton: false,),
       body: GetBuilder<ProfileController>(
         builder: (profileController) {
           return Padding(
@@ -72,7 +72,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                                       borderRadius: BorderRadius.circular(Dimensions.radiusTen),
                                       border: Border.all(color: Colors.deepOrange,width: 1),
                                     ),
-                                    child: Text('${data.paymentStatus}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeFourteen,color: Colors.white)),
+                                    child: Text('${data.paymentStatus=="null"?"Pending":data.paymentStatus}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeFourteen,color: Colors.white)),
                                   ),
 
                                 ],
