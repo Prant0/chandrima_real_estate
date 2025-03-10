@@ -311,9 +311,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                             children: [
                               CustomDropdownButton(
                                 hintText: 'Choose Payment Method',
-                                items:[
-                                  "Cash","Bank","MFS","Check","Others"
-                                ],
+                                items: gatePassController.gatePassTypeModel!.data!.getPaymentMethods!.toJson().keys.toList(),
                                 onChanged: (value) {
                                   setState(() {
                                     _paymentMethod = value.toString();
