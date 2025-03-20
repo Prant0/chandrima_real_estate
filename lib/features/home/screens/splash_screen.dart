@@ -39,8 +39,11 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(Images.logo,  ),
-            const SizedBox(height: 20),
+            Container(
+                color: Colors.red,
+                child: Image.asset(Images.logo, height: 150, width: 500,fit: BoxFit.cover,)),
+            Text("Welcome to Chandrima Model Town", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+            SizedBox(height: 50),
             const CircularProgressIndicator(),
           ],
         ),

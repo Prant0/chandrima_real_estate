@@ -1,5 +1,6 @@
 import 'package:chandrima_real_estate/common/widgets/custom_card.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
+import 'package:chandrima_real_estate/features/auth/controller/auth_controller.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/features/profile/widgets/build_details_row.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
@@ -56,6 +57,8 @@ class GeneralInfoTab extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
+
+
 
             Text(
               'Member Information',
@@ -116,6 +119,47 @@ class GeneralInfoTab extends StatelessWidget {
                 BuildDetailsRow(title: 'Member Since', value: member.memberSine),
               ]),
             ),
+
+            SizedBox(height: 16),
+            MaterialButton(
+              onPressed: () {
+                // profileController.logout();
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Logout Confirmation'),
+                    content: const Text('Are you sure you want to log out?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Dismiss the dialog
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Get.find<AuthController>().removeToken();
+                          Navigator.of(context).pop(); // Dismiss the dialog
+                        },
+                        child: const Text('Logout'),
+                      ),
+                    ],
+                  );
+                },
+              );
+              },
+
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("  Log Out", style: poppinsBold.copyWith(color: AppColors.red)),
+                  SizedBox(width: 11,),
+                  Icon(Icons.logout, color: AppColors.red),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
           ],
         ),
       );

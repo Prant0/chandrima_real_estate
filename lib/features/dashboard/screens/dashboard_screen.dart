@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:chandrima_real_estate/features/home/screens/help_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -87,7 +88,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             HomeScreen(),
             InvoiceScreen(),
-            ComplainScreen(isShowAppBar: true,),
+            HelpLineScreen(),
+            //ComplainScreen(isShowAppBar: true,),
             ProfileScreen(initialIndex:_profileIndex),
           ],
         ),
@@ -109,7 +111,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 _buildNavItem(icon: Icons.home, label: 'Home', index: 0),
                 _buildNavItem(icon: Icons.receipt, label: 'Invoice', index: 1),
                // _buildNavItem(icon: Icons.payment, label: 'Payment', index: 2),
-                 _buildNavItem(icon: Icons.error, label: 'Complaint', index: 2),
+                 _buildNavItem(icon: Icons.live_help_outlined, label: 'Help Line', index: 2),
                 _buildNavItem(icon: Icons.person, label: 'Profile', index: 3),
               ],
             ),

@@ -150,7 +150,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                 CustomTextField(
                   controller: _nidNumberController,
                   hintText: 'Enter NID Number',
-                   prefixIcon: Icons.perm_identity,
+                   prefixIcon: Icons.confirmation_number_outlined,
                   inputType: TextInputType.multiline,
                 ),
                 const SizedBox(height: 15),

@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     HomeController homeController = Get.find<HomeController>();
     homeController.getAdvertisesList();
     homeController.getNotification();
+    homeController.getNotificationCount();
   }
 
   @override
@@ -80,7 +81,26 @@ class _HomeScreenState extends State<HomeScreen> {
                           Get.to(NotificationScreen());
                           //Get.find<AuthController>().removeToken();
                         },
-                        child: const Icon(Icons.notifications, color: AppColors.white),
+                        child:  Container(
+                          height: 50,
+                          width: 45,
+                          alignment: Alignment.centerLeft,
+                          child: Stack(
+                            children: [
+                              Icon(Icons.notifications, color: AppColors.white,size: 35,),
+                              Positioned(
+                                  top: -4, right: -0,
+                                  child: Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: BoxDecoration(
+                                  color: AppColors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Text('${homeController.notificationCount??"0"}', style: poppinsRegular.copyWith(color: AppColors.white, fontSize: Dimensions.fontSizeFourteen - 1)),
+                              )),
+                            ],
+                          ),
+                        )
                       ),
                     ]),
                     const SizedBox(height: 20),
@@ -240,14 +260,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: () {
                           Get.to(AdvertisesDetailsScreen(advertisesId: advertise.id!));
                         },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                          child: CustomNetworkImage(
-                            image: advertise.image ?? '',
-                            height: 150, width: double.infinity,
-                            fit: BoxFit.cover,
+                        child: Container(
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(Dimensions.radiusTen),
+                            image: DecorationImage(
+                              image: NetworkImage(advertise.image ?? ''),
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
+                          child:advertise.adType=="video"? Icon(Icons.play_circle_outline, color: Colors.white, size: 70):null,
+                        )
                       );
                     }).toList() ?? [],
                     options: CarouselOptions(

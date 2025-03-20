@@ -1,6 +1,8 @@
 import 'package:chandrima_real_estate/common/widgets/custom_app_bar.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
 import 'package:chandrima_real_estate/features/home/controller/home_controller.dart';
+import 'package:chandrima_real_estate/features/home/screens/add_advertise.dart';
+import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,13 @@ class _AdvertisesDetailsScreenState extends State<AdvertisesDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.primary,
+        onPressed: (){
+          Get.to(AddAdvertiseScreen());
+        },
+      child: Icon(Icons.add_circle_outline,color: Colors.white,),
+      ),
       appBar: const CustomAppBar(title: 'Advertises Details'),
       body: GetBuilder<HomeController>(builder: (homeController) {
         return homeController.advertisesDetails != null

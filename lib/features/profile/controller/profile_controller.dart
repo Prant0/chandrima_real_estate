@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:chandrima_real_estate/common/widgets/custom_snackbar.dart';
 import 'package:chandrima_real_estate/data/api/api_checker.dart';
 import 'package:chandrima_real_estate/features/profile/models/UserInvoiceModel.dart';
 import 'package:chandrima_real_estate/features/profile/models/profile_model.dart';
 import 'package:chandrima_real_estate/features/profile/repository/profile_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:open_filex/open_filex.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ProfileController extends GetxController implements GetxService{
   final ProfileRepository profileRepository;
@@ -148,6 +153,113 @@ class ProfileController extends GetxController implements GetxService{
     }
 
     _isLoading = false;
+    update();
+  }
+
+  Future<void> requestFamilyIDCard({required String id, required String details,}) async{
+    _isLoading = true;
+    update();
+
+    Map<String, String> body = {};
+    body.addAll({
+      'family_member_id' : id,
+      'details' : details,
+    });
+
+    Response response = await profileRepository.requestFamilyIDCard(body: body, );
+    if(response.statusCode == 200){
+      Get.back();
+      showCustomSnackBar('Family member ID Card Requested successfully', isError: false);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+
+    _isLoading = false;
+    update();
+  }
+
+
+
+
+  Future<void> downloadLandInfo( ) async {
+    final response = await profileRepository.downloadLandInfo( );
+
+    if (response.statusCode == 200) {
+
+      try {
+
+        // Get the document directory path
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/land_info_${_profileDetails?.data?.member?.name}.pdf';
+
+        // Save the PDF file
+        final file = File(filePath);
+        await file.writeAsBytes(response.bodyString!.codeUnits);
+
+         showCustomSnackBar('PDF saved at: $filePath', isError: false);
+
+        // Open the PDF file
+        OpenFilex.open(filePath);
+      } catch (e) {
+        if (kDebugMode) {
+          print("Error generating PDF: $e");
+        }
+      }
+
+    } else {
+      ApiChecker.checkApi(response);
+    }
+  }
+  Future<void> downloadTenantInfo( ) async {
+    final response = await profileRepository.downloadTenantInfo( );
+
+    if (response.statusCode == 200) {
+
+      try {
+
+        // Get the document directory path
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/tenant_info.pdf';
+
+        // Save the PDF file
+        final file = File(filePath);
+        await file.writeAsBytes(response.bodyString!.codeUnits);
+
+         showCustomSnackBar('PDF saved at: $filePath', isError: false);
+
+        // Open the PDF file
+        OpenFilex.open(filePath);
+      } catch (e) {
+        if (kDebugMode) {
+          print("Error generating PDF: $e");
+        }
+      }
+
+    } else {
+      ApiChecker.checkApi(response);
+    }
+  }
+
+  Future<void> deleteFamilyMember({required int id,int? index}) async {
+    final response = await profileRepository.deleteFamilyMember(id: id);
+    if(response.statusCode == 200){
+      showCustomSnackBar('Family Member deleted successfully', isError: false);
+      _profileDetails?.data?.familyMembers!.removeAt(index!);
+      update();
+    }else{
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
+ Future<void> deleteTenantMember({required int id,int? index}) async {
+    final response = await profileRepository.deleteTenantMember(id: id);
+    if(response.statusCode == 200){
+      showCustomSnackBar('Tenant Member deleted successfully', isError: false);
+      _profileDetails?.data?.tenants!.removeAt(index!);
+      update();
+    }else{
+      ApiChecker.checkApi(response);
+    }
     update();
   }
 

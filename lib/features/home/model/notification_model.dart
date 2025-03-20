@@ -41,7 +41,7 @@ class Data {
 class Notifications {
   String? type;
   String? itemId;
-  String? notify;
+  String? notify,date;
   int? read;
   DateTime? createdAt;
 
@@ -51,6 +51,9 @@ class Notifications {
     this.notify,
     this.read,
     this.createdAt,
+    this.date
+
+
   });
 
   factory Notifications.fromJson(Map<String, dynamic> json) => Notifications(
@@ -58,6 +61,7 @@ class Notifications {
     itemId: json["item_id"],
     notify: json["notify"],
     read: json["read"],
+    date: json["date"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
   );
 

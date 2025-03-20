@@ -249,7 +249,7 @@ class GetFlats {
   String? memberId;
   int? plotId;
   String? flatSize;
-  String? flatNo;
+  String? flatNo,flat_id;
   String? flatType;
   String? csRecord;
   String? csFiles;
@@ -261,7 +261,7 @@ class GetFlats {
   String? mutationDocument;
   String? createdAt;
   String? updatedAt;
-  dynamic getPurchasedBy;
+  var getPurchasedBy;
 
   GetFlats({
     this.id,
@@ -274,7 +274,7 @@ class GetFlats {
     this.csFiles,
     this.rsRecord,
     this.rsFiles,
-    this.bsRecord,
+    this.bsRecord,this.flat_id,
     this.bsFiles,
     this.mutationNumber,
     this.mutationDocument,
@@ -289,6 +289,7 @@ class GetFlats {
     plotId = json['plot_id'];
     flatSize = json['flat_size'];
     flatNo = json['flat_no'];
+    flat_id = json['flat_id'];
     flatType = json['flat_type'];
     csRecord = json['cs_record'];
     csFiles = json['cs_files'];
@@ -309,6 +310,7 @@ class GetFlats {
 class FamilyMembers {
   int? id;
   String? memberId;
+  String? familyId;
   String? name;
   String? mobile;
   String? email;
@@ -317,7 +319,7 @@ class FamilyMembers {
   String? birthday;
   String? relation;
   String? nidNumber;
-  String? nidImage;
+  String? nidImage,address,id_card_status;
   String? createdAt;
   String? updatedAt;
 
@@ -331,21 +333,26 @@ class FamilyMembers {
     this.gender,
     this.birthday,
     this.relation,
-    this.nidNumber,
+    this.nidNumber,this.address,
     this.nidImage,
     this.createdAt,
     this.updatedAt,
+    this.familyId,
+    this.id_card_status,
   });
 
   FamilyMembers.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     memberId = json['member_id'];
+    familyId = json['family_id'];
     name = json['name'];
     mobile = json['mobile'];
     email = json['email'];
+    address = json['address'];
     photo = json['photo'];
     gender = json['gender'];
     birthday = json['birthday'];
+    id_card_status = json['id_card_status'];
     relation = json['relation'];
     nidNumber = json['nid_number'];
     nidImage = json['nid_image'];
@@ -375,6 +382,7 @@ class FamilyMembers {
 class Tenants {
   int? id;
   String? memberId;
+  String? tenantId;
   String? name;
   String? mobile;
   String? email;
@@ -388,8 +396,8 @@ class Tenants {
   String? rentMonth;
   String? rentYear;
   String? nidNumber;
-  String? nidImage;
-  String? address;
+  dynamic nidImage;
+  String? address,permanent_address;
   String? status;
   String? createdAt;
   String? updatedAt;
@@ -415,13 +423,17 @@ class Tenants {
     this.status,
     this.createdAt,
     this.updatedAt,
+    this.tenantId,
+    this.permanent_address
   });
 
   Tenants.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     memberId = json['member_id'];
+    tenantId = json['tenant_id'];
     name = json['name'];
     mobile = json['mobile'];
+    permanent_address = json['permanent_address'];
     email = json['email'];
     photo = json['photo'];
     gender = json['gender'];

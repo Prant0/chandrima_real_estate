@@ -5,6 +5,7 @@ import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 
 class LandInformationTab extends StatefulWidget {
@@ -42,7 +43,13 @@ class _LandInformationTabState extends State<LandInformationTab> {
                       'Sl No: ${index+1}',
                       style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen),
                     ),
-                    const Spacer(),
+                    Spacer(),
+                    InkWell(
+                        onTap: (){
+                          profileController.downloadLandInfo();
+                        },
+                        child: Icon(Icons.download, color: AppColors.purpleColor,size: 33,)),
+                    const SizedBox(width: 10,),
                     InkWell(
                         onTap: () {
                           plot.isExpanded = !plot.isExpanded!;
@@ -52,7 +59,7 @@ class _LandInformationTabState extends State<LandInformationTab> {
                           });
                           //profileController.togglePlotVisibility(index);
                         },
-                        child: Icon(Icons.arrow_drop_down, color: AppColors.primary,size: 32,)),
+                        child: Icon(Icons.arrow_drop_down, color: AppColors.primary,size: 42,)),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -93,13 +100,10 @@ class _LandInformationTabState extends State<LandInformationTab> {
                                  child: Column(
                                    crossAxisAlignment: CrossAxisAlignment.start,
                                    children: [
+                                     BuildDetailsRow(title: 'Flat ID', value: flat.flat_id),
                                      BuildDetailsRow(title: 'Flat No', value: flat.flatNo),
-                                     BuildDetailsRow(title: 'Flat Type', value: flat.flatType),
                                      BuildDetailsRow(title: 'Flat Size', value: flat.flatSize),
-                                     // BuildDetailsRow(title: 'CS Record', value: flat.csRecord),
-                                     //BuildDetailsRow(title: 'RS Record', value: flat.rsRecord),
-                                     //BuildDetailsRow(title: 'BS Record', value: flat.bsRecord),
-                                     BuildDetailsRow(title: 'Sell Status', value: "flat"),
+                                     BuildDetailsRow(title: 'Purchase By', value: flat.getPurchasedBy?["name"] ?? "Own Flat"),
                                    ],
                                  ),
                                ),
@@ -148,13 +152,10 @@ class _LandInformationTabState extends State<LandInformationTab> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
+                                      BuildDetailsRow(title: 'Flat ID', value: flat.flat_id),
                                       BuildDetailsRow(title: 'Flat No', value: flat.flatNo),
-                                      BuildDetailsRow(title: 'Flat Type', value: flat.flatType),
                                       BuildDetailsRow(title: 'Flat Size', value: flat.flatSize),
-                                     // BuildDetailsRow(title: 'CS Record', value: flat.csRecord),
-                                      //BuildDetailsRow(title: 'RS Record', value: flat.rsRecord),
-                                      //BuildDetailsRow(title: 'BS Record', value: flat.bsRecord),
-                                      BuildDetailsRow(title: 'Sell Status', value: "flat"),
+                                      BuildDetailsRow(title: 'Purchase By', value: flat.getPurchasedBy?["name"] ?? "Own Flat"),
                                     ],
                                   ),
                                 ),
