@@ -1,5 +1,6 @@
 import 'package:chandrima_real_estate/common/widgets/custom_snackbar.dart';
 import 'package:chandrima_real_estate/data/api/api_checker.dart';
+import 'package:chandrima_real_estate/features/home/model/advertise_notification.dart';
 import 'package:chandrima_real_estate/features/home/model/advertises_list_model.dart';
 import 'package:chandrima_real_estate/features/home/model/heml_line_model.dart';
 import 'package:chandrima_real_estate/features/home/model/notification_model.dart';
@@ -20,8 +21,11 @@ class HomeController extends GetxController implements GetxService {
   HelpLineModel? _helpLineModel;
   HelpLineModel? get helpLineModel => _helpLineModel;
 
-  int ?_notificationCount;
-  int ?get notificationCount => _notificationCount;
+  int? _notificationCount;
+  int? get notificationCount => _notificationCount;
+
+  AdvertiseNotification? _advertiseNotification;
+  AdvertiseNotification? get advertiseNotification => _advertiseNotification;
 
   Future<void> getAdvertisesList() async {
     Response response = await homeRepository.getAdvertisesList();
@@ -107,7 +111,7 @@ class HomeController extends GetxController implements GetxService {
     Response response = await homeRepository.addAdvertise(
         body: body, image: _pickedFile,video: video);
     if(response.statusCode == 200){
-      _pickedFile=null;
+      _pickedFile = null;
       update();
       Get.back();
       showCustomSnackBar('Advertise Request added successfully', isError: false);
@@ -119,6 +123,14 @@ class HomeController extends GetxController implements GetxService {
     update();
   }
 
-
+  Future<void> getAdvertiseNotificationDetails(String uri) async {
+    Response response = await homeRepository.getAdvertiseNotificationDetails(uri);
+    if (response.statusCode == 200) {
+      _advertiseNotification = AdvertiseNotification.fromJson(response.body);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
 
 }

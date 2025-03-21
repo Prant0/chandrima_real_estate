@@ -31,4 +31,12 @@ class HomeRepository {
     return await apiClient.postMultipartData(AppConstants.addAdvertise, body, [MultipartBody('image', image),MultipartBody('video', video)]);
   }
 
+  Future<Response> getAdvertiseNotificationDetails(String uri) async {
+    return await apiClient.getData(uri);
+  }
+
+  Future<Response> getServiceChargeNotificationDetails(String uri)async {
+    return await apiClient.getData(uri);
+  }
+
 }
