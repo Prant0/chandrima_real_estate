@@ -6,6 +6,7 @@ import 'package:chandrima_real_estate/common/widgets/custom_drop_down_button.dar
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_text_field.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
+import 'package:chandrima_real_estate/features/profile/models/profile_model.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
@@ -13,31 +14,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 
-class AddFamilyMemberScreen extends StatefulWidget {
-  const AddFamilyMemberScreen({super.key});
+class UpdateFamilyMemberScreen extends StatefulWidget {
+  final FamilyMembers familyMembers;
+  const UpdateFamilyMemberScreen({super.key, required this.familyMembers});
 
   @override
-  State<AddFamilyMemberScreen> createState() => _AddFamilyMemberScreenState();
+  State<UpdateFamilyMemberScreen> createState() => _UpdateFamilyMemberScreenState();
 }
 
-class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
-
+class _UpdateFamilyMemberScreenState extends State<UpdateFamilyMemberScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  String? dateOfBirth = '';
+  String? dateOfBirth;
 
   @override
   void initState() {
     super.initState();
     ProfileController profileController = Get.find<ProfileController>();
 
-    profileController.initData();
+    _nameController.text = widget.familyMembers.name ?? '';
+    _phoneController.text = widget.familyMembers.mobile ?? '';
+    dateOfBirth = widget.familyMembers.birthday ?? '';
+
+    profileController.setSelectedGender(widget.familyMembers.gender!, isUpdate: false);
+    profileController.setSelectedRelation(widget.familyMembers.relation!, isUpdate: false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Add Family Member'),
+      appBar: const CustomAppBar(title: 'Update Family Member'),
 
       body: GetBuilder<ProfileController>(builder: (profileController) {
         return Column(children: [
@@ -45,16 +51,13 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
               child: Column(children: [
-
                 Center(child: Stack(children: [
-
                   ClipOval(child: profileController.pickedFile != null ? GetPlatform.isWeb ? Image.network(
-                    profileController.pickedFile!.path, width: 80, height: 80, fit: BoxFit.cover) : Image.file(
-                    File(profileController.pickedFile!.path), width: 80, height: 80, fit: BoxFit.cover) : const CustomNetworkImage(
-                    image: '',
+                      profileController.pickedFile!.path, width: 80, height: 80, fit: BoxFit.cover) : Image.file(
+                      File(profileController.pickedFile!.path), width: 80, height: 80, fit: BoxFit.cover) : CustomNetworkImage(
+                    image: widget.familyMembers.photo ?? '',
                     height: 80, width: 80, fit: BoxFit.cover,
                   )),
-
                   Positioned(
                     bottom: 0, right: 0, top: 0, left: 0,
                     child: InkWell(
@@ -77,17 +80,14 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
                       ),
                     ),
                   ),
-
                 ])),
                 const SizedBox(height: 20),
-
                 CustomTextField(
                   controller: _nameController,
                   hintText: 'Enter Full Name',
                   prefixIcon: TablerIcons.user,
                 ),
                 const SizedBox(height: 15),
-
                 CustomTextField(
                   controller: _phoneController,
                   hintText: 'Enter Phone Number',
@@ -95,7 +95,6 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
                   inputType: TextInputType.phone,
                 ),
                 const SizedBox(height: 15),
-
                 CustomDropdownButton(
                   hintText: 'Select Gender',
                   items: const ['Male', 'Female', 'Other'],
@@ -105,7 +104,6 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
                   selectedValue: profileController.selectedGender,
                 ),
                 const SizedBox(height: 15),
-
                 Container(
                   height: 55,
                   decoration: BoxDecoration(
@@ -115,7 +113,7 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
                   child: Row(children: [
                     Expanded(child: Padding(
                       padding: const EdgeInsets.only(left: 28),
-                      child: Text(dateOfBirth!.isEmpty ? 'Select Date of Birth' : dateOfBirth!, style: poppinsRegular.copyWith(color: AppColors.black, fontSize: 15)),
+                      child: Text(dateOfBirth ?? 'Select Date of Birth', style: poppinsRegular.copyWith(color: AppColors.black, fontSize: 15)),
                     )),
                     IconButton(
                       icon: const Icon(Icons.calendar_month),
@@ -138,7 +136,6 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
                   ]),
                 ),
                 const SizedBox(height: 15),
-
                 CustomDropdownButton(
                   hintText: 'Select Relation',
                   items: const ['Owner Family', 'Care Taker', 'Driver', 'Buya'],
@@ -147,21 +144,23 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
                   },
                   selectedValue: profileController.selectedRelation,
                 ),
-
               ]),
             ),
           ),
-
           CustomCard(
             padding: Dimensions.paddingSizeFifteen,
             child: CustomButton(
               isLoading: profileController.isLoading,
-              buttonText: 'Add Member',
+              buttonText: 'Update Member',
               onPressed: () {
                 String name = _nameController.text;
                 String mobile = _phoneController.text;
-
-                profileController.addFamilyMember(name: name, mobile: mobile, dob: dateOfBirth);
+                profileController.updateFamilyMember(
+                  id: widget.familyMembers.id!,
+                  name: name,
+                  mobile: mobile,
+                  dob: dateOfBirth,
+                );
               },
             ),
           ),

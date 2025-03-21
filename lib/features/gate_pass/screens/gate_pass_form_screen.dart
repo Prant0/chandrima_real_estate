@@ -73,7 +73,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                       Container(
                         height: 55,
                         decoration: BoxDecoration(
-                          color: AppColors.grey.withOpacity(0.2),
+                          color: AppColors.grey.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
                         ),
                         child: Align(
@@ -213,7 +213,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                       Container(
                         height: 55,
                         decoration: BoxDecoration(
-                          color: AppColors.grey.withOpacity(0.2),
+                          color: AppColors.grey.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
                         ),
                         child: Row(children: [
@@ -247,7 +247,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                       Container(
                         height: 55,
                         decoration: BoxDecoration(
-                          color: AppColors.grey.withOpacity(0.2),
+                          color: AppColors.grey.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
                         ),
                         child: Row(children: [
@@ -299,7 +299,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                             height: 55,
                             margin: const EdgeInsets.only(bottom: 15),
                             decoration: BoxDecoration(
-                              color: AppColors.grey.withOpacity(0.2),
+                              color: AppColors.grey.withValues(alpha: 0.2),
                               borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
                             ),
                             child: Align(
@@ -374,7 +374,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                                  onTap: () => gatePassController.pickPaymentDocument(),
                                  child: Container(
                                    decoration: BoxDecoration(
-                                     color: Colors.black.withOpacity(0.2),
+                                     color: Colors.black.withValues(alpha: 0.2),
                                      border: Border.all(width: 1, color: AppColors.primary),
                                    ),
                                    child: gatePassController.paymentDocument != null ? const SizedBox() : Container(
@@ -444,7 +444,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            color: Colors.black.withOpacity(0.2),
+                                            color: Colors.black.withValues(alpha: 0.2),
                                             border: Border.all(width: 1, color: AppColors.primary),
                                           ),
                                           child: gatePassController.paymentDocument != null ? const SizedBox() : Container(
@@ -496,7 +496,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.grey.withValues(alpha: 0.5),
                       spreadRadius: 1,
                       blurRadius: 5,
                       offset: const Offset(0, 3),

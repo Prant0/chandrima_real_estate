@@ -3,6 +3,7 @@ import 'package:chandrima_real_estate/common/widgets/custom_card.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
 import 'package:chandrima_real_estate/features/complain/screens/complain_details_screen.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
+import 'package:chandrima_real_estate/features/profile/screens/update_family_member_screen.dart';
 import 'package:chandrima_real_estate/routes/routes_name.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
@@ -150,10 +151,17 @@ class FamilyMemberTab extends StatelessWidget {
                                         });
                                       },
                                  child: Icon(Icons.remove_red_eye_outlined,color: Colors.blue,size: 25,)),
+
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                                    child: InkWell(onTap: (){}, child: Icon(Icons.edit,color: Colors.blue,size: 25,)),
+                                    child: InkWell(
+                                      onTap: (){
+                                        Get.to(() => UpdateFamilyMemberScreen(familyMembers: familyMembers));
+                                      },
+                                      child: const Icon(Icons.edit, color: Colors.blue, size: 25),
+                                    ),
                                   ),
+
                                   InkWell(
                                     onTap: () {
                                       showDialog(
@@ -223,7 +231,7 @@ class FamilyMemberTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$title ', style: poppinsRegular.copyWith(color: Colors.black87.withOpacity(0.7),fontWeight: FontWeight.bold),
+            '$title ', style: poppinsRegular.copyWith(color: Colors.black87.withValues(alpha: 0.7),fontWeight: FontWeight.bold),
           ),
           Expanded(
             child: Text(value ?? 'N/A', style: poppinsRegular.copyWith(color:Colors.black54), overflow: TextOverflow.ellipsis, maxLines: 1),

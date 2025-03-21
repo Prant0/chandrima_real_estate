@@ -73,7 +73,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                       onTap: () => profileController.pickImage(),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.2), shape: BoxShape.circle,
+                          color: Colors.black.withValues(alpha: 0.2), shape: BoxShape.circle,
                           border: Border.all(width: 1, color: AppColors.primary),
                         ),
                         child: profileController.pickedFile != null ? const SizedBox() : Container(
@@ -168,7 +168,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                 Container(
                   height: 55,
                   decoration: BoxDecoration(
-                    color: AppColors.grey.withOpacity(0.2),
+                    color: AppColors.grey.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
                   ),
                   child: Row(children: [
@@ -228,7 +228,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                           onTap: () => profileController.pickNidFrontImage(),
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.2),
+                              color: Colors.black.withValues(alpha: 0.2),
                               border: Border.all(width: 1, color: AppColors.primary),
                             ),
                             child: profileController.pickedNidFront != null ? const SizedBox() : Container(
@@ -264,7 +264,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                           onTap: () => profileController.pickNidRareImage(),
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.2),
+                              color: Colors.black.withValues(alpha: 0.2),
                               border: Border.all(width: 1, color: AppColors.primary),
                             ),
                             child: profileController.pickedNidRare != null ? const SizedBox() : Container(

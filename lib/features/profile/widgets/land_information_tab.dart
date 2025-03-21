@@ -92,7 +92,7 @@ class _LandInformationTabState extends State<LandInformationTab> {
                              return Container(
                                margin: EdgeInsets.only(bottom: plot.getFlats!.last == flat ? 0 : Dimensions.paddingSizeTen),
                                decoration: BoxDecoration(
-                                 color: AppColors.grey.withOpacity(0.1),
+                                 color: AppColors.grey.withValues(alpha: 0.1),
                                  borderRadius: BorderRadius.circular(Dimensions.radiusEight),
                                ),
                                child: Padding(
@@ -144,7 +144,7 @@ class _LandInformationTabState extends State<LandInformationTab> {
                               return Container(
                                 margin: EdgeInsets.only(bottom: plot.getFlats!.last == flat ? 0 : Dimensions.paddingSizeTen),
                                 decoration: BoxDecoration(
-                                  color: AppColors.grey.withOpacity(0.1),
+                                  color: AppColors.grey.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(Dimensions.radiusEight),
                                 ),
                                 child: Padding(

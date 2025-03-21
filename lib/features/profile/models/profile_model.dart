@@ -396,7 +396,7 @@ class Tenants {
   String? rentMonth;
   String? rentYear;
   String? nidNumber;
-  dynamic nidImage;
+  List<String>? nidImage;
   String? address,permanent_address;
   String? status;
   String? createdAt;
@@ -445,7 +445,14 @@ class Tenants {
     rentMonth = json['rent_month'];
     rentYear = json['rent_year'];
     nidNumber = json['nid_number'];
-    nidImage = json['nid_image'];
+    if (json['nid_image'] != null) {
+      nidImage = <String>[];
+      json['nid_image'].forEach((v) {
+        if(v != null){
+          nidImage!.add(v);
+        }
+      });
+    }
     address = json['address'];
     status = json['status'];
     createdAt = json['created_at'];

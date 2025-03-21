@@ -34,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             isScrollable: true,
             indicatorColor: AppColors.white,
             labelColor: AppColors.white,
-            unselectedLabelColor: AppColors.white.withOpacity(0.5),
+            unselectedLabelColor: AppColors.white.withValues(alpha: 0.5),
             tabs: const [
               Tab(text: 'General Info'),
               Tab(text: 'Land Information'),

@@ -122,7 +122,7 @@ class _AddAdvertiseScreenState extends State<AddAdvertiseScreen> {
                               onTap: () => profileController.pickImage(),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.2),
+                                  color: Colors.black.withValues(alpha: 0.2),
                                   border: Border.all(width: 1, color: AppColors.primary),
                                 ),
                                 child: profileController.pickedFile != null ? const SizedBox() : Container(

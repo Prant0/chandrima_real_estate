@@ -8,9 +8,11 @@ class AppConstants  {
   static const String logoutUri = '/member/logout';
   static const String memberDetailsUri = '/member/details';
   static const String addFamilyMember = '/member/family/store';
+  static const String updateFamilyMember = '/member/family/update';
   static const String requestFamilyIDCard = '/family/id-card/request/send';
   static const String addAdvertise = '/advertise/request';
   static const String addTenantMember = '/member/tenant/store';
+  static const String updateTenantMember = '/member/tenant/update';
   static const String userInvoiceList = '/invoice/list';
   static const String advertisementList = '/advertises';
   static const String notificationsList = '/notifications';

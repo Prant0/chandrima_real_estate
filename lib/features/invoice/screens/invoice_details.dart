@@ -74,7 +74,7 @@ class InvoiceDetails extends StatelessWidget {
                                     Container(
                                       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                                       decoration: BoxDecoration(
-                                        color: Colors.green.withOpacity(0.8),
+                                        color: Colors.green.withValues(alpha: 0.8),
                                         borderRadius: BorderRadius.circular(Dimensions.radiusTen),
                                         border: Border.all(color: Colors.greenAccent,width: 1),
                                       ),

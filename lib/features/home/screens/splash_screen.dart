@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Container(
                 color: Colors.red,
                 child: Image.asset(Images.logo, height: 150, width: 500,fit: BoxFit.cover,)),
-            Text("Welcome to Chandrima Model Town", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+            Text("Welcome to Chandrima Model Town", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
             SizedBox(height: 50),
             const CircularProgressIndicator(),
           ],

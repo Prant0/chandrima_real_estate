@@ -5,6 +5,7 @@ import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
 import 'package:chandrima_real_estate/features/complain/screens/complain_details_screen.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/features/profile/models/profile_model.dart';
+import 'package:chandrima_real_estate/features/profile/screens/update_tenant_screen.dart';
 import 'package:chandrima_real_estate/routes/routes_name.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
@@ -65,10 +66,17 @@ class TenantTab extends StatelessWidget {
                                   InkWell(onTap: (){
                                     showTenantDetails(context,tenants);
                                   }, child: Icon(Icons.remove_red_eye_outlined,color: Colors.blue,size: 25,)),
+
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                                    child: InkWell(onTap: (){}, child: Icon(Icons.edit,color: Colors.blue,size: 25,)),
+                                    child: InkWell(
+                                      onTap: (){
+                                        Get.to(() => UpdateTenantScreen(tenants: tenants));
+                                      },
+                                      child: Icon(Icons.edit,color: Colors.blue,size: 25,),
+                                    ),
                                   ),
+
                                   InkWell(
                                       onTap: () {
                                         showDialog(
@@ -148,7 +156,7 @@ class TenantTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$title  ', style: poppinsRegular.copyWith(color: Colors.black87.withOpacity(0.7),fontWeight: FontWeight.bold),
+            '$title  ', style: poppinsRegular.copyWith(color: Colors.black87.withValues(alpha: 0.7),fontWeight: FontWeight.bold),
           ),
           Expanded(
             child: Text(value ?? 'N/A', style: poppinsRegular.copyWith(color: Colors.black54), overflow: TextOverflow.ellipsis, maxLines: 1),
@@ -196,12 +204,12 @@ class TenantTab extends StatelessWidget {
                 tenants.nidImage!=null? InkWell(
                   onTap: (){
                     Get.to(() => FullScreenImage(
-                      image: "https://app.chandrimarpl.com/upload/members/documents/${tenants.nidImage[0]}",
+                      image: "https://app.chandrimarpl.com/upload/members/documents/${tenants.nidImage?[0]}",
                     ));
                   },
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(Dimensions.radiusFive),
-                      child: Image.network("https://app.chandrimarpl.com/upload/members/documents/${tenants.nidImage[0]}",height: 100,width: 100,)),
+                      child: Image.network("https://app.chandrimarpl.com/upload/members/documents/${tenants.nidImage?[0]}",height: 100,width: 100,)),
                 ):SizedBox(height: 0,),
 
 

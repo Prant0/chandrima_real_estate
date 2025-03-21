@@ -20,6 +20,9 @@ class ProfileRepository{
     return await apiClient.postMultipartData(AppConstants.addFamilyMember, body, [MultipartBody('photo', image)]);
   }
 
+  Future<Response> updateFamilyMember({required Map<String, String> body, XFile? image}) async{
+    return await apiClient.postMultipartData(AppConstants.updateFamilyMember, body, [MultipartBody('photo', image)]);
+  }
 
   Future<Response> requestFamilyIDCard({required Map<String, String> body,  }) async{
     return await apiClient.postData(AppConstants.requestFamilyIDCard, body, );
@@ -34,17 +37,27 @@ class ProfileRepository{
       ],);
   }
 
-
-  Future<Response> downloadLandInfo() async {
-    return await apiClient.getData('${AppConstants.landInfoDownload}');
-  }Future<Response> downloadTenantInfo() async {
-    return await apiClient.getData('${AppConstants.tenantInfoDownload}');
+  Future<Response> updateTenantMember({required Map<String, String> body, XFile? photo,nidFront,nidRare}) async{
+    return await apiClient.postMultipartData(AppConstants.updateTenantMember, body,
+      [
+        MultipartBody('photo', photo),
+        MultipartBody('nid_image', nidFront),
+        MultipartBody('nid_image', nidRare),
+      ],);
   }
 
+  Future<Response> downloadLandInfo() async {
+    return await apiClient.getData(AppConstants.landInfoDownload);
+  }
+
+  Future<Response> downloadTenantInfo() async {
+    return await apiClient.getData(AppConstants.tenantInfoDownload);
+  }
 
   Future<Response> deleteFamilyMember({required int id}) async {
     return await apiClient.getData('${AppConstants.deleteFamilyMember}/$id');
   }
+  
   Future<Response> deleteTenantMember({required int id}) async {
     return await apiClient.getData('${AppConstants.deleteTenantMember}/$id');
   }

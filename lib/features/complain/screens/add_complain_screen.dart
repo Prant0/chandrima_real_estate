@@ -71,7 +71,7 @@ class _AddComplainScreenState extends State<AddComplainScreen> {
                                 borderSide: BorderSide.none,
                               ),
                               filled: true,
-                              fillColor:  AppColors.grey.withOpacity(0.2),
+                              fillColor:  AppColors.grey.withValues(alpha: 0.2),
                             ),
                             items: widget.complaintCategories?.map((ComplaintCategory category) {
                               return DropdownMenuItem<ComplaintCategory>(
@@ -162,7 +162,7 @@ class _AddComplainScreenState extends State<AddComplainScreen> {
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            color: Colors.black.withOpacity(0.2),
+                                            color: Colors.black.withValues(alpha: 0.2),
                                             border: Border.all(width: 1, color: AppColors.primary),
                                           ),
                                           child: complainController.complaintImages != null ? const SizedBox() : Container(

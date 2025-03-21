@@ -86,14 +86,18 @@ class ProfileController extends GetxController implements GetxService{
     //update();
   }
 
-  void setSelectedGender(String value){
+  void setSelectedGender(String value, {bool isUpdate = true}){
     _selectedGender = value;
-    update();
+    if(isUpdate){
+      update();
+    }
   }
 
-  void setSelectedRelation(String value){
+  void setSelectedRelation(String value, {bool isUpdate = true}){
     _selectedRelation = value;
-    update();
+    if(isUpdate){
+      update();
+    }
   }
 
   Future<void> addFamilyMember({required String name, required String mobile, String? dob}) async{
@@ -122,6 +126,32 @@ class ProfileController extends GetxController implements GetxService{
     update();
   }
 
+  Future<void> updateFamilyMember({required String name, required String mobile, String? dob, required int id}) async{
+    _isLoading = true;
+    update();
+
+    Map<String, String> body = {};
+    body.addAll({
+      'id' : id.toString(),
+      'name' : name,
+      'mobile' : mobile,
+      'birthday' : dob ?? '',
+      'gender' : _selectedGender ?? '',
+      'relation' : _selectedRelation ?? '',
+    });
+
+    Response response = await profileRepository.updateFamilyMember(body: body, image: _pickedFile);
+    if(response.statusCode == 200){
+      getProfileDetails();
+      Get.back();
+      showCustomSnackBar('Family member updated successfully', isError: false);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+
+    _isLoading = false;
+    update();
+  }
 
   Future<void> addTenant({required String name, required String mobile, String? email,houseNumber,flatNo,advanceRent,rentPerMonth,rentMonth,rentYear,address,nidNumber}) async{
     _isLoading = true;
@@ -148,6 +178,40 @@ class ProfileController extends GetxController implements GetxService{
       getProfileDetails();
       Get.back();
       showCustomSnackBar('Tenant added successfully', isError: false);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+
+    _isLoading = false;
+    update();
+  }
+
+  Future<void> updateTenant({required String name, required String mobile, String? email,houseNumber,flatNo,advanceRent,rentPerMonth,rentMonth,rentYear,address,nidNumber,required int id}) async{
+    _isLoading = true;
+    update();
+
+    Map<String, String> body = {};
+    body.addAll({
+      'id' : id.toString(),
+      'name' : name,
+      'mobile' : mobile,
+      'gender' : _selectedGender ?? '',
+      'email' : email ?? '',
+      'house_number' : houseNumber ?? '',
+      'flat_no' : flatNo ?? '',
+      'advance_rent' : advanceRent ?? '',
+      'rent_per_month' : rentPerMonth ?? '',
+      'rent_month' : rentMonth ?? '',
+      'rent_year' : rentYear ?? '',
+      'address' : address ?? '',
+      'nidNumber' : nidNumber ?? '',
+    });
+
+    Response response = await profileRepository.updateTenantMember(body: body, photo: _pickedFile,nidFront: _pickedNidFront,nidRare: _pickedNidRare);
+    if(response.statusCode == 200){
+      getProfileDetails();
+      Get.back();
+      showCustomSnackBar('Tenant updated successfully', isError: false);
     }else{
       ApiChecker.checkApi(response);
     }

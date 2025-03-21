@@ -45,7 +45,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
       decoration: InputDecoration(
         border: border(),
         filled: true,
-        fillColor: AppColors.grey.withOpacity(0.2),
+        fillColor: AppColors.grey.withValues(alpha: 0.2),
       ),
 
       hint: Text(widget.hintText ?? 'Select an option'),
