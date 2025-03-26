@@ -51,7 +51,7 @@ class EventsScreen extends StatelessWidget {
                   );
                 },
               ),
-            ) : const Expanded(child: Center(child: Text("No tenant information available."))),
+            ) : const Expanded(child: Center(child: Text("No Events available."))),
 
 
           ],

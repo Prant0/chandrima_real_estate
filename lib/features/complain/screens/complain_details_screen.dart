@@ -12,7 +12,7 @@ import 'package:photo_view/photo_view.dart';
 class ComplainDetailsScreen extends StatefulWidget {
     ComplainDetailsScreen({super.key,this.complaints});
 
-  Complaint ?complaints;
+    ComplainModelList ?complaints;
 
   @override
   State<ComplainDetailsScreen> createState() => _ComplainDetailsScreenState();

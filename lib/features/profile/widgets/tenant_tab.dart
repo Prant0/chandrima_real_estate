@@ -119,7 +119,7 @@ class TenantTab extends StatelessWidget {
                 ),
               );
             },
-          ) : const Expanded(child: Center(child: Text("No tenant information available."))),
+          ) : const Expanded(child: Center(child: Text("No Tenant information available."))),
 
           Positioned(
              bottom: 25,
@@ -180,8 +180,7 @@ class TenantTab extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Text("Tenant Details",style: poppinsRegular.copyWith(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 20),),
-                Text("Tenant Details",style: poppinsRegular.copyWith(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 20),),
+                 Text("Tenant Details",style: poppinsRegular.copyWith(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 20),),
                 SizedBox(height: 20,),
                 ClipRRect(
                     borderRadius: BorderRadius.circular(Dimensions.radiusFive),

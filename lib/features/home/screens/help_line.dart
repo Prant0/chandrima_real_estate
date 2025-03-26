@@ -9,6 +9,8 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
 class HelpLineScreen extends StatefulWidget {
+ HelpLineScreen({required this.isBackButton});
+  bool ?isBackButton;
 
 
   @override
@@ -20,7 +22,6 @@ class _HelpLineState extends State<HelpLineScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     Get.find<HomeController>().getHelpLine();
     super.initState();
   }
@@ -31,7 +32,7 @@ class _HelpLineState extends State<HelpLineScreen> {
       backgroundColor: AppColors.background,
       appBar: CustomAppBar(title: 'Help Line',
 
-      backButton: false,
+      backButton:widget.isBackButton==true?true: false,
       ),
       body: GetBuilder<HomeController>(
         builder: (homeController) {

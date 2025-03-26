@@ -13,6 +13,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final Function? onTap;
   final Function? onChanged;
+  final VoidCallback? onComplete;
   final Function? onSubmit;
   final bool isMarginEnable;
   final String? Function(String? value)? validator;
@@ -35,6 +36,7 @@ class CustomTextField extends StatefulWidget {
     this.maxLines = 1,
     this.onTap,
     this.onChanged,
+    this.onComplete,
     this.onSubmit,
     this.isMarginEnable = false,
     this.validator,
@@ -62,6 +64,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.inputType,
       textInputAction: widget.inputAction,
       maxLines: widget.maxLines,
+      onEditingComplete:widget.onComplete,
       obscureText: widget.isPassword ? _obscureText : false,
       cursorColor: Colors.black,
       decoration: InputDecoration(

@@ -18,110 +18,88 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-//text: '01723826340'
-//text: '12345678'
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
-            child: GetBuilder<AuthController>(builder: (authController) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-
-                  SizedBox(height: constraints.maxHeight * 0.1),
-
-                  Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
-                      child: Image.asset(Images.logo, height: 80),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  RichText(
-                    text: TextSpan(
-                      text: "Let's ",
-                      style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeTwentySix, color: AppColors.black),
-                      children: [
-                        TextSpan(
-                          text: 'Sign In',
-                          style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeTwentySix, color: AppColors.primary),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-
-                  Text(
-                    'Sign in with the Chandrima Real Estate to explore our all services',
-                    style: poppinsRegular.copyWith(color: AppColors.grey),
-                  ),
-                  SizedBox(height: constraints.maxHeight * 0.08),
-
-                  CustomTextField(
-                    controller: _phoneController,
-                    hintText: 'Enter Your Phone Number',
-                    prefixIcon: TablerIcons.phone,
-                    inputType: TextInputType.phone,
-                  ),
-                  const SizedBox(height: 15),
-
-                  CustomTextField(
-                    controller: _passwordController,
-                    hintText: 'Enter Your Password',
-                    prefixIcon: TablerIcons.lock,
-                    isPassword: true,
-                    inputAction: TextInputAction.done,
-                  ),
-                  SizedBox(height: constraints.maxHeight * 0.1),
-
-                  CustomButton(
-                    buttonText: 'Sign In',
-                    isLoading: authController.isLoading,
-                    onPressed: () {
-                      String phone = _phoneController.text;
-                      String password = _passwordController.text;
-
-                      if (phone.isEmpty) {
-                        showCustomSnackBar('Please enter your phone number');
-                      }else if (!RegExp(r'^01[3-9]\d{8}$').hasMatch(phone)) {
-                        showCustomSnackBar('Please enter a valid phone number');
-                      }else if (password.isEmpty) {
-                        showCustomSnackBar('Please enter your password');
-                      }else if (password.length < 6) {
-                        showCustomSnackBar('Password must be at least 6 characters');
-                      }else {
-                        authController.login(phone: phone, password: password);
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 10),
-
-                  Center(
-                    child: TextButton(
-                      onPressed: () {
-
-                      },
-                      child: Text(
-                        'Forgot Password?',
-                        style: poppinsRegular.copyWith(color: AppColors.primary),
+      body: GetBuilder<AuthController>(builder: (authController) {
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 50),
+                height: MediaQuery.of(context).size.height * 0.18,
+                alignment: Alignment.center,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset(Images.logo, fit: BoxFit.cover),
+                ),
+              ),
+              const SizedBox(height: 30),
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: "Let's ",
+                    style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeTwentySix, color: AppColors.black),
+                    children: [
+                      TextSpan(
+                        text: 'Sign In',
+                        style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeTwentySix, color: AppColors.primary),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              );
-            }),
-          );
-        }
-      ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Sign in with the Chandrima Model Town to explore our all services',
+                  style: poppinsRegular.copyWith(color: AppColors.grey),
+                ),
+              ),
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: CustomTextField(
+                  controller: authController.phoneNumberController,
+                  hintText: 'Phone Number',
+                  prefixIcon: TablerIcons.phone,
+                 inputType: TextInputType.number,
+                  inputAction: TextInputAction.done,
+                ),
+              ),
+              const SizedBox(height: 15),
+              SizedBox(height: 30),
+              Center(
+                child: CustomButton(
+                  width: 150,
+                  buttonText: 'Sign In',
+                  isLoading: authController.isLoading,
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+                    String phone = authController.phoneNumberController.text.toString();
+                    if (phone.isEmpty) {
+                      showCustomSnackBar('Please enter your phone number');
+                    } else {
+                      authController.sendOtp(phoneNumber: phone);
+                    }
+                  },
+                ),
+              ),
+              SizedBox(height: 200,),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  "All rights and reserved by : Chandrima Real Estate PVT.LTD",
+                  style: poppinsRegular,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

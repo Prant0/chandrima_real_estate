@@ -9,7 +9,6 @@ import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 
 class NotificationScreen extends StatelessWidget {
@@ -21,12 +20,12 @@ class NotificationScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       appBar: const CustomAppBar(title: 'Notification'),
       body: GetBuilder<HomeController>(builder: (homeController) {
-        return homeController.notificationModel != null ? ListView.builder(
+        return homeController.notificationModel != null ? homeController.notificationModel!.data!.data!.isEmpty?Center(child: Text("No Data Found",style: poppinsMedium,)): ListView.builder(
           padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
           itemCount: homeController.notificationModel!.data!.data!.length,
           itemBuilder: (context, index) {
             var data=homeController.notificationModel!.data!.data![index];
-            return InkWell(
+            return  InkWell(
               onTap: (){
                  if(data.type == "gatepass"){
                    Get.to(() => const GatePassScreen());
@@ -40,7 +39,8 @@ class NotificationScreen extends StatelessWidget {
                      );
                    });
                  }else if(data.type == 'service_charge'){
-                   showDialog(context: context, builder: (context){
+                   Get.to(DashboardScreen(pageIndex: 1, profilePageIndex: 0));
+                   /*showDialog(context: context, builder: (context){
                      return Dialog(
                        shape: RoundedRectangleBorder(
                            borderRadius: BorderRadius.circular(20.0)
@@ -55,7 +55,7 @@ class NotificationScreen extends StatelessWidget {
                          ),
                        ),
                      );
-                   });
+                   });*/
                  }
               },
               child: CustomCard(

@@ -8,21 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class InvoiceScreen extends StatefulWidget {
-  const InvoiceScreen({super.key});
+class InvoiceScreen extends StatelessWidget {
+    InvoiceScreen({super.key,required this.isBackButton});
 
-  @override
-  State<InvoiceScreen> createState() => _InvoiceScreenState();
-}
-
-class _InvoiceScreenState extends State<InvoiceScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    //Get.find<ProfileController>().getUserInvoiceList();
-    super.initState();
-  }//
-
+  bool isBackButton;
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +19,26 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
       backgroundColor:AppColors.background,
       appBar:CustomAppBar(title: 'Invoice',
 
-      backButton: false,),
+      backButton:isBackButton==true?true :false,),
       body: GetBuilder<ProfileController>(
         builder: (profileController) {
           return Padding(
             padding: const EdgeInsets.all(Dimensions.paddingSizeTen),
             child: SingleChildScrollView(
               child: Column(
+
                 children: [
 
-                  profileController.userInvoiceModel==null?SizedBox(): ListView.builder(
+                  profileController.userInvoiceModel==null?SizedBox():profileController.userInvoiceModel!.isEmpty ? Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: 350),
+                      child: Text("No Invoice Found",style: poppinsMedium,)):  ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: profileController.userInvoiceModel!.data!.data!.length,
+                    itemCount: profileController.userInvoiceModel!.length,
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
-                      var data= profileController.userInvoiceModel!.data!.data![index];
+                      var data= profileController.userInvoiceModel![index];
                       return InkWell(
                         onTap: (){
                           Get.to(InvoiceDetails(userInvoice: data));
@@ -68,11 +61,11 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                                   Container(
                                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                     decoration: BoxDecoration(
-                                      color: Colors.orange.withValues(alpha: 0.8),
+                                      color:data.paymentStatus!.toUpperCase()=="PAID"?AppColors.green: Colors.orange.withValues(alpha: 0.8),
                                       borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                                      border: Border.all(color: Colors.deepOrange,width: 1),
+                                      border: Border.all(color: data.paymentStatus!.toUpperCase()=="PAID"?AppColors.green:Colors.deepOrange,width: 1),
                                     ),
-                                    child: Text('${data.paymentStatus=="null"?"Pending":data.paymentStatus}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeFourteen,color: Colors.white)),
+                                    child: Text('${data.paymentStatus=="null"?"PENDING":data.paymentStatus!.toUpperCase()}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeFourteen,color: Colors.white)),
                                   ),
 
                                 ],

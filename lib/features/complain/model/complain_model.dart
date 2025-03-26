@@ -2,73 +2,27 @@
 //
 //     final complainModel = complainModelFromJson(jsonString);
 
-import 'dart:convert';
 
-ComplainModel complainModelFromJson(String str) => ComplainModel.fromJson(json.decode(str));
+class Complaints {
+  List<ComplainModelList>? data;
+  Links? links;
+  Meta? meta;
 
-String complainModelToJson(ComplainModel data) => json.encode(data.toJson());
-
-class ComplainModel {
-  bool? status;
-  Data? data;
-
-  ComplainModel({
-    this.status,
+  Complaints({
     this.data,
+    this.links,
+    this.meta,
   });
 
-  factory ComplainModel.fromJson(Map<String, dynamic> json) => ComplainModel(
-    status: json["status"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
+  factory Complaints.fromJson(Map<String, dynamic> json) => Complaints(
+    data: json["data"] == null ? [] : List<ComplainModelList>.from(json["data"]!.map((x) => ComplainModelList.fromJson(x))),
+    links: json["links"] == null ? null : Links.fromJson(json["links"]),
+    meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
   );
 
-  Map<String, dynamic> toJson() => {
-    "status": status,
-    "data": data?.toJson(),
-  };
 }
 
-class Data {
-  List<Complaint>? complaints;
-  List<ComplaintCategory>? complaintCategories;
-
-  Data({
-    this.complaints,
-    this.complaintCategories,
-  });
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    complaints: json["complaints"] == null ? [] : List<Complaint>.from(json["complaints"]!.map((x) => Complaint.fromJson(x))),
-    complaintCategories: json["complaint_categories"] == null ? [] : List<ComplaintCategory>.from(json["complaint_categories"]!.map((x) => ComplaintCategory.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "complaints": complaints == null ? [] : List<dynamic>.from(complaints!.map((x) => x.toJson())),
-    "complaint_categories": complaintCategories == null ? [] : List<dynamic>.from(complaintCategories!.map((x) => x.toJson())),
-  };
-}
-
-class ComplaintCategory {
-  int? id;
-  String? name;
-
-  ComplaintCategory({
-    this.id,
-    this.name,
-  });
-
-  factory ComplaintCategory.fromJson(Map<String, dynamic> json) => ComplaintCategory(
-    id: json["id"],
-    name: json["name"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-  };
-}
-
-class Complaint {
+class ComplainModelList {
   String? complaintCategory;
   int? id;
   String? title;
@@ -84,7 +38,7 @@ class Complaint {
   DateTime? updatedAt;
   String? documentPath;
 
-  Complaint({
+  ComplainModelList({
     this.complaintCategory,
     this.id,
     this.title,
@@ -101,7 +55,7 @@ class Complaint {
     this.documentPath,
   });
 
-  factory Complaint.fromJson(Map<String, dynamic> json) => Complaint(
+  factory ComplainModelList.fromJson(Map<String, dynamic> json) => ComplainModelList(
     complaintCategory: json["complaint_category"],
     id: json["id"],
     title: json["title"],
@@ -118,20 +72,65 @@ class Complaint {
     documentPath: json["document_path"],
   );
 
+
+}
+
+class Links {
+  String? first;
+  dynamic last;
+  String? prev;
+  dynamic next;
+
+  Links({
+    this.first,
+    this.last,
+    this.prev,
+    this.next,
+  });
+
+  factory Links.fromJson(Map<String, dynamic> json) => Links(
+    first: json["first"],
+    last: json["last"],
+    prev: json["prev"],
+    next: json["next"],
+  );
+
   Map<String, dynamic> toJson() => {
-    "complaint_category": complaintCategory,
-    "id": id,
-    "title": title,
-    "complaint_category_id": complaintCategoryId,
-    "member_id": memberId,
-    "description": description,
-    "document": document == null ? [] : List<dynamic>.from(document!.map((x) => x)),
-    "date": date?.toIso8601String(),
-    "status": status,
-    "resolution": resolution,
-    "created_by": createdBy,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "document_path": documentPath,
+    "first": first,
+    "last": last,
+    "prev": prev,
+    "next": next,
+  };
+}
+
+class Meta {
+  int? currentPage;
+  int? from;
+  String? path;
+  int? perPage;
+  int? to;
+
+  Meta({
+    this.currentPage,
+    this.from,
+    this.path,
+    this.perPage,
+    this.to,
+  });
+
+  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+    currentPage: json["current_page"],
+    from: json["from"],
+    path: json["path"],
+    perPage: json["per_page"],
+    to: json["to"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "current_page": currentPage,
+    "from": from,
+    "path": path,
+    "per_page": perPage,
+    "to": to,
   };
 }

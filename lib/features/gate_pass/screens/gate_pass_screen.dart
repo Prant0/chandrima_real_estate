@@ -215,7 +215,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
               ),
             );
           },
-        ) : const Center(child: Text('No data found')) : const Center(child: CircularProgressIndicator());
+        ) : const Center(child: Text('No Gate Pass found')) : const Center(child: CircularProgressIndicator());
       }),
     );
   }

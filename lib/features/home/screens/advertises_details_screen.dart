@@ -20,6 +20,7 @@ class AdvertisesDetailsScreen extends StatefulWidget {
 
 class _AdvertisesDetailsScreenState extends State<AdvertisesDetailsScreen> {
   late VideoPlayerController _videoController;
+  bool _isPlaying = false;
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _AdvertisesDetailsScreenState extends State<AdvertisesDetailsScreen> {
           ..initialize().then((_) {
             setState(() {});
             _videoController.play();
+            _isPlaying = true;
           });
       }
     });
@@ -42,15 +44,27 @@ class _AdvertisesDetailsScreenState extends State<AdvertisesDetailsScreen> {
     super.dispose();
   }
 
+  void _togglePlayPause() {
+    setState(() {
+      if (_videoController.value.isPlaying) {
+        _videoController.pause();
+        _isPlaying = false;
+      } else {
+        _videoController.play();
+        _isPlaying = true;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
-        onPressed: (){
+        onPressed: () {
           Get.to(AddAdvertiseScreen());
         },
-      child: Icon(Icons.add_circle_outline,color: Colors.white,),
+        child: Icon(Icons.add_circle_outline, color: Colors.white),
       ),
       appBar: const CustomAppBar(title: 'Advertises Details'),
       body: GetBuilder<HomeController>(builder: (homeController) {
@@ -62,9 +76,28 @@ class _AdvertisesDetailsScreenState extends State<AdvertisesDetailsScreen> {
             children: [
               if (homeController.advertisesDetails?.video != null)
                 _videoController.value.isInitialized
-                    ? AspectRatio(
-                  aspectRatio: _videoController.value.aspectRatio,
-                  child: VideoPlayer(_videoController),
+                    ? Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    AspectRatio(
+                      aspectRatio: _videoController.value.aspectRatio,
+                      child: VideoPlayer(_videoController),
+                    ),
+                    VideoProgressIndicator(
+                      _videoController,
+                      allowScrubbing: true,
+                      colors: VideoProgressColors(
+                        playedColor: AppColors.red,
+                        backgroundColor: Colors.white70,
+                      ),
+                    ),
+                    FloatingActionButton(
+                      onPressed: _togglePlayPause,
+                      child: Icon(
+                        _isPlaying ? Icons.pause : Icons.play_arrow,
+                      ),
+                    ),
+                  ],
                 )
                     : const Center(child: CircularProgressIndicator())
               else

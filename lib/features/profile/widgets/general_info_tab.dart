@@ -121,7 +121,7 @@ class GeneralInfoTab extends StatelessWidget {
             ),
 
             SizedBox(height: 16),
-            MaterialButton(
+           /* MaterialButton(
               onPressed: () {
                 // profileController.logout();
               showDialog(
@@ -158,7 +158,7 @@ class GeneralInfoTab extends StatelessWidget {
                   Icon(Icons.logout, color: AppColors.red),
                 ],
               ),
-            ),
+            ),*/
             const SizedBox(height: 16),
           ],
         ),

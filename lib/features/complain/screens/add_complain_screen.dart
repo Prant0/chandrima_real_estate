@@ -6,6 +6,7 @@ import 'package:chandrima_real_estate/common/widgets/custom_drop_down_button.dar
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_text_field.dart';
 import 'package:chandrima_real_estate/features/complain/controller/complain_controller.dart';
+import 'package:chandrima_real_estate/features/complain/model/complain_category_model.dart';
 import 'package:chandrima_real_estate/features/complain/model/complain_model.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
@@ -15,8 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 class AddComplainScreen extends StatefulWidget {
-    AddComplainScreen({super.key,required this.complaintCategories});
-  List<ComplaintCategory>? complaintCategories;
+
   @override
   State<AddComplainScreen> createState() => _AddComplainScreenState();
 }
@@ -27,12 +27,15 @@ class _AddComplainScreenState extends State<AddComplainScreen> {
 
   var formKey=GlobalKey<FormState>();
   String ?categoryId ;
+
   @override
   void initState() {
     // TODO: implement initState
-    print("xxxxsxsxsxsxsxsxsxsxsxsxsxsxsxsx${widget.complaintCategories!.length}");
+    ComplainController homeController = Get.find<ComplainController>();
+    homeController.getComplainCategory( );
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +57,7 @@ class _AddComplainScreenState extends State<AddComplainScreen> {
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
-                    child: Column(
+                    child:complainController.isLoading?CircularProgressIndicator(): Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           DropdownButtonFormField<ComplaintCategory>(
@@ -73,7 +76,7 @@ class _AddComplainScreenState extends State<AddComplainScreen> {
                               filled: true,
                               fillColor:  AppColors.grey.withValues(alpha: 0.2),
                             ),
-                            items: widget.complaintCategories?.map((ComplaintCategory category) {
+                            items: complainController.complaintCategoryModel!.data!.map((ComplaintCategory category) {
                               return DropdownMenuItem<ComplaintCategory>(
                                 value: category,
                                 child: Text(category.name.toString()), // Assuming ComplaintCategories has a 'name' property

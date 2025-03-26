@@ -1,58 +1,6 @@
-// To parse this JSON data, do
-//
-//     final userInvoiceModel = userInvoiceModelFromJson(jsonString);
 
-import 'dart:convert';
-
-UserInvoiceModel userInvoiceModelFromJson(String str) => UserInvoiceModel.fromJson(json.decode(str));
-
-String userInvoiceModelToJson(UserInvoiceModel data) => json.encode(data.toJson());
 
 class UserInvoiceModel {
-  bool? status;
-  Data? data;
-
-  UserInvoiceModel({
-    this.status,
-    this.data,
-  });
-
-  factory UserInvoiceModel.fromJson(Map<String, dynamic> json) => UserInvoiceModel(
-    status: json["status"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "status": status,
-    "data": data?.toJson(),
-  };
-}
-
-class Data {
-  List<UserInvoiceList>? data;
-  Links? links;
-  Meta? meta;
-
-  Data({
-    this.data,
-    this.links,
-    this.meta,
-  });
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    data: json["data"] == null ? [] : List<UserInvoiceList>.from(json["data"]!.map((x) => UserInvoiceList.fromJson(x))),
-    links: json["links"] == null ? null : Links.fromJson(json["links"]),
-    meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-    "links": links?.toJson(),
-    "meta": meta?.toJson(),
-  };
-}
-
-class UserInvoiceList {
   int? id;
   dynamic? memberId;
   String? invoiceId;
@@ -71,7 +19,7 @@ class UserInvoiceList {
   DateTime? createdAt;
   DateTime? updatedAt;
 
-  UserInvoiceList({
+  UserInvoiceModel({
     this.id,
     this.memberId,
     this.invoiceId,
@@ -91,7 +39,7 @@ class UserInvoiceList {
     this.updatedAt,
   });
 
-  factory UserInvoiceList.fromJson(Map<String, dynamic> json) => UserInvoiceList(
+  factory UserInvoiceModel.fromJson(Map<String, dynamic> json) => UserInvoiceModel(
     id: json["id"],
     memberId: json["member_id"],
     invoiceId: json["invoice_id"],

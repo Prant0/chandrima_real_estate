@@ -12,6 +12,10 @@ class AuthRepository {
     return apiClient.postData(AppConstants.loginUri, data);
   }
 
+  Future<Response> sendOtp(Map<String, dynamic> data) async {
+    return apiClient.postData(AppConstants.sendOtpUrl, data);
+  }
+
   Future<bool> saveUserToken(String token) async {
     apiClient.token = token;
     apiClient.updateHeader(token);

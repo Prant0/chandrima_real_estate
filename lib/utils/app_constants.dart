@@ -4,7 +4,8 @@ class AppConstants  {
 
   static const String baseUrl = 'https://app.chandrimarpl.com/api';
 
-  static const String loginUri = '/login';
+  static const String loginUri = '/login/otp/verify';
+  static const String sendOtpUrl = '/login/otp/send';
   static const String logoutUri = '/member/logout';
   static const String memberDetailsUri = '/member/details';
   static const String addFamilyMember = '/member/family/store';

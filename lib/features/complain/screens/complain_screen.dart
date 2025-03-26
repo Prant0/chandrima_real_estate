@@ -1,3 +1,4 @@
+import 'package:chandrima_real_estate/common/widgets/custom_app_bar.dart';
 import 'package:chandrima_real_estate/features/complain/controller/complain_controller.dart';
 import 'package:chandrima_real_estate/features/complain/screens/add_complain_screen.dart';
 import 'package:chandrima_real_estate/features/complain/screens/complain_details_screen.dart';
@@ -9,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ComplainScreen extends StatefulWidget {
-    ComplainScreen({super.key, this.isShowAppBar  });
+    ComplainScreen({super.key,required this.isShowAppBar  });
   bool ?isShowAppBar =true ;
 
   @override
@@ -17,51 +18,71 @@ class ComplainScreen extends StatefulWidget {
 }
 
 class _ComplainScreenState extends State<ComplainScreen> {
+
+
+
+  late ScrollController _scrollController;
+  int page=1 ;
+
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
+
     ComplainController homeController = Get.find<ComplainController>();
-    homeController.getComplainList();
+    homeController.getComplainList(page: 1);
+    homeController.complainModelList!.clear();
+
+   // Get.find<ApplicationListController>().getApplicationList(page: 1);
+
+    /// Manage scroll
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent && !Get.find<ComplainController>().isLoading) {
+         Get.find<ComplainController>().loadMore(page=page+1);
+      }
+    });
+
   }
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:widget.isShowAppBar==true? CustomAppBar(title: "My Complaints",
+        backButton: true,
+      ):null,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.to(AddComplainScreen(
-            complaintCategories: Get.find<ComplainController>().complainModel!.data!.complaintCategories,
+            //complaintCategories: Get.find<ComplainController>().complainModel!.data!.complaintCategories,
           ));
         },
         child: Icon(Icons.add,color: Colors.white,),
         backgroundColor: AppColors.purpleColor,
       ),
       backgroundColor:AppColors.background,
-      appBar: widget.isShowAppBar==true?AppBar(
-       /* leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: (){
-            Navigator.of(context).pop();
-          }
-        ),*/
-        centerTitle: true,
-        title:   Text('My Complaints',style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeTwenty,color: Colors.white),),
-        backgroundColor: AppColors.purpleColor,
-      ):null,
+
       body: GetBuilder<ComplainController>(
           builder: (complainController) {
             return Padding(
               padding: const EdgeInsets.all(Dimensions.paddingSizeTen),
               child: SingleChildScrollView(
+                controller: _scrollController,
                 child: Column(
                   children: [
-                    complainController.complainModel==null?SizedBox(): ListView.builder(
+                    complainController.complainModelList==null?SizedBox(): ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: complainController.complainModel?.data?.complaints?.length,
+                      itemCount: complainController.complainModelList!.length,
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
-                        var data= complainController.complainModel?.data?.complaints?[index];
+                        var data= complainController.complainModelList?[index];
                         return InkWell(
                           onTap: (){
                              Get.to(ComplainDetailsScreen(complaints: data));

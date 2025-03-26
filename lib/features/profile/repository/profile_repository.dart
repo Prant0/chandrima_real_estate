@@ -12,8 +12,8 @@ class ProfileRepository{
   }
 
 
-  Future<Response> getUserInvoiceList() async {
-    return await apiClient.getData(AppConstants.userInvoiceList);
+  Future<Response> getUserInvoiceList({required int page}) async {
+    return await apiClient.getData("${AppConstants.userInvoiceList}?page=$page");
   }
 
   Future<Response> addFamilyMember({required Map<String, String> body, XFile? image}) async{

@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class InvoiceDetails extends StatelessWidget {
-  UserInvoiceList userInvoice;
+  UserInvoiceModel userInvoice;
     InvoiceDetails({super.key,required this.userInvoice });
 
   @override
@@ -66,30 +66,47 @@ class InvoiceDetails extends StatelessWidget {
                                     Text('${userInvoice.memberId}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.textColor)),
                                   ],
                                 ),
+
+
+
+                              ],
+                            ),
+                            SizedBox(height: 8,),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text('Status', style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.purpleColor)),
+                                    SizedBox(height: 4,),
+                                    Text('Invoice Date ',style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.purpleColor)),
+                                    Text('${DateFormat('d-MM-yyyy').format(DateTime.parse(userInvoice.createdAt.toString()))}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.textColor)),
+
+                                  ],
+                                ),
+
+
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+
+                                    Text('Status     ', style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.purpleColor)),
                                     SizedBox(height: 4,),
                                     Container(
                                       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                                       decoration: BoxDecoration(
-                                        color: Colors.green.withValues(alpha: 0.8),
+                                        color:userInvoice.paymentStatus!.toUpperCase()=="PAID"? Colors.green.withValues(alpha: 0.8):Colors.orange,
                                         borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                                        border: Border.all(color: Colors.greenAccent,width: 1),
+                                        border: Border.all(color:  userInvoice.paymentStatus!.toUpperCase()=="PAID"? Colors.green.withValues(alpha: 0.8):Colors.orange,width: 1),
                                       ),
                                       child: Text('${userInvoice.paymentStatus=="null"?"Pending":userInvoice.paymentStatus}'.toUpperCase(), style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeFourteen,color: Colors.white,)),
                                     ),
                                   ],
                                 ),
-
-
                               ],
-                            ),
+                            )
 
-                            SizedBox(height: 4,),
-                            Text('Invoice Date ',style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.purpleColor)),
-                            Text('${DateFormat('d-MM-yyyy').format(DateTime.parse(userInvoice.createdAt.toString()))}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.textColor)),
 
                           ],
                         ),
@@ -239,7 +256,7 @@ class InvoiceDetails extends StatelessWidget {
               ),
             ),
           ),
-          CustomCard(
+          userInvoice.paymentStatus!.toUpperCase()=="PAID"?SizedBox(height: 1,): CustomCard(
             padding: Dimensions.paddingSizeFifteen,
             child: CustomButton(
               color:Color(0xffEE1748),

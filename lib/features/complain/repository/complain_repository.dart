@@ -7,8 +7,12 @@ class ComplainRepository{
   final ApiClient apiClient;
   ComplainRepository({required this.apiClient});
 
-  Future<Response> getComplainList() async {
-    return await apiClient.getData(AppConstants.complainList);
+  Future<Response> getComplainList({required int page}) async {
+    return await apiClient.getData("${AppConstants.complainList}?page=$page");
+  }
+
+  Future<Response> getComplainCategory( ) async {
+    return await apiClient.getData("${AppConstants.complainCategoryList}");
   }
   Future<Response> deleteComplain(String id) async {
     return await apiClient.getData("/complaint/delete/$id");

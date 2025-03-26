@@ -1,11 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:chandrima_real_estate/common/widgets/custom_drawer.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
+import 'package:chandrima_real_estate/features/complain/screens/complain_screen.dart';
 import 'package:chandrima_real_estate/features/dashboard/screens/dashboard_screen.dart';
 import 'package:chandrima_real_estate/features/home/controller/home_controller.dart';
 import 'package:chandrima_real_estate/features/home/screens/advertises_details_screen.dart';
 import 'package:chandrima_real_estate/features/home/screens/events_screen.dart';
 import 'package:chandrima_real_estate/features/home/screens/notification_screen.dart';
 import 'package:chandrima_real_estate/features/invoice/screens/invoice_details.dart';
+import 'package:chandrima_real_estate/features/invoice/screens/invoice_screen.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/routes/routes_name.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
@@ -13,6 +16,7 @@ import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/images.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -35,9 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
     homeController.getNotificationCount();
   }
 
+  var _scaffoldKey=GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: CustomDrawer(),
       backgroundColor:AppColors.background,
       body: GetBuilder<ProfileController>(builder: (profileController) {
         return GetBuilder<HomeController>(builder: (homeController) {
@@ -58,23 +65,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 Positioned(
                   top: 50, left: 20, right: 20,
                   child: Column(children: [
-                    Row(children: [
-                      ClipOval(
-                        child: CustomNetworkImage(
-                          image: profileController.profileDetails?.data?.member?.photo ?? '',
-                          height: 50, width: 50,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(profileController.profileDetails?.data?.member?.name ?? '', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.white)),
-                          Text('ID: ${profileController.profileDetails?.data?.member?.memberId ?? ''}', style: poppinsRegular.copyWith(color: AppColors.white)),
+                      InkWell(
+
+                          child: Icon(TablerIcons.menu_4,color: Colors.white,),
+                      onTap: (){
+                        _scaffoldKey.currentState!.openDrawer();
+
+                      },
+                      ),
+                      SizedBox(width: 16,),
+                      Row(
+
+                        children: [
+                          ClipOval(
+                            child: CustomNetworkImage(
+                              image: profileController.profileDetails?.data?.member?.photo ?? '',
+                              height: 50, width: 50,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(profileController.profileDetails?.data?.member?.name ?? '', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.white)),
+                              Text('ID: ${profileController.profileDetails?.data?.member?.memberId ?? ''}', style: poppinsRegular.copyWith(color: AppColors.white)),
+                            ],
+                          ),
                         ],
                       ),
-                      const Spacer(),
+                      Spacer(),
 
                       InkWell(
                         onTap: () {
@@ -105,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ]),
                     const SizedBox(height: 20),
 
-                    Text('Welcome to Chandrima Real Estate', style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.white), textAlign: TextAlign.center),
+                    Text('Welcome to Chandrima Model Town', style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.white), textAlign: TextAlign.center),
                     const SizedBox(height: 20),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -156,7 +179,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                         child: InkWell(
                           onTap: () {
-                            Get.offAll(const DashboardScreen(pageIndex: 2, profilePageIndex: 0));
+                            Get.to(ComplainScreen(
+                              isShowAppBar: true,
+                            ));
+                            //Get.offAll(const DashboardScreen(pageIndex: 2, profilePageIndex: 0));
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
@@ -305,25 +331,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                     Text('Invoice List', style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeSixteen)),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(InvoiceScreen(isBackButton: true,));
+                      },
                       child: Text('View All', style: poppinsRegular.copyWith(color: AppColors.purpleColor,fontWeight: FontWeight.w600)),
                     ),
                   ]),
                   const SizedBox(height: 12),
 
-                  profileController.userInvoiceModel == null ? const SizedBox() : ListView.builder(
+                  profileController.userInvoiceModel==null?SizedBox(): profileController.userInvoiceModel!.isEmpty ? Padding(
+                    padding: const EdgeInsets.only(top: 50),
+                    child: Text("No Invoice Found",style: poppinsMedium,),
+                  ) : ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: profileController.userInvoiceModel!.data!.data!.length,
+                    itemCount: profileController.userInvoiceModel!.length,
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
-                      var data= profileController.userInvoiceModel!.data!.data![index];
+                      var data= profileController.userInvoiceModel![index];
                       return InkWell(
                         onTap: () {
                           Get.to(InvoiceDetails(userInvoice: data));
                         },
                         child: Container(
-                          margin: EdgeInsets.only(bottom: index == profileController.userInvoiceModel!.data!.data!.length - 1 ? 0 : Dimensions.paddingSizeTen),
+                          margin: EdgeInsets.only(bottom: index == profileController.userInvoiceModel!.length - 1 ? 0 : Dimensions.paddingSizeTen),
                           padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
                           decoration: BoxDecoration(
                             color: AppColors.white,
@@ -339,9 +370,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                   decoration: BoxDecoration(
-                                    color: Colors.orange.withValues(alpha: 0.8),
+                                    color:data.paymentStatus!.toUpperCase()=="PAID"?AppColors.green: Colors.orange.withValues(alpha: 0.8),
                                     borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                                    border: Border.all(color: Colors.deepOrange,width: 1),
+                                    border: Border.all(color:data.paymentStatus!.toUpperCase()=="PAID"?AppColors.green: Colors.orange,width: 1),
                                   ),
                                   child: Text('${data.paymentStatus=="null"?"Pending":data.paymentStatus}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeFourteen,color: Colors.white)),
                                 ),

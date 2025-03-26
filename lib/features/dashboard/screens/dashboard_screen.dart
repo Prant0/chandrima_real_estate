@@ -32,17 +32,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     ProfileController profileController = Get.find<ProfileController>();
     profileController.getProfileDetails();
-    profileController.getUserInvoiceList();
+    profileController.getUserInvoiceList(page: 1);
     _selectedIndex = widget.pageIndex;
     _profileIndex=widget.profilePageIndex??0;
   }
-
-    List<Widget> _pages = [
-      HomeScreen(),
-      InvoiceScreen(),
-      ComplainScreen(isShowAppBar: true,),
-      ProfileScreen(initialIndex:0),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -87,8 +80,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           index: _selectedIndex,
           children: [
             HomeScreen(),
-            InvoiceScreen(),
-            HelpLineScreen(),
+            InvoiceScreen(isBackButton: false,),
+            HelpLineScreen(isBackButton: false,),
             //ComplainScreen(isShowAppBar: true,),
             ProfileScreen(initialIndex:_profileIndex),
           ],
