@@ -26,8 +26,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     ),
   );
 
-  TextEditingController userNameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
 
   Timer? _timer;
   int _start = 90;

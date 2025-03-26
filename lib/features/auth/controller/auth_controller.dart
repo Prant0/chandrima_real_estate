@@ -86,7 +86,7 @@ class AuthController extends GetxController implements GetxService {
     print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww${response.statusCode}");
     if(response.statusCode == 200 && response.body["status"]==true) {
       isSuccess = true;
-      otpController.text=response.body["test_code"].toString();
+     // otpController.text=response.body["test_code"].toString();
       showCustomSnackBar("success otp send to your phone number", isError: false);
       Get.to(VerifyOtpScreen());
     }
