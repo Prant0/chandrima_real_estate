@@ -17,7 +17,7 @@ class AppRoutes {
 
     GetPage(
       name: RoutesName.dashboardScreen,
-      page: () =>   DashboardScreen(pageIndex: 0,profilePageIndex: 0),
+      page: () => const DashboardScreen(pageIndex: 0, profilePageIndex: 0),
     ),
 
     GetPage(
@@ -30,7 +30,7 @@ class AppRoutes {
       page: () => const AddTenantScreen(),
     ),
     GetPage(
-      name: RoutesName.splash_screen,
+      name: RoutesName.splashScreen,
       page: () => const SplashScreen(),
     ),
 

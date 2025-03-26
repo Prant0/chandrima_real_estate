@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary).copyWith(),
           useMaterial3: true,
         ),
-        initialRoute:RoutesName.splash_screen,
+        initialRoute: RoutesName.getSplashScreen(),
         getPages: AppRoutes.appRoutes(),
         defaultTransition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 500),
@@ -46,6 +46,3 @@ class MyApp extends StatelessWidget {
     });
   }
 }
-
-
-//
