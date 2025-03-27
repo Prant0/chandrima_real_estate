@@ -31,7 +31,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     ProfileController profileController = Get.find<ProfileController>();
-    profileController.getProfileDetails();
     profileController.getUserInvoiceList(page: 1);
     _selectedIndex = widget.pageIndex;
     _profileIndex=widget.profilePageIndex??0;

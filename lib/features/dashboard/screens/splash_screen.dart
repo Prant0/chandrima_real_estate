@@ -18,12 +18,16 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
+
+
+
     AuthController authController=Get.find<AuthController>();
    bool isLogin= authController.isLoggedIn();
    if(isLogin){
-      Future.delayed(const Duration(milliseconds: 1500), () {
-        Get.offNamed(RoutesName.dashboardScreen);
-      });
+     ProfileController profileController = Get.find<ProfileController>();
+     profileController.getProfileDetails().then((value){
+       Get.offNamed(RoutesName.dashboardScreen);
+     });
    }else{
       Future.delayed(const Duration(milliseconds: 1500), () {
         Get.offNamed(RoutesName.login);

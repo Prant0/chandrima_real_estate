@@ -11,8 +11,12 @@ class HomeRepository {
     return await apiClient.getData(AppConstants.advertisementList);
   }
 
-  Future<Response> getNotificationList() async {
-    return await apiClient.getData(AppConstants.notificationsList);
+  Future<Response> getNotificationList({required int page}) async {
+    return await apiClient.getData("${AppConstants.notificationsList}?page=$page");
+  }
+
+  Future<Response> getMyAdvertiseList({required int page}) async {
+    return await apiClient.getData("${AppConstants.myAdvertisementList}?page=$page");
   }
 
   Future<Response> getNotificationCount() async {

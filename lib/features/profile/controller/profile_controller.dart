@@ -18,7 +18,7 @@ class ProfileController extends GetxController implements GetxService{
   ProfileModel? _profileDetails;
   ProfileModel? get profileDetails => _profileDetails;
 
-  List<UserInvoiceModel>? _userInvoiceModel;
+  List<UserInvoiceModel>? _userInvoiceModel= [];
   List<UserInvoiceModel>? get userInvoiceModel => _userInvoiceModel;
 
   XFile? _pickedFile;
@@ -52,15 +52,12 @@ class ProfileController extends GetxController implements GetxService{
   Future<void> getUserInvoiceList({required int page}) async {
     Response response = await profileRepository.getUserInvoiceList(page: page);
     if(response.statusCode == 200){
-      _userInvoiceModel = [];
       if (response.body["data"]["data"].isNotEmpty) {
         _userInvoiceModel?.addAll(response.body["data"]["data"].map<UserInvoiceModel>((data) => UserInvoiceModel.fromJson(data)).toList());
-
+        update();
       } else {
         showCustomSnackBar("No Data Available", isError: false);
       }
-      //_userInvoiceModel = UserInvoiceModel.fromJson(response.body);
-      //print("all data length areeeeeeeeeeeee${_userInvoiceModel!.data!.data!.length}");
     }else{
       ApiChecker.checkApi(response);
     }

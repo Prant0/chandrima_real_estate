@@ -31,6 +31,7 @@ class AuthController extends GetxController implements GetxService {
       final token = response.body['token'];
       await authRepository.saveUserToken(token);
       Get.find<ProfileController>().getProfileDetails();
+      _otpController.clear();
       Get.offAll(() =>   DashboardScreen(pageIndex: 0,profilePageIndex: 0));
     } else {
      // ApiChecker.checkApi(response);

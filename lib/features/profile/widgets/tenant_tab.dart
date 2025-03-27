@@ -22,6 +22,7 @@ class TenantTab extends StatelessWidget {
       final tenant = profileController.profileDetails?.data?.tenants;
 
       return Stack(
+       // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           tenant != null && tenant.isNotEmpty ? ListView.builder(
             padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
@@ -119,7 +120,7 @@ class TenantTab extends StatelessWidget {
                 ),
               );
             },
-          ) : const Expanded(child: Center(child: Text("No Tenant information available."))),
+          ) : Center(child: Text("No Tenant information available.")),
 
           Positioned(
              bottom: 25,

@@ -671,8 +671,8 @@ class Payments {
 
 class Service {
   String? serviceName;
-  int? serviceCharge;
-  String? discount;
+  dynamic? serviceCharge;
+  dynamic? discount;
 
   Service({
     this.serviceName,

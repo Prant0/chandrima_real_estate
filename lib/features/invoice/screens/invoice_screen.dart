@@ -8,10 +8,34 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class InvoiceScreen extends StatelessWidget {
+class InvoiceScreen extends StatefulWidget {
     InvoiceScreen({super.key,required this.isBackButton});
 
   bool isBackButton;
+
+  @override
+  State<InvoiceScreen> createState() => _InvoiceScreenState();
+}
+
+class _InvoiceScreenState extends State<InvoiceScreen> {
+
+  late ScrollController _scrollController;
+  int page=1 ;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+
+
+    /// Manage scroll
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent && !Get.find<ProfileController>().isLoading) {
+        Get.find<ProfileController>().loadMore(page=page+1);
+      }
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +43,13 @@ class InvoiceScreen extends StatelessWidget {
       backgroundColor:AppColors.background,
       appBar:CustomAppBar(title: 'Invoice',
 
-      backButton:isBackButton==true?true :false,),
+      backButton:widget.isBackButton==true?true :false,),
       body: GetBuilder<ProfileController>(
         builder: (profileController) {
           return Padding(
             padding: const EdgeInsets.all(Dimensions.paddingSizeTen),
             child: SingleChildScrollView(
+              controller: _scrollController,
               child: Column(
 
                 children: [

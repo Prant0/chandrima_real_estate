@@ -201,7 +201,7 @@ class InvoiceDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text('Payment Method :', style: poppinsMedium.copyWith(fontWeight: FontWeight.w800 )),
-                                Text('${userInvoice.paymentMethod}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.textColor)),
+                                Text('${userInvoice.paymentMethod??"N/A"}', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.textColor)),
                               ],
                             ),/*Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

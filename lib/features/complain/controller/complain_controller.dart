@@ -3,8 +3,7 @@ import 'package:chandrima_real_estate/data/api/api_checker.dart';
 import 'package:chandrima_real_estate/features/complain/model/complain_category_model.dart';
 import 'package:chandrima_real_estate/features/complain/model/complain_model.dart';
 import 'package:chandrima_real_estate/features/complain/repository/complain_repository.dart';
-import 'package:chandrima_real_estate/features/home/model/advertises_list_model.dart';
-import 'package:get/get.dart';
+ import 'package:get/get.dart';
 import 'package:chandrima_real_estate/features/home/repository/home_repository.dart';
 import 'package:image_picker/image_picker.dart';
 

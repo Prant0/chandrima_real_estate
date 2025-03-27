@@ -1,8 +1,9 @@
 import 'package:chandrima_real_estate/common/widgets/custom_snackbar.dart';
 import 'package:chandrima_real_estate/data/api/api_checker.dart';
-import 'package:chandrima_real_estate/features/home/model/advertise_notification.dart';
-import 'package:chandrima_real_estate/features/home/model/advertises_list_model.dart';
-import 'package:chandrima_real_estate/features/home/model/heml_line_model.dart';
+import 'package:chandrima_real_estate/features/advertise/model/advertise_notification.dart';
+import 'package:chandrima_real_estate/features/advertise/model/advertises_list_model.dart';
+import 'package:chandrima_real_estate/features/advertise/model/my_advertise_model.dart';
+ import 'package:chandrima_real_estate/features/home/model/heml_line_model.dart';
 import 'package:chandrima_real_estate/features/home/model/notification_model.dart';
 import 'package:get/get.dart';
 import 'package:chandrima_real_estate/features/home/repository/home_repository.dart';
@@ -37,19 +38,65 @@ class HomeController extends GetxController implements GetxService {
     update();
   }
 
-  NotificationModel? _notificationModel;
-  NotificationModel? get notificationModel => _notificationModel;
 
-  Future<void> getNotification() async {
-    Response response = await homeRepository.getNotificationList();
-    print("Notification Response: ${response.body}");
+  List<MyAdvertiseModel>? _myAdvertiseModel= [];
+  List<MyAdvertiseModel>? get myAdvertiseModel => _myAdvertiseModel;
+
+  Future<void> getMyAdvertise({required int page}) async {
+    _isLoading=true;
+    update();
+    Response response = await homeRepository.getMyAdvertiseList(page: page);
+    print("My Advertise Response: ${response.body}");
+    _isLoading=false;
     if (response.statusCode == 200) {
-      _notificationModel = NotificationModel.fromJson(response.body);
+      if (response.body["data"]["data"].isNotEmpty) {
+        _myAdvertiseModel?.addAll(response.body["data"]["data"].map<MyAdvertiseModel>((data) => MyAdvertiseModel.fromJson(data)).toList());
+        update();
+      } else {
+        showCustomSnackBar("No Data Available", isError: false);
+      }
+      //_notificationModel = NotificationModel.fromJson(response.body);
     }else{
       ApiChecker.checkApi(response);
     }
     update();
   }
+
+  void loadMoreAdvertise(int pageNo) {
+    getMyAdvertise(page: pageNo);
+  }
+
+
+
+
+
+  List<NotificationModel>? _notificationModel= [];
+  List<NotificationModel>? get notificationModel => _notificationModel;
+
+  Future<void> getNotification({required int page}) async {
+    _isLoading=true;
+    update();
+    Response response = await homeRepository.getNotificationList(page: page);
+    print("Notification Response: ${response.body}");
+    _isLoading=false;
+    if (response.statusCode == 200) {
+      if (response.body["data"]["data"].isNotEmpty) {
+        _notificationModel?.addAll(response.body["data"]["data"].map<NotificationModel>((data) => NotificationModel.fromJson(data)).toList());
+        update();
+      } else {
+        showCustomSnackBar("No Data Available", isError: false);
+      }
+      //_notificationModel = NotificationModel.fromJson(response.body);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
+
+  void loadMore(int pageNo) {
+    getNotification(page: pageNo);
+  }
+
 
 
   Future<void> getAdvertiseDetails(int id) async {
@@ -112,6 +159,7 @@ class HomeController extends GetxController implements GetxService {
         body: body, image: _pickedFile,video: video);
     if(response.statusCode == 200){
       _pickedFile = null;
+      _myAdvertiseModel=[];
       update();
       Get.back();
       showCustomSnackBar('Advertise Request added successfully', isError: false);

@@ -1,11 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_drawer.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
+import 'package:chandrima_real_estate/features/advertise/screen/advertises_details_screen.dart';
 import 'package:chandrima_real_estate/features/complain/screens/complain_screen.dart';
 import 'package:chandrima_real_estate/features/dashboard/screens/dashboard_screen.dart';
 import 'package:chandrima_real_estate/features/home/controller/home_controller.dart';
-import 'package:chandrima_real_estate/features/home/screens/advertises_details_screen.dart';
-import 'package:chandrima_real_estate/features/home/screens/events_screen.dart';
+ import 'package:chandrima_real_estate/features/home/screens/events_screen.dart';
 import 'package:chandrima_real_estate/features/home/screens/notification_screen.dart';
 import 'package:chandrima_real_estate/features/invoice/screens/invoice_details.dart';
 import 'package:chandrima_real_estate/features/invoice/screens/invoice_screen.dart';
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     HomeController homeController = Get.find<HomeController>();
     homeController.getAdvertisesList();
-    homeController.getNotification();
+    homeController.getNotification(page: 1);
     homeController.getNotificationCount();
   }
 

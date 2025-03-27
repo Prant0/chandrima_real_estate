@@ -1,44 +1,6 @@
 
-import 'dart:convert';
 
 class NotificationModel {
-  bool? status;
-  Data? data;
-
-  NotificationModel({
-    this.status,
-    this.data,
-  });
-
-  factory NotificationModel.fromJson(Map<String, dynamic> json) => NotificationModel(
-    status: json["status"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-  );
-
-
-}
-
-class Data {
-  List<Notifications>? data;
-  Links? links;
-  Meta? meta;
-
-  Data({
-    this.data,
-    this.links,
-    this.meta,
-  });
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    data: json["data"] == null ? [] : List<Notifications>.from(json["data"]!.map((x) => Notifications.fromJson(x))),
-    links: json["links"] == null ? null : Links.fromJson(json["links"]),
-    meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
-  );
-
-
-}
-
-class Notifications {
   String? type;
   String? itemId;
   String? notify,date;
@@ -46,7 +8,7 @@ class Notifications {
   DateTime? createdAt;
   String? link;
 
-  Notifications({
+  NotificationModel({
     this.type,
     this.itemId,
     this.notify,
@@ -56,7 +18,7 @@ class Notifications {
     this.link
   });
 
-  factory Notifications.fromJson(Map<String, dynamic> json) => Notifications(
+  factory NotificationModel.fromJson(Map<String, dynamic> json) => NotificationModel(
     type: json["type"],
     itemId: json["item_id"],
     notify: json["notify"],
