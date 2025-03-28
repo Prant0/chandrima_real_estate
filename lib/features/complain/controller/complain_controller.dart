@@ -28,6 +28,8 @@ class ComplainController extends GetxController implements GetxService {
   bool? get isDetailsShow => _isDetailsShow;
 
   Future<void> getComplainList({required int page}) async {
+    _isLoading=true;
+    update();
     Response response = await complainRepository.getComplainList(page: page);
     if (response.statusCode == 200) {
      // _complainModel = ComplainModel.fromJson(response.body);
@@ -41,6 +43,7 @@ class ComplainController extends GetxController implements GetxService {
     }else{
       ApiChecker.checkApi(response);
     }
+    _isLoading=false;
     update();
   }
 

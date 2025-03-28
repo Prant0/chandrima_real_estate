@@ -50,6 +50,8 @@ class ProfileController extends GetxController implements GetxService{
   }
 
   Future<void> getUserInvoiceList({required int page}) async {
+    _isLoading=true;
+    update();
     Response response = await profileRepository.getUserInvoiceList(page: page);
     if(response.statusCode == 200){
       if (response.body["data"]["data"].isNotEmpty) {
@@ -61,6 +63,7 @@ class ProfileController extends GetxController implements GetxService{
     }else{
       ApiChecker.checkApi(response);
     }
+    _isLoading=false;
     update();
   }
 

@@ -72,13 +72,14 @@ class _ComplainScreenState extends State<ComplainScreen> {
           builder: (complainController) {
             return Padding(
               padding: const EdgeInsets.all(Dimensions.paddingSizeTen),
-              child: SingleChildScrollView(
+              child: complainController.complainModelList==null?SizedBox(): SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 controller: _scrollController,
                 child: Column(
                   children: [
-                    complainController.complainModelList==null?SizedBox(): ListView.builder(
+                    ListView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: complainController.complainModelList!.length,
                       padding: EdgeInsets.zero,
                       itemBuilder: (context, index) {
@@ -142,7 +143,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                               ],
                                             ),
                                           ),*/
-
+                
                                       SizedBox(height: 4,),
                                           RichText(
                                             text: TextSpan(
@@ -158,7 +159,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                           ),
                                      ]),
                                   ),
-
+                
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeTen, vertical: Dimensions.paddingSizeFive),
                                     decoration: BoxDecoration(
@@ -167,8 +168,8 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                     ),
                                     child: Text("${data?.status}", style: poppinsRegular.copyWith(color: Colors.white),),
                                   )
-
-
+                
+                
                                   /*Column(
                                     children: [
                                       InkWell(
@@ -203,7 +204,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                      *//* SizedBox(height: 18,),
                                       InkWell(
                                           onTap: (){
-
+                
                                           },
                                           child: Icon(Icons.edit,color: AppColors.primary,)),*//*
                                     ],
@@ -215,7 +216,10 @@ class _ComplainScreenState extends State<ComplainScreen> {
                         );
                       },
                     ),
-
+                
+                    complainController.isLoading?Padding(padding: EdgeInsets.symmetric(vertical: 25),
+                    child: CircularProgressIndicator(),
+                    ):SizedBox(height: 25,)
                   ],
                 ),
               ),

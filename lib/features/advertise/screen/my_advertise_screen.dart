@@ -29,11 +29,12 @@ class _MyAdvertiseScreenState extends State<MyAdvertiseScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       HomeController homeController = Get.find<HomeController>();
+      homeController.myAdvertiseModel!.clear();
       homeController.getMyAdvertise(page: 1);
     });
 
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent && !Get.find<HomeController>().isLoading) {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent && Get.find<HomeController>().isLoading==false) {
         Get.find<HomeController>().loadMoreAdvertise(page = page + 1);
       }
     });
@@ -61,6 +62,7 @@ class _MyAdvertiseScreenState extends State<MyAdvertiseScreen> {
               padding: const EdgeInsets.all(Dimensions.paddingSizeTen),
               child: SingleChildScrollView(
               controller: _scrollController,
+                physics: BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     homeController.myAdvertiseModel==null?Center(child: Text("No Data Found")): ListView.builder(
@@ -227,6 +229,10 @@ class _MyAdvertiseScreenState extends State<MyAdvertiseScreen> {
                       },
                     ),
 
+                    homeController.isLoading?Padding(
+                      padding: const EdgeInsets.all(28.0),
+                      child: CircularProgressIndicator(),
+                    ):SizedBox(height: 30,),
                   ],
                 ),
               ),

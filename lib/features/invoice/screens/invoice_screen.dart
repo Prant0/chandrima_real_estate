@@ -50,6 +50,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
             padding: const EdgeInsets.all(Dimensions.paddingSizeTen),
             child: SingleChildScrollView(
               controller: _scrollController,
+              physics: BouncingScrollPhysics(),
               child: Column(
 
                 children: [
@@ -57,7 +58,8 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                   profileController.userInvoiceModel==null?SizedBox():profileController.userInvoiceModel!.isEmpty ? Container(
                       alignment: Alignment.center,
                       margin: EdgeInsets.only(top: 350),
-                      child: Text("No Invoice Found",style: poppinsMedium,)):  ListView.builder(
+                      child: Text("No Invoice Found",style: poppinsMedium,)):
+                  ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: profileController.userInvoiceModel!.length,
@@ -114,6 +116,11 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                       );
                     },
                   ),
+
+
+                  profileController.isLoading? Padding(padding: EdgeInsets.symmetric(vertical: 25),
+                  child: CircularProgressIndicator(),
+                  ):SizedBox(height: 30,)
 
                 ],
               ),
