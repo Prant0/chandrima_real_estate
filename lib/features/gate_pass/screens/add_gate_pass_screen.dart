@@ -42,6 +42,7 @@ class AddGatePassScreen extends StatelessWidget {
                       Get.off(() => GatePassFormScreen(gatePassType: data.name));
                     },
                     child: Container(
+                      alignment: Alignment.center,
                       margin: EdgeInsets.symmetric(horizontal: 10),
                       padding: EdgeInsets.only(top: 14),
                       decoration: BoxDecoration(
@@ -57,9 +58,10 @@ class AddGatePassScreen extends StatelessWidget {
                         ],
                       ),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                            SvgPicture.network(data.icon!,height: 100,width: 100,),
-                          SizedBox(height: 10,),
+                          SizedBox(height: 12,),
                           Text("${data.name}",style: poppinsRegular.copyWith(color: AppColors.primary,fontSize: 20,fontWeight: FontWeight.w800),),
                         ],
                       ),

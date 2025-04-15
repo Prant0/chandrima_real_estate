@@ -133,6 +133,7 @@ class _AddComplainScreenState extends State<AddComplainScreen> {
                           ),
                           SizedBox(height: 10),
                           Center(
+
                               child: GridView.builder(
                                   itemCount: complainController.complaintImages != null ? complainController.complaintImages!.length : 1,
                                   shrinkWrap: true,
@@ -146,10 +147,9 @@ class _AddComplainScreenState extends State<AddComplainScreen> {
                                   borderRadius: BorderRadius.circular(10),
                                   child: Stack(children: [
                                     complainController.complaintImages != null ? GetPlatform.isWeb ? Image.network(
-                                        complainController.complaintImages![index].path, width: 200, height: 150, fit: BoxFit.cover) : Image.file(
-                                            File(complainController.complaintImages![index].path), width: 200, height: 150, fit: BoxFit.cover) :   CustomNetworkImage(
-                                      image: '',
-                                      height: 150, width: 200, fit: BoxFit.cover,
+                                        complainController.complaintImages![index].path,  fit: BoxFit.cover) : Image.file(
+                                            File(complainController.complaintImages![index].path), fit: BoxFit.cover) :   CustomNetworkImage(
+                                      image: '', fit: BoxFit.fitHeight,
                                     ),
 
                                     Positioned(

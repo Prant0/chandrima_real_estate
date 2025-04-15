@@ -30,6 +30,7 @@ class PaymentsTab extends StatelessWidget {
                 return Container(
                   padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
+                    color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: AppColors.primary)
                   ),
@@ -58,7 +59,9 @@ class PaymentsTab extends StatelessWidget {
                           border: Border.all(color: AppColors.primary)
                         ),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+
 
 
                             Text("Services", style: poppinsBold.copyWith(color: AppColors.primary,fontWeight: FontWeight.w800,fontSize: 16),),

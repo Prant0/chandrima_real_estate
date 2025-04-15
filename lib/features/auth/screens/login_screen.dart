@@ -90,10 +90,12 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 200,),
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  "All rights and reserved by : Chandrima Real Estate PVT.LTD",
-                  style: poppinsRegular,
-                  textAlign: TextAlign.center,
+                child: Center(
+                  child: Text(
+                    "All rights and reserved by : Chandrima Real Estate PVT.LTD",
+                    style: poppinsRegular,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ],
