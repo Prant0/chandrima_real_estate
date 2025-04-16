@@ -5,6 +5,7 @@ import 'package:chandrima_real_estate/data/api/api_checker.dart';
 import 'package:chandrima_real_estate/features/profile/models/UserInvoiceModel.dart';
 import 'package:chandrima_real_estate/features/profile/models/profile_model.dart';
 import 'package:chandrima_real_estate/features/profile/repository/profile_repository.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,11 +25,11 @@ class ProfileController extends GetxController implements GetxService{
   XFile? _pickedFile;
   XFile? get pickedFile => _pickedFile;
 
-  XFile? _pickedNidFront;
+/*  XFile? _pickedNidFront;
   XFile? get pickedNidFront => _pickedNidFront;
 
   XFile? _pickedNidRare;
-  XFile? get pickedNidRare => _pickedNidRare;
+  XFile? get pickedNidRare => _pickedNidRare;*/
 
   String? _selectedGender;
   String? get selectedGender => _selectedGender;
@@ -77,7 +78,7 @@ class ProfileController extends GetxController implements GetxService{
     update();
   }
 
-  void pickNidFrontImage() async {
+ /* void pickNidFrontImage() async {
     _pickedNidFront = await ImagePicker().pickImage(source: ImageSource.gallery);
     update();
   }
@@ -85,16 +86,18 @@ class ProfileController extends GetxController implements GetxService{
   void pickNidRareImage() async {
     _pickedNidRare = await ImagePicker().pickImage(source: ImageSource.gallery);
     update();
-  }
+  }*/
 
   void initData() {
     _pickedFile = null;
     _selectedGender = null;
     _selectedRelation = null;
-    _pickedNidFront = null;
-    _pickedNidRare = null;
-    //update();
+    _nidImages=[];
+    _document1 = null;
+    _document2 = null;
   }
+
+
 
   void setSelectedGender(String value, {bool isUpdate = true}){
     _selectedGender = value;
@@ -163,7 +166,16 @@ class ProfileController extends GetxController implements GetxService{
     update();
   }
 
-  Future<void> addTenant({required String name, required String mobile, String? email,houseNumber,flatNo,advanceRent,rentPerMonth,rentMonth,rentYear,address,nidNumber}) async{
+  List<XFile>? _nidImages;
+  List<XFile>? get  nidImages => _nidImages;
+  void pickNidImage() async {
+    _nidImages!.addAll(await ImagePicker().pickMultiImage());
+   // _nidImages = await ImagePicker().pickMultiImage();
+    update();
+  }
+
+
+  Future<void> addTenant({required String name, required String mobile, String? email,houseNumber,flatNo,advanceRent,rentPerMonth,rentMonth,rentYear,address,nidNumber,document1Title,document2Title}) async{
     _isLoading = true;
     update();
 
@@ -181,9 +193,19 @@ class ProfileController extends GetxController implements GetxService{
       'rent_year' : rentYear ?? '',
       'address' : address ?? '',
       'nidNumber' : nidNumber ?? '',
+      'document_title[0]' : document1Title ?? '',
+      'document_title[1]' : document2Title ?? '',
+
     });
 
-    Response response = await profileRepository.addTenantMember(body: body, photo: _pickedFile,nidFront: _pickedNidFront,nidRare: _pickedNidRare);
+    Response response = await profileRepository.addTenantMember(
+      body: body,
+      photo: _pickedFile,
+      nidImages: _nidImages,
+      documents1: _document1,
+      documents2: _document2,
+
+    );
     if(response.statusCode == 200){
       getProfileDetails();
       Get.back();
@@ -195,6 +217,45 @@ class ProfileController extends GetxController implements GetxService{
     _isLoading = false;
     update();
   }
+
+  XFile ? _document1;
+  XFile ? get document1 => _document1;
+
+  Future<void> pickFile1() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      _document1 = XFile(result.files.single.path!);
+      update();
+    } else {
+      print('File picking canceled');
+    }
+  }
+
+  XFile ? _document2;
+  XFile ? get document2 => _document2;
+
+  Future<void> pickFile2() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      _document2 = XFile(result.files.single.path!);
+      update();
+    } else {
+      print('File picking canceled');
+    }
+  }
+
+  removeDocument1(){
+    _document1 = null;
+    update();
+  }
+
+  removeDocument2(){
+    _document2 = null;
+    update();
+  }
+
+
+
 
   Future<void> updateTenant({required String name, required String mobile, String? email,houseNumber,flatNo,advanceRent,rentPerMonth,rentMonth,rentYear,address,nidNumber,required int id}) async{
     _isLoading = true;
@@ -217,7 +278,7 @@ class ProfileController extends GetxController implements GetxService{
       'nidNumber' : nidNumber ?? '',
     });
 
-    Response response = await profileRepository.updateTenantMember(body: body, photo: _pickedFile,nidFront: _pickedNidFront,nidRare: _pickedNidRare);
+    Response response = await profileRepository.updateTenantMember(body: body, photo: _pickedFile, );
     if(response.statusCode == 200){
       getProfileDetails();
       Get.back();

@@ -30,6 +30,8 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
   final TextEditingController _rentPerMonthController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _nidNumberController = TextEditingController();
+  final TextEditingController _document1TitleController = TextEditingController();
+  final TextEditingController _document2TitleController = TextEditingController();
   String? rentYear = '';
   String? rentMonth = '';
 
@@ -41,280 +43,443 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
     profileController.initData();
   }
 
+  var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Add Tenant'),
 
       body: GetBuilder<ProfileController>(builder: (profileController) {
-        return Column(
+        return Form(
+          key: formKey,
+          child: Column(
 
-            children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                Center(
-                    child: Stack(children: [
-                  ClipOval(child: profileController.pickedFile != null ? GetPlatform.isWeb ? Image.network(
-                      profileController.pickedFile!.path, width: 100, height: 100, fit: BoxFit.cover) : Image.file(
-                      File(profileController.pickedFile!.path), width: 100, height: 100, fit: BoxFit.cover) :   CustomNetworkImage(
-                    image: '',
-                    height: 100, width: 100, fit: BoxFit.cover,
-                  )),
-
-                  Positioned(
-                    bottom: 0, right: 0, top: 0, left: 0,
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () => profileController.pickImage(),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.2), shape: BoxShape.circle,
-                          border: Border.all(width: 1, color: AppColors.primary),
-                        ),
-                        child: profileController.pickedFile != null ? const SizedBox() : Container(
-                          margin: const EdgeInsets.all(Dimensions.marginSizeFifteen),
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 2, color: AppColors.white),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(Icons.camera_alt, color: AppColors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                ])),
-                const SizedBox(height: 20),
-
-                CustomTextField(
-                  controller: _nameController,
-                  hintText: 'Enter Full Name',
-                  prefixIcon: TablerIcons.user,
-                ),
-                const SizedBox(height: 15),
-
-                CustomTextField(
-                  controller: _phoneController,
-                  hintText: 'Enter Phone Number',
-                  prefixIcon: TablerIcons.phone,
-                  inputType: TextInputType.phone,
-                ),
-                const SizedBox(height: 15),
-                CustomTextField(
-                  controller: _emailController,
-                  hintText: 'Enter Email',
-                  prefixIcon: TablerIcons.mail,
-                  inputType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 15),
-                CustomTextField(
-                  controller: _houseNoController,
-                  hintText: 'Enter House No',
-                   prefixIcon: TablerIcons.home,
-                  inputType: TextInputType.text,
-                ),
-                const SizedBox(height: 15),
-                CustomTextField(
-                  controller: _flatNoController,
-                  hintText: 'Enter Flat No',
-                   prefixIcon: TablerIcons.home_2,
-                  inputType: TextInputType.text,
-                ),
-                const SizedBox(height: 15),
-                CustomTextField(
-                  controller: _advanceRentController,
-                  hintText: 'Advance Rent Amount',
-                   prefixIcon: TablerIcons.moneybag,
-                  inputType: TextInputType.number,
-                ),
-                const SizedBox(height: 15),
-                CustomTextField(
-                  controller: _rentPerMonthController,
-                  hintText: 'Rent Per Month',
-                   prefixIcon: Icons.money,
-                  inputType: TextInputType.number,
-                ),
-                const SizedBox(height: 15),
-                CustomTextField(
-                  controller: _addressController,
-                  hintText: 'Enter Full Address',
-                   prefixIcon: Icons.sticky_note_2_outlined,
-                  inputType: TextInputType.multiline,
-                ),
-                const SizedBox(height: 15),
-                CustomTextField(
-                  controller: _nidNumberController,
-                  hintText: 'Enter NID Number',
-                   prefixIcon: Icons.confirmation_number_outlined,
-                  inputType: TextInputType.multiline,
-                ),
-                const SizedBox(height: 15),
-
-                CustomDropdownButton(
-                  hintText: 'Select Gender',
-                  items: const ['Male', 'Female', 'Other'],
-                  onChanged: (value) {
-                    profileController.setSelectedGender(value!);
-                  },
-                  selectedValue: profileController.selectedGender,
-                ),
-                const SizedBox(height: 15),
-
-                Container(
-                  height: 55,
-                  decoration: BoxDecoration(
-                    color: AppColors.grey.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
-                  ),
-                  child: Row(children: [
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.only(left: 28),
-                      child: Text(rentYear!.isEmpty ? 'Select Rent Date' : "Month : $rentMonth, Year : ${rentYear!}", style: poppinsRegular.copyWith(color: AppColors.black, fontSize: 15)),
+              children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                  Center(
+                      child: Stack(children: [
+                    ClipOval(child: profileController.pickedFile != null ? GetPlatform.isWeb ? Image.network(
+                        profileController.pickedFile!.path, width: 100, height: 100, fit: BoxFit.cover) : Image.file(
+                        File(profileController.pickedFile!.path), width: 100, height: 100, fit: BoxFit.cover) :   CustomNetworkImage(
+                      image: '',
+                      height: 100, width: 100, fit: BoxFit.cover,
                     )),
-                    IconButton(
-                      icon: const Icon(Icons.calendar_month),
-                      onPressed: () {
-                        showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now(),
 
-                        ).then((value) {
-                          if (value != null) {
-                            setState(() {
-                              rentMonth = value.month.toString();
-                              rentYear = '${value.year}';
-                            });
-                          }
-                        });
-                      },
+                    Positioned(
+                      bottom: 0, right: 0, top: 0, left: 0,
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () => profileController.pickImage(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.2), shape: BoxShape.circle,
+                            border: Border.all(width: 1, color: AppColors.primary),
+                          ),
+                          child: profileController.pickedFile != null ? const SizedBox() : Container(
+                            margin: const EdgeInsets.all(Dimensions.marginSizeFifteen),
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 2, color: AppColors.white),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(Icons.camera_alt, color: AppColors.white),
+                          ),
+                        ),
+                      ),
                     ),
-                    const SizedBox(width: 12),
-                  ]),
-                ),
-               /* const SizedBox(height: 15),
 
-                CustomDropdownButton(
-                  hintText: 'Select Relation',
-                  items: const ['Owner Family', 'Care Taker', 'Driver', 'Buya'],
-                  onChanged: (value) {
-                    profileController.setSelectedRelation(value!);
-                  },
-                  selectedValue: profileController.selectedRelation,
-                ),*/
-                SizedBox(height: 15),
-                Text("NID Front Image", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 17)),
-                SizedBox(height: 10),
-                Center(
-                    child: Stack(children: [
-                      profileController.pickedNidFront != null ? GetPlatform.isWeb ? Image.network(
-                          profileController.pickedNidFront!.path, width: 200, height: 150, fit: BoxFit.cover) : Image.file(
-                          File(profileController.pickedNidFront!.path), width: 200, height: 150, fit: BoxFit.cover) :   CustomNetworkImage(
-                        image: '',
-                        height: 150, width: 200, fit: BoxFit.cover,
+                  ])),
+                  const SizedBox(height: 20),
+
+                  CustomTextField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your name';
+                      }
+                      return null;
+                    },
+                    controller: _nameController,
+                    hintText: 'Enter Full Name',
+                    prefixIcon: TablerIcons.user,
+                  ),
+                  const SizedBox(height: 15),
+
+                  CustomTextField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your phone number';
+                      }
+                      return null;
+                    },
+                    controller: _phoneController,
+                    hintText: 'Enter Phone Number',
+                    prefixIcon: TablerIcons.phone,
+                    inputType: TextInputType.phone,
+                  ),
+                  const SizedBox(height: 15),
+                  CustomTextField(
+                    controller: _emailController,
+                    hintText: 'Enter Email',
+                    prefixIcon: TablerIcons.mail,
+                    inputType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(height: 15),
+                  CustomTextField(
+                    controller: _houseNoController,
+                    hintText: 'Enter House No',
+                     prefixIcon: TablerIcons.home,
+                    inputType: TextInputType.text,
+                  ),
+                  const SizedBox(height: 15),
+                  CustomTextField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your flat number';
+                      }
+                      return null;
+                    },
+                    controller: _flatNoController,
+                    hintText: 'Enter Flat No',
+                     prefixIcon: TablerIcons.home_2,
+                    inputType: TextInputType.text,
+                  ),
+                  const SizedBox(height: 15),
+                  CustomTextField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter advance rent amount';
+                      }
+                      return null;
+                    },
+                    controller: _advanceRentController,
+                    hintText: 'Advance Rent Amount',
+                     prefixIcon: TablerIcons.moneybag,
+                    inputType: TextInputType.number,
+                  ),
+                  const SizedBox(height: 15),
+                  CustomTextField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter rent per month';
+                      }
+                      return null;
+                    },
+                    controller: _rentPerMonthController,
+                    hintText: 'Rent Per Month',
+                     prefixIcon: Icons.money,
+                    inputType: TextInputType.number,
+                  ),
+                  const SizedBox(height: 15),
+                  CustomTextField(
+                    controller: _addressController,
+                    hintText: 'Enter Full Address',
+                     prefixIcon: Icons.sticky_note_2_outlined,
+                    inputType: TextInputType.multiline,
+                  ),
+                  const SizedBox(height: 15),
+                  CustomTextField(
+                    controller: _nidNumberController,
+                    hintText: 'Enter NID Number',
+                     prefixIcon: Icons.confirmation_number_outlined,
+                    inputType: TextInputType.multiline,
+                  ),
+                  const SizedBox(height: 15),
+
+                  CustomDropdownButton(
+                    hintText: 'Select Gender',
+                    items: const ['Male', 'Female', 'Other'],
+                    onChanged: (value) {
+                      profileController.setSelectedGender(value!);
+                    },
+                    selectedValue: profileController.selectedGender,
+                  ),
+                  const SizedBox(height: 15),
+
+                  Container(
+                    height: 55,
+                    decoration: BoxDecoration(
+                      color: AppColors.grey.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
+                    ),
+                    child: Row(children: [
+                      Expanded(child: Padding(
+                        padding: const EdgeInsets.only(left: 28),
+                        child: Text(rentYear!.isEmpty ? 'Select Rent Date' : "Month : $rentMonth, Year : ${rentYear!}", style: poppinsRegular.copyWith(color: AppColors.black, fontSize: 15)),
+                      )),
+                      IconButton(
+                        icon: const Icon(Icons.calendar_month),
+                        onPressed: () {
+                          showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+
+                          ).then((value) {
+                            if (value != null) {
+                              setState(() {
+                                rentMonth = value.month.toString();
+                                rentYear = '${value.year}';
+                              });
+                            }
+                          });
+                        },
                       ),
+                      const SizedBox(width: 12),
+                    ]),
+                  ),
 
-                      Positioned(
-                        bottom: 0, right: 0, top: 0, left: 0,
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () => profileController.pickNidFrontImage(),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.2),
-                              border: Border.all(width: 1, color: AppColors.primary),
+                  SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Text("Add NID Images (Front & Rare)", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 20)),
+                          Spacer(),
+                          IconButton(onPressed: (){
+                            profileController.pickNidImage();
+                          }, icon:Icon(Icons.add_circle_outlined,color: AppColors.primary,size: 33,))
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Center(
+
+                          child: GridView.builder(
+                              itemCount: profileController.nidImages != null ? profileController.nidImages!.length : 1,
+                              shrinkWrap: true,
+                              physics:   NeverScrollableScrollPhysics(),
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisSpacing: 16,
+                                  mainAxisSpacing: 16,
+                                  crossAxisCount: 2),
+                              itemBuilder: (context,index){
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Stack(children: [
+                                    profileController.nidImages != null ? GetPlatform.isWeb ? Image.network(
+                                        profileController.nidImages![index].path,  fit: BoxFit.cover) : Image.file(
+                                        File(profileController.nidImages![index].path), fit: BoxFit.cover) :   CustomNetworkImage(
+                                      image: '', fit: BoxFit.fitHeight,
+                                    ),
+
+                                    Positioned(
+                                      bottom: 0, right: 0, top: 0, left: 0,
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () {
+                                          profileController.pickNidImage();
+                                          setState(() {
+
+                                          });
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.black.withValues(alpha: 0.2),
+                                            border: Border.all(width: 1, color: AppColors.primary),
+                                          ),
+                                          child: profileController.nidImages != null ? const SizedBox() : Container(
+                                            margin: const EdgeInsets.all(Dimensions.marginSizeFifteen),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(width: 2, color: AppColors.white),
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(Icons.camera_alt, color: AppColors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                    Positioned(
+                                      right: 0, top: 0,
+                                      child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: (){
+                                          profileController.nidImages!.removeAt(index);
+                                          profileController.update();
+                                          setState(() {
+
+                                          });
+                                        },
+                                        child: profileController.nidImages == null ? const SizedBox() :
+                                        Container(
+                                          margin: const EdgeInsets.all(Dimensions.marginSizeFifteen),
+
+                                          child: const Icon(Icons.remove_circle_outline, color: AppColors.red,size: 30,),
+                                        ),
+                                      ),
+                                    ),
+
+                                  ]),
+                                );
+                              })
+
+                      ),
+                  SizedBox(height: 15),
+                  Row(
+                    children: [
+                      Text("Add Documents 1", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 20)),
+                      Spacer(),
+                      IconButton(onPressed: (){
+                        setState(() {
+                          isDocument1=true;
+                        });
+                        //profileController.pickFile1();
+                      }, icon:Icon(Icons.arrow_forward,color: AppColors.primary,size: 33,))
+                    ],
+                  ),
+                  SizedBox(height: 10),
+
+
+
+                      Visibility(
+                        visible: isDocument1==true,
+                        child: Column(
+                          children: [
+                            CustomTextField(
+                              controller: _document1TitleController,
+                              hintText: 'Enter Document 1 Title',
+                              prefixIcon: TablerIcons.file,
+                              inputType: TextInputType.text,
                             ),
-                            child: profileController.pickedNidFront != null ? const SizedBox() : Container(
-                              margin: const EdgeInsets.all(Dimensions.marginSizeFifteen),
-                              decoration: BoxDecoration(
-                                border: Border.all(width: 2, color: AppColors.white),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(Icons.camera_alt, color: AppColors.white),
+
+                            SizedBox(height: 10),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Attach Documents",style: poppinsMedium,),
+
+                                IconButton(onPressed: (){
+                                  profileController.pickFile1();
+
+                                }, icon:
+                                Icon(Icons.add_circle_outlined,color: AppColors.primary,size: 33,)),
+                              ],
                             ),
-                          ),
+
+                            profileController.document1==null?SizedBox() : Row(
+                              children: [
+                                Text("${profileController.document1!.path.split('/').last}",style: poppinsRegular.copyWith(color: AppColors.black,fontSize: 15),),
+
+                                Spacer(),
+                                IconButton(onPressed: (){
+                                  profileController.removeDocument1();
+                                }, icon:Icon(Icons.delete,color: AppColors.red,size: 33,))
+                              ],
+                            ),
+                          ],
                         ),
                       ),
+                      SizedBox(height: 15),
 
-                    ])),
-                SizedBox(height: 15),
-                Text("NID Rare Image", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 17)),
-                SizedBox(height: 10),
-                Center(
-                    child: Stack(children: [
-                      profileController.pickedNidRare != null ? GetPlatform.isWeb ? Image.network(
-                          profileController.pickedNidRare!.path, width: 200, height: 150, fit: BoxFit.cover) : Image.file(
-                          File(profileController.pickedNidRare!.path), width: 200, height: 150, fit: BoxFit.cover) :   CustomNetworkImage(
-                        image: '',
-                        height: 150, width: 200, fit: BoxFit.cover,
+
+                      Row(
+                        children: [
+                          Text("Add Documents 2", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 20)),
+                          Spacer(),
+                          IconButton(onPressed: (){
+                            setState(() {
+                              isDocument2=true;
+                            });
+                            //profileController.pickFile1();
+                          }, icon:Icon(Icons.arrow_forward,color: AppColors.primary,size: 33,))
+                        ],
                       ),
+                      SizedBox(height: 10),
 
-                      Positioned(
-                        bottom: 0, right: 0, top: 0, left: 0,
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () => profileController.pickNidRareImage(),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.2),
-                              border: Border.all(width: 1, color: AppColors.primary),
+
+
+                      Visibility(
+                        visible: isDocument2==true,
+                        child: Column(
+                          children: [
+                            CustomTextField(
+                              controller: _document2TitleController,
+                              hintText: 'Enter Document 2 Title',
+                              prefixIcon: TablerIcons.file,
+                              inputType: TextInputType.text,
                             ),
-                            child: profileController.pickedNidRare != null ? const SizedBox() : Container(
-                              margin: const EdgeInsets.all(Dimensions.marginSizeFifteen),
-                              decoration: BoxDecoration(
-                                border: Border.all(width: 2, color: AppColors.white),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(Icons.camera_alt, color: AppColors.white),
+
+                            SizedBox(height: 10),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Attach Documents",style: poppinsMedium,),
+
+                                IconButton(onPressed: (){
+                                  profileController.pickFile2();
+
+                                }, icon:
+                                Icon(Icons.add_circle_outlined,color: AppColors.primary,size: 33,)),
+                              ],
                             ),
-                          ),
+
+                            profileController.document2==null?SizedBox() : Row(
+                              children: [
+                                Text("${profileController.document2!.path.split('/').last}",style: poppinsRegular.copyWith(color: AppColors.black,fontSize: 15),),
+
+                                Spacer(),
+                                IconButton(onPressed: (){
+                                  profileController.removeDocument1();
+                                }, icon:Icon(Icons.delete,color: AppColors.red,size: 33,))
+                              ],
+                            ),
+                          ],
                         ),
                       ),
+                      SizedBox(height: 15),
 
-                    ])),
 
-              ]),
+                ]),
+              ),
             ),
-          ),
 
 
 
 
 
-          CustomCard(
-            padding: Dimensions.paddingSizeFifteen,
-            child: CustomButton(
-              isLoading: profileController.isLoading,
-              buttonText: 'Add Tenant',
-              onPressed: () {
-                profileController.addTenant(
-                    name: _nameController.text.toString(),
-                    mobile: _phoneController.text.toString(),
-                    email: _emailController.text.toString(),
-                    houseNumber: _houseNoController.text.toString(),
-                    flatNo: _flatNoController.text.toString(),
-                    advanceRent: _advanceRentController.text.toString(),
-                    rentPerMonth: _rentPerMonthController.text.toString(),
-                    rentMonth: rentMonth,
-                    rentYear: rentYear,
-                    address: _addressController.text.toString(),
-                    nidNumber: _nidNumberController.text.toString()
+            CustomCard(
+              padding: Dimensions.paddingSizeFifteen,
+              child: CustomButton(
+                isLoading: profileController.isLoading,
+                buttonText: 'Add Tenant',
+                onPressed: () {
+
+                  if(formKey.currentState!.validate()){
+                    profileController.addTenant(
+                        name: _nameController.text.toString(),
+                        mobile: _phoneController.text.toString(),
+                        email: _emailController.text.toString(),
+                        houseNumber: _houseNoController.text.toString(),
+                        flatNo: _flatNoController.text.toString(),
+                        advanceRent: _advanceRentController.text.toString(),
+                        rentPerMonth: _rentPerMonthController.text.toString(),
+                        rentMonth: rentMonth,
+                        rentYear: rentYear,
+                        address: _addressController.text.toString(),
+                        nidNumber: _nidNumberController.text.toString(),
+                      document1Title: _document1TitleController.text.toString(),
+                      document2Title: _document2TitleController.text.toString(),
 
 
-                  );
-              },
+                    );
+                  }
+                },
+              ),
             ),
-          ),
-        ]);
+          ]),
+        );
       }),
     );
   }
+
+  bool isDocument1=false;
+  bool isDocument2=false;
 }

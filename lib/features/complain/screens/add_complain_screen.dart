@@ -127,7 +127,7 @@ class _AddComplainScreenState extends State<AddComplainScreen> {
                               Text("Add Images", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 20)),
                               SizedBox(width: 20),
                               IconButton(onPressed: (){
-                                complainController.pickNidFrontImage();
+                                complainController.pickComplaintImages();
                               }, icon:Icon(Icons.add_circle_outlined,color: AppColors.primary,size: 33,))
                             ],
                           ),
@@ -158,7 +158,7 @@ class _AddComplainScreenState extends State<AddComplainScreen> {
                                         splashColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () {
-                                          complainController.pickNidFrontImage();
+                                          complainController.pickComplaintImages();
                                           setState(() {
 
                                           });

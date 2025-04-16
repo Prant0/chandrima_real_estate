@@ -60,7 +60,7 @@ class TenantTab extends StatelessWidget {
                               buildDetailRow('Name :', tenants.name),
                               buildDetailRow('Mobile No :', tenants.mobile),
                               buildDetailRow('Flat No :', tenants.flatNo),
-                              buildDetailRow('Address :', tenants.address),
+                              buildDetailRow('Address :', tenants.permanentAddress??"N/A"),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -197,8 +197,8 @@ class TenantTab extends StatelessWidget {
                 buildDetailRow('Advance Rent :', tenants.advanceRent??"N/A"),
                 buildDetailRow('Rent From :', "${tenants.rentPerMonth??""} ${tenants.rentYear??"N/A"}"),
                 buildDetailRow('Rent Per Month :', tenants.rentPerMonth??"N/A"),
-                buildDetailRow('Address :', tenants.address??"N/A"),
-                buildDetailRow('Permanent Address :', tenants.permanent_address??"N/A"),
+               // buildDetailRow('Address :', tenants.permanentAddress??"N/A"),
+                buildDetailRow('Permanent Address :', tenants.permanentAddress??"N/A"),
                 tenants.nidImage!=null?  buildDetailRow("NID Image : ",""):SizedBox(height: 0,),
 
                 tenants.nidImage!=null? InkWell(

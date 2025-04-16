@@ -98,7 +98,7 @@ class ComplainController extends GetxController implements GetxService {
 
   List<XFile>? _complaintImages;
   List<XFile>? get complaintImages => _complaintImages;
-  void pickNidFrontImage() async {
+  void pickComplaintImages() async {
     _complaintImages = await ImagePicker().pickMultiImage();
     update();
   }

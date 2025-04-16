@@ -59,13 +59,13 @@ class _AdvertisesDetailsScreenState extends State<AdvertisesDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+     /* floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
         onPressed: () {
           Get.to(AddAdvertiseScreen());
         },
         child: Icon(Icons.add_circle_outline, color: Colors.white),
-      ),
+      ),*/
       appBar: const CustomAppBar(title: 'Advertises Details'),
       body: GetBuilder<HomeController>(builder: (homeController) {
         return homeController.advertisesDetails != null

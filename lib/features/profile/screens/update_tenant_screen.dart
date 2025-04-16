@@ -46,7 +46,7 @@ class _UpdateTenantScreenState extends State<UpdateTenantScreen> {
     _flatNoController.text = widget.tenants.flatNo ?? '';
     _advanceRentController.text = widget.tenants.advanceRent ?? '';
     _rentPerMonthController.text = widget.tenants.rentPerMonth ?? '';
-    _addressController.text = widget.tenants.address ?? '';
+   // _addressController.text = widget.tenants.address ?? '';
     _nidNumberController.text = widget.tenants.nidNumber ?? '';
     rentYear = widget.tenants.rentYear ?? '';
     rentMonth = widget.tenants.rentMonth ?? '';
@@ -238,7 +238,7 @@ class _UpdateTenantScreenState extends State<UpdateTenantScreen> {
                     const SizedBox(height: 15),
                     Text("NID Front Image", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 17)),
                     const SizedBox(height: 10),
-                    Center(
+                    /*Center(
                       child: Stack(
                         children: [
                           profileController.pickedNidFront != null
@@ -346,7 +346,7 @@ class _UpdateTenantScreenState extends State<UpdateTenantScreen> {
                           ),
                         ],
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ),

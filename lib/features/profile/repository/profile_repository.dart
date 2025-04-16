@@ -16,8 +16,15 @@ class ProfileRepository{
     return await apiClient.getData("${AppConstants.userInvoiceList}?page=$page");
   }
 
-  Future<Response> addFamilyMember({required Map<String, String> body, XFile? image}) async{
-    return await apiClient.postMultipartData(AppConstants.addFamilyMember, body, [MultipartBody('photo', image)]);
+  Future<Response> addFamilyMember({required Map<String, String> body, XFile? image,nidFront,nidRare,documents1,documents2}) async{
+    return await apiClient.postMultipartData(AppConstants.addFamilyMember, body, [
+      MultipartBody('photo', image,),
+      MultipartBody('nid_image', nidFront,),
+      MultipartBody('photo', image,),
+      MultipartBody('photo', image,),
+
+
+    ]);
   }
 
   Future<Response> updateFamilyMember({required Map<String, String> body, XFile? image}) async{
@@ -28,21 +35,24 @@ class ProfileRepository{
     return await apiClient.postData(AppConstants.requestFamilyIDCard, body, );
   }
 
-  Future<Response> addTenantMember({required Map<String, String> body, XFile? photo,nidFront,nidRare}) async{
+  Future<Response> addTenantMember({required Map<String, String> body, XFile? photo,List<XFile> ?nidImages,XFile ?documents1,documents2}) async{
+    List<MultipartBody> _nidImages = nidImages?.map((img) => MultipartBody('nid_image[]', img))?.toList() ?? [];
     return await apiClient.postMultipartData(AppConstants.addTenantMember, body,
       [
         MultipartBody('photo', photo),
-        MultipartBody('nid_image', nidFront),
-        MultipartBody('nid_image', nidRare),
-      ],);
+        MultipartBody('document_file[0][]', documents1),
+        MultipartBody('document_file[1][]', documents2),
+        ..._nidImages,
+
+      ],
+
+    );
   }
 
-  Future<Response> updateTenantMember({required Map<String, String> body, XFile? photo,nidFront,nidRare}) async{
+  Future<Response> updateTenantMember({required Map<String, String> body, XFile? photo,List<XFile> ?nidImages}) async{
     return await apiClient.postMultipartData(AppConstants.updateTenantMember, body,
       [
         MultipartBody('photo', photo),
-        MultipartBody('nid_image', nidFront),
-        MultipartBody('nid_image', nidRare),
       ],);
   }
 

@@ -21,7 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 6, // Number of tabs
+      length: 4, // Number of tabs
       initialIndex: widget.initialIndex,
       child: Scaffold(
         backgroundColor: AppColors.background,
@@ -40,8 +40,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Tab(text: 'Land Information'),
               Tab(text: 'Family Member'),
               Tab(text: 'Tenant'),
-              Tab(text: 'Payments'),
-              Tab(text: 'Complaint'),
+             // Tab(text: 'Payments'),
+              //Tab(text: 'Complaint'),
               //Tab(text: 'Document'),
             ],
           ),
@@ -52,8 +52,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             LandInformationTab(),
             FamilyMemberTab(),
             TenantTab(),
-            PaymentsTab(),
-            ComplainScreen(isShowAppBar: false),
+            //PaymentsTab(),
+            //ComplainScreen(isShowAppBar: false),
            // DocumentTab(),
           ],
         ),

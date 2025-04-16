@@ -19,10 +19,7 @@ class ComplainRepository{
   }
 
   Future<Response> addComplain({required Map<String, String> body, List<XFile>? image}) async{
-    /*return await apiClient.postMultipartData(AppConstants.addFamilyMember, body,
-        [MultipartBody('documents', image)]
 
-    */
 
     List<MultipartBody> multipartImages = image?.map((img) => MultipartBody('documents[]', img))?.toList() ?? [];
     return await apiClient.postMultipartData(AppConstants.addComplain, body, multipartImages);
