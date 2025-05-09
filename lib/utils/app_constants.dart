@@ -44,6 +44,7 @@ class AppConstants  {
 
 
   static const String makePaymentUri = '/payment/create/';
+  static const String checkPaymentUri = '/payment/check/';
 
   static const String token = 'chandrima_token';
 }

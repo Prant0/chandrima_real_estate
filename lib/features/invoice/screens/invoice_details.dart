@@ -1,6 +1,6 @@
 import 'package:chandrima_real_estate/common/widgets/custom_button.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_card.dart';
-import 'package:chandrima_real_estate/features/payment/screen/make_payment_screen.dart';
+import 'package:chandrima_real_estate/features/payment/controller/payment_controller.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/features/profile/models/UserInvoiceModel.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
@@ -11,8 +11,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class InvoiceDetails extends StatelessWidget {
-  UserInvoiceModel userInvoice;
-    InvoiceDetails({super.key,required this.userInvoice });
+  final UserInvoiceModel userInvoice;
+  const InvoiceDetails({super.key,required this.userInvoice });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class InvoiceDetails extends StatelessWidget {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios,color: Colors.white,),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white,),
           onPressed: (){
             Navigator.pop(context);
           },
@@ -257,16 +257,20 @@ class InvoiceDetails extends StatelessWidget {
               ),
             ),
           ),
-          userInvoice.paymentStatus!.toUpperCase()=="PAID"?SizedBox(height: 1,): CustomCard(
-            padding: Dimensions.paddingSizeFifteen,
-            child: CustomButton(
-              color:Color(0xffEE1748),
-              //isLoading: profileController.isLoading,
-              buttonText: 'Make Payment',
-              onPressed: () {
-                Get.to(MakePaymentScreen(paymentId: userInvoice.invoiceId.toString()) );
-              },
-            ),
+          (userInvoice.paymentStatus!.toUpperCase() == "PAID") || (userInvoice.paymentStatus == "null") ? const SizedBox() : GetBuilder<PaymentController>(
+            builder: (paymentController) {
+              return CustomCard(
+                padding: Dimensions.paddingSizeFifteen,
+                child: CustomButton(
+                  color: const Color(0xffEE1748),
+                  isLoading: paymentController.isLoading,
+                  buttonText: 'Make Payment',
+                  onPressed: () {
+                    paymentController.makePayment(paymentId: userInvoice.invoiceId ?? '');
+                  },
+                ),
+              );
+            }
           ),
         ],
       ),

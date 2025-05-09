@@ -8,12 +8,15 @@ import 'package:image_picker/image_picker.dart';
 
 class PaymentRepository {
   final ApiClient apiClient;
-
   PaymentRepository({required this.apiClient});
 
 
   Future<Response> makePayment({required String paymentId}) async{
     return await apiClient.postData("${AppConstants.makePaymentUri}$paymentId",{});
+  }
+
+  Future<Response> checkPayment({required String paymentId}) async{
+    return await apiClient.postData("${AppConstants.checkPaymentUri}$paymentId",{});
   }
 
 }
