@@ -12,9 +12,14 @@ class AppConstants  {
   static const String updateFamilyMember = '/member/family/update';
   static const String requestFamilyIDCard = '/family/id-card/request/send';
   static const String addAdvertise = '/advertise/request';
+  static const String updateAdvertise = '/advertise/update';
   static const String addTenantMember = '/member/tenant/store';
+  static const String tenantIdCardRequest = '/tenant/id-card/request/send';
+  static const String familyIdCardRequest = '/family/id-card/request/send';
   static const String updateTenantMember = '/member/tenant/update';
   static const String userInvoiceList = '/invoice/list';
+  static const String eventList = '/event/list';
+  static const String tenantListUri = '/member/tenant/list';
   static const String advertisementList = '/advertises';
   static const String myAdvertisementList = '/my/advertise';
   static const String notificationsList = '/notifications';
@@ -31,10 +36,14 @@ class AppConstants  {
   static const String deleteGatePass = '/gate-pass/delete';
   static const String deleteFamilyMember = '/member/family/delete';
   static const String deleteTenantMember = '/member/tenant/delete';
+  static const String deleteAdvertise = '/advertise/delete';
   static const String gatePassDownload = '/gate-pass/download';
   static const String landInfoDownload = '/member/land-info/download';
 
   static const String tenantInfoDownload = '/member/tenant-info/download';
+
+
+  static const String makePaymentUri = '/payment/create/';
 
   static const String token = 'chandrima_token';
 }

@@ -23,18 +23,25 @@ class GatePassController extends GetxController implements GetxService{
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  Future<void> getGatePassList() async {
-    final response = await gatePassRepository.getGatePassList();
+
+  Future<void> getGatePassList({required int page}) async {
+    final response = await gatePassRepository.getGatePassList(page);
 
     if(response.statusCode == 200){
-      _gatePassList = [];
-      _gatePassList = response.body['data'] ['data'].map<GatePassData>((data) => GatePassData.fromJson(data)).toList();
+      if (response.body["data"]["data"].isNotEmpty) {
+        _gatePassList?.addAll(response.body["data"]["data"].map<GatePassData>((data) => GatePassData.fromJson(data)).toList());
+        update();
+      } else {
+        showCustomSnackBar("No Data Available", isError: false);
+      }
     }else{
       ApiChecker.checkApi(response);
     }
     update();
   }
-
+  void loadMoreGatePass(int pageNo) {
+    getGatePassList(page: pageNo);
+  }
 
   GatePassTypeModel? _gatePassTypeModel;
   GatePassTypeModel? get gatePassTypeModel => _gatePassTypeModel;
@@ -53,17 +60,22 @@ class GatePassController extends GetxController implements GetxService{
     update();
   }
 
+
+
   Future<void> addGatePass(Map<String, String> data) async {
     _isLoading = true;
     update();
 
     final response = await gatePassRepository.addGatePass(data, _paymentDocument);
     if(response.statusCode == 200){
-      Get.back();
+
+
       showCustomSnackBar('Gate Pass added successfully', isError: false);
-      getGatePassList();
+      _gatePassList = [];
+      getGatePassList(page: 1);
+      Get.back();
     }else{
-      getGatePassList();
+
       ApiChecker.checkApi(response);
     }
 
@@ -71,11 +83,11 @@ class GatePassController extends GetxController implements GetxService{
     update();
   }
 
-  Future<void> deleteGatePass({required int gatePassId}) async {
+  Future<void> deleteGatePass({required int gatePassId,required int index}) async {
     final response = await gatePassRepository.deleteGatePass(gatePassId: gatePassId);
     if(response.statusCode == 200){
       showCustomSnackBar('Gate Pass deleted successfully', isError: false);
-      getGatePassList();
+      _gatePassList!.removeAt(index);
     }else{
       ApiChecker.checkApi(response);
     }

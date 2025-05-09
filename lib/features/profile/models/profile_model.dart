@@ -16,18 +16,19 @@ class Data {
   List<Plots>? plots;
   List<FamilyMembers>? familyMembers;
   List<Tenants>? tenants;
-  List<Events>? events;
   List<Payments>? payments;
+  List<AllFlatModel>? flats;
   bool ?isExpanded = true;
+  List<Documents>? documents;
 
   Data({
     this.member,
     this.plots,
     this.familyMembers,
     this.tenants,
-    this.events,
     this.isExpanded,
-    this.payments
+    this.flats,
+    this.payments,this.documents
   });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -38,10 +39,23 @@ class Data {
         plots!.add(Plots.fromJson(v));
       });
     }
+
+    if (json['allflats'] != null) {
+      flats = <AllFlatModel>[];
+      json['allflats'].forEach((v) {
+        flats!.add(AllFlatModel.fromJson(v));
+      });
+    }
     if (json['familyMembers'] != null) {
       familyMembers = <FamilyMembers>[];
       json['familyMembers'].forEach((v) {
         familyMembers!.add(FamilyMembers.fromJson(v));
+      });
+    }
+    if (json['other_documents'] != null) {
+      documents = <Documents>[];
+      json['other_documents'].forEach((v) {
+        documents!.add(Documents.fromJson(v));
       });
     }
     if (json['tenants'] != null) {
@@ -50,18 +64,14 @@ class Data {
         tenants!.add(Tenants.fromJson(v));
       });
     }
-    if (json['events'] != null) {
-      events = <Events>[];
-      json['events'].forEach((v) {
-        events!.add(Events.fromJson(v));
-      });
-    }
+
     if (json['payments'] != null) {
       payments = <Payments>[];
       json['payments'].forEach((v) {
         payments!.add(Payments.fromJson(v));
       });
     }
+
   }
 
 }
@@ -80,7 +90,7 @@ class Member {
   String? totalLand;
   dynamic? nidNumber;
   String? nidPhoto;
-  List<Documents>? documents;
+
   String? nameOfPower;
   String? remarks;
   String? status;
@@ -100,7 +110,6 @@ class Member {
     this.totalLand,
     this.nidNumber,
     this.nidPhoto,
-    this.documents,
     this.nameOfPower,
     this.remarks,
     this.status,
@@ -121,62 +130,36 @@ class Member {
     totalLand = json['total_land'];
     nidNumber = json['nid_number'];
     nidPhoto = json['nid_photo'];
-    if (json['documents'] != null) {
-      documents = <Documents>[];
-      json['documents'].forEach((v) {
-        documents!.add(Documents.fromJson(v));
-      });
-    }
+
     nameOfPower = json['name_of_power'];
     remarks = json['remarks'];
     status = json['status'];
     memberSine = json['member_sine'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['member_id'] = memberId;
-    data['member_type'] = memberType;
-    data['name'] = name;
-    data['gender'] = gender;
-    data['mobile'] = mobile;
-    data['email'] = email;
-    data['photo'] = photo;
-    data['present_address'] = presentAddress;
-    data['permanent_address'] = permanentAddress;
-    data['land_qty'] = landQty;
-    data['total_land'] = totalLand;
-    data['nid_number'] = nidNumber;
-    data['nid_photo'] = nidPhoto;
-    if (documents != null) {
-      data['documents'] = documents!.map((v) => v.toJson()).toList();
-    }
-    data['name_of_power'] = nameOfPower;
-    data['remarks'] = remarks;
-    data['status'] = status;
-    data['member_sine'] = memberSine;
-    return data;
-  }
 }
+
 
 class Documents {
-  String? documentTitle;
-  String? documentFile;
+  String? title;
+  List<String>? documents;
 
-  Documents({this.documentTitle, this.documentFile});
+  Documents({
+    this.title,
+    this.documents,
+  });
 
-  Documents.fromJson(Map<String, dynamic> json) {
-    documentTitle = json['document_title'];
-    documentFile = json['document_file'];
-  }
+  factory Documents.fromJson(Map<String, dynamic> json) => Documents(
+    title: json["title"],
+    documents: json["documents"] == null ? [] : List<String>.from(json["documents"]!.map((x) => x)),
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['document_title'] = documentTitle;
-    data['document_file'] = documentFile;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "title": title,
+    "documents": documents == null ? [] : List<dynamic>.from(documents!.map((x) => x)),
+  };
 }
+
 
 class Plots {
   int? id;
@@ -309,22 +292,30 @@ class GetFlats {
 
 class FamilyMembers {
   int? id;
-  String? memberId;
   String? familyId;
+  String? memberId;
   String? name;
   String? mobile;
-  String? email;
+  dynamic email;
   String? photo;
   String? gender;
-  String? birthday;
+  DateTime? birthday;
   String? relation;
-  String? nidNumber;
-  String? nidImage,address,id_card_status;
-  String? createdAt;
-  String? updatedAt;
+  dynamic nidNumber;
+  dynamic nidImage;
+  dynamic address;
+  dynamic permanentAddress;
+  dynamic familyFor;
+  String? idCardReason;
+  String? idCardStatus;
+  dynamic createdBy;
+  dynamic updatedBy;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   FamilyMembers({
     this.id,
+    this.familyId,
     this.memberId,
     this.name,
     this.mobile,
@@ -333,51 +324,95 @@ class FamilyMembers {
     this.gender,
     this.birthday,
     this.relation,
-    this.nidNumber,this.address,
+    this.nidNumber,
     this.nidImage,
+    this.address,
+    this.permanentAddress,
+    this.familyFor,
+    this.idCardReason,
+    this.idCardStatus,
+    this.createdBy,
+    this.updatedBy,
     this.createdAt,
     this.updatedAt,
-    this.familyId,
-    this.id_card_status,
   });
 
-  FamilyMembers.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    memberId = json['member_id'];
-    familyId = json['family_id'];
-    name = json['name'];
-    mobile = json['mobile'];
-    email = json['email'];
-    address = json['address'];
-    photo = json['photo'];
-    gender = json['gender'];
-    birthday = json['birthday'];
-    id_card_status = json['id_card_status'];
-    relation = json['relation'];
-    nidNumber = json['nid_number'];
-    nidImage = json['nid_image'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
+  factory FamilyMembers.fromJson(Map<String, dynamic> json) => FamilyMembers(
+    id: json["id"],
+    familyId: json["family_id"],
+    memberId: json["member_id"],
+    name: json["name"],
+    mobile: json["mobile"],
+    email: json["email"],
+    photo: json["photo"],
+    gender: json["gender"],
+    birthday: json["birthday"] == null ? null : DateTime.parse(json["birthday"]),
+    relation: json["relation"],
+    nidNumber: json["nid_number"],
+    nidImage: json["nid_image"],
+    address: json["address"],
+    permanentAddress: json["permanent_address"],
+    familyFor: json["family_for"],
+    idCardReason: json["id_card_reason"],
+    idCardStatus: json["id_card_status"],
+    createdBy: json["created_by"],
+    updatedBy: json["updated_by"],
+    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['member_id'] = memberId;
-    data['name'] = name;
-    data['mobile'] = mobile;
-    data['email'] = email;
-    data['photo'] = photo;
-    data['gender'] = gender;
-    data['birthday'] = birthday;
-    data['relation'] = relation;
-    data['nid_number'] = nidNumber;
-    data['nid_image'] = nidImage;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "family_id": familyId,
+    "member_id": memberId,
+    "name": name,
+    "mobile": mobile,
+    "email": email,
+    "photo": photo,
+    "gender": gender,
+    "birthday": "${birthday!.year.toString().padLeft(4, '0')}-${birthday!.month.toString().padLeft(2, '0')}-${birthday!.day.toString().padLeft(2, '0')}",
+    "relation": relation,
+    "nid_number": nidNumber,
+    "nid_image": nidImage,
+    "address": address,
+    "permanent_address": permanentAddress,
+    "family_for": familyFor,
+    "id_card_reason": idCardReason,
+    "id_card_status": idCardStatus,
+    "created_by": createdBy,
+    "updated_by": updatedBy,
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
+  };
 }
+
+
+
+class AllFlatModel {
+  int? id;
+  String? flatNo;
+  String? houseNumber;
+
+  AllFlatModel({
+    this.id,
+    this.flatNo,
+    this.houseNumber,
+  });
+
+  factory AllFlatModel.fromJson(Map<String, dynamic> json) => AllFlatModel(
+    id: json["id"],
+    flatNo: json["flat_no"],
+    houseNumber: json["house_number"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "flat_no": flatNo,
+    "house_number": houseNumber,
+  };
+}
+
+
 class Tenants {
   int? id;
   String? tenantId;
@@ -515,81 +550,7 @@ class Document {
 }
 
 
-class Events {
-  int? id;
-  dynamic userId;
-  String? title;
-  String? description;
-  String? eventSending;
-  DateTime? sendingDate;
-  String? block;
-  String? eventTo;
-  dynamic startDate;
-  dynamic endDate;
-  String? notifyVia;
-  String? status;
-  int? createdBy;
-  int? updatedBy;
-  DateTime? createdAt;
-  DateTime? updatedAt;
 
-  Events({
-    this.id,
-    this.userId,
-    this.title,
-    this.description,
-    this.eventSending,
-    this.sendingDate,
-    this.block,
-    this.eventTo,
-    this.startDate,
-    this.endDate,
-    this.notifyVia,
-    this.status,
-    this.createdBy,
-    this.updatedBy,
-    this.createdAt,
-    this.updatedAt,
-  });
-
-  factory Events.fromJson(Map<String, dynamic> json) => Events(
-    id: json["id"],
-    userId: json["user_id"],
-    title: json["title"],
-    description: json["description"],
-    eventSending: json["event_sending"],
-    sendingDate: json["sending_date"] == null ? null : DateTime.parse(json["sending_date"]),
-    block: json["block"],
-    eventTo: json["event_to"],
-    startDate: json["start_date"],
-    endDate: json["end_date"],
-    notifyVia: json["notify_via"],
-    status: json["status"],
-    createdBy: json["created_by"],
-    updatedBy: json["updated_by"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "user_id": userId,
-    "title": title,
-    "description": description,
-    "event_sending": eventSending,
-    "sending_date": sendingDate?.toIso8601String(),
-    "block": block,
-    "event_to": eventTo,
-    "start_date": startDate,
-    "end_date": endDate,
-    "notify_via": notifyVia,
-    "status": status,
-    "created_by": createdBy,
-    "updated_by": updatedBy,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-  };
-}
 
 class Payments {
   int? id;

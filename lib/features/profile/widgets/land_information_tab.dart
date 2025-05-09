@@ -68,9 +68,9 @@ class _LandInformationTabState extends State<LandInformationTab> {
                  children: [
                    BuildDetailsRow(title: 'Plot No', value: plot.plotNo),
                    BuildDetailsRow(title: 'Land Condition', value: plot.landCondition),
-                   BuildDetailsRow(title: 'Net Land', value: '${plot.netLand} sq ft'),
+                   BuildDetailsRow(title: 'Net Land', value: '${plot.netLand} Katha'),
                    BuildDetailsRow(title: 'Deed No', value: '${plot.deedNo??"N/A"}'),
-                   BuildDetailsRow(title: 'House No', value: plot.houseNumber),
+                  plot.landCondition=="ready flat" ?BuildDetailsRow(title: 'House No', value: plot.houseNumber):SizedBox(),
                    BuildDetailsRow(title: 'Road No', value: plot.roadNumber),
                    BuildDetailsRow(title: 'Block No', value: plot.blockNumber),
                    BuildDetailsRow(title: 'Date', value: plot.date),

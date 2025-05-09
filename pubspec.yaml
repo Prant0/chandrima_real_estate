@@ -25,6 +25,8 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_tabler_icons: ^1.43.0
   intl: ^0.20.1
+  dio:
+  url_launcher:
   dropdown_button2: ^2.3.9
   carousel_slider: ^5.0.0
   path_provider: ^2.1.5
@@ -32,6 +34,7 @@ dependencies:
   photo_view:
   flutter_html:
   video_player:
+  webview_flutter: ^4.2.1
 
 
 dev_dependencies:

@@ -1,6 +1,7 @@
 import 'package:chandrima_real_estate/common/widgets/custom_button.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_card.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
+import 'package:chandrima_real_estate/common/widgets/custom_text_field.dart';
 import 'package:chandrima_real_estate/features/complain/screens/complain_details_screen.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/features/profile/screens/update_family_member_screen.dart';
@@ -51,6 +52,82 @@ class FamilyMemberTab extends StatelessWidget {
                               buildDetailRow('Mobile No :', familyMembers.mobile),
                               buildDetailRow('Relation :', familyMembers.relation),
                               buildDetailRow('Gender :', familyMembers.gender),
+                              familyMembers.idCardStatus=="approve"?Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color:  Colors.green.withOpacity(0.8),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Text(
+                                  "Print ID Card",
+                                  style: poppinsRegular.copyWith(color: Colors.white),
+                                ),
+                              ):  InkWell(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      TextEditingController detailsController = TextEditingController();
+
+                                      return AlertDialog(
+                                        title: const Text('Apply for ID Card'),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+
+                                            CustomTextField(
+                                              controller: detailsController,
+                                              hintText: "Enter Details",
+                                              prefixIcon: Icons.description,
+                                              maxLines: 5,
+                                            ),
+                                          ],
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              if(detailsController.text.isEmpty){
+                                                Get.snackbar("Error", "Please enter details",backgroundColor: AppColors.red.withOpacity(0.8),colorText: Colors.white);
+
+                                              }else{
+                                                profileController.addIdCardRequestFamilyMember(
+                                                  id: familyMembers.id.toString(),
+                                                  details: detailsController.text,
+                                                ).then((v){
+                                                  //  profileController.getTenantList();
+                                                  profileController.getProfileDetails();
+                                                  Get.back();
+                                                  // Navigator.of(context).pop();
+                                                });
+
+                                              }
+
+                                            },
+                                            child: const Text('Submit'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color:  Colors.red.withOpacity(0.8),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Text(
+                                    "ID Card Request",
+                                    style: poppinsRegular.copyWith(color: Colors.white),
+                                  ),
+                                ),
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -82,11 +159,11 @@ class FamilyMemberTab extends StatelessWidget {
                                                     buildDetailRow('Mobile No :', familyMembers.mobile),
                                                     buildDetailRow('Email :', familyMembers.email),
                                                     buildDetailRow('Gender :', familyMembers.gender??"N/A"),
-                                                    buildDetailRow('Birthday :', familyMembers.birthday??"N/A"),
+                                                    buildDetailRow('Birthday :', familyMembers.birthday.toString()??"N/A"),
                                                     buildDetailRow('NID Number :', familyMembers.nidImage??"N/A"),
                                                     buildDetailRow('Relation :', familyMembers.relation??"N/A"),
                                                     buildDetailRow('Address :', familyMembers.address??"N/a"),
-                                                    buildDetailRow('ID Card Status :', familyMembers.id_card_status??"N/a"),
+                                                    buildDetailRow('ID Card Status :', familyMembers.idCardStatus??"N/a"),
 
                                                     familyMembers.nidImage!=null?  buildDetailRow("NID Image : ",""):SizedBox(height: 0,),
 
@@ -102,7 +179,7 @@ class FamilyMemberTab extends StatelessWidget {
                                                     ):SizedBox(height: 0,),
                                                     SizedBox(height: 12,),
 
-                                                    familyMembers.id_card_status==null || familyMembers.id_card_status=="reject"?CustomButton(
+                                                    familyMembers.idCardStatus==null || familyMembers.idCardStatus=="reject"?CustomButton(
 
                                                         onPressed: () {
                                                           showDialog(

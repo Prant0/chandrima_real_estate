@@ -119,7 +119,7 @@ class GetPaymentMethods {
 class VehicleType {
   String? vehicleFor;
   String? name;
-  int? price;
+  dynamic? price;
 
   VehicleType({
     this.vehicleFor,

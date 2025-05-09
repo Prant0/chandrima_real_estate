@@ -34,7 +34,7 @@ class _UpdateFamilyMemberScreenState extends State<UpdateFamilyMemberScreen> {
 
     _nameController.text = widget.familyMembers.name ?? '';
     _phoneController.text = widget.familyMembers.mobile ?? '';
-    dateOfBirth = widget.familyMembers.birthday ?? '';
+    dateOfBirth = widget.familyMembers.birthday.toString() ?? '';
 
     profileController.setSelectedGender(widget.familyMembers.gender!, isUpdate: false);
     profileController.setSelectedRelation(widget.familyMembers.relation!, isUpdate: false);

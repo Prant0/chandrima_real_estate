@@ -20,7 +20,7 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
-
+//01723826340
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
 
                 Positioned(
-                  top: 50, left: 20, right: 20,
+                  top: 50, left: 12, right: 12,
                   child: Column(children: [
                     Row(
                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ]),
                     const SizedBox(height: 20),
 
-                    Text('Welcome to Chandrima Model Town', style: poppinsBold.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.white), textAlign: TextAlign.center),
+                    Text('Welcome to Chandrima Model Town', style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeEighteen, color: AppColors.white), textAlign: TextAlign.center),
                     const SizedBox(height: 20),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -183,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Get.offAll(const DashboardScreen(pageIndex: 3,profilePageIndex: 1,));
                           },
                           child: Container(
-                            padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty),
+                            padding: const EdgeInsets.symmetric(vertical:Dimensions.paddingSizeTwenty,horizontal: 10),
                             decoration: BoxDecoration(
                               color: AppColors.white,
                               borderRadius: BorderRadius.circular(Dimensions.radiusTen),
@@ -279,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        Get.offAll(const DashboardScreen(pageIndex: 3, profilePageIndex: 4));
+                        Get.offAll(  DashboardScreen(pageIndex: 1,profilePageIndex: 0,));
 
                       },
                       child: Container(

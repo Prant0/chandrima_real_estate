@@ -6,9 +6,11 @@ import 'package:chandrima_real_estate/common/widgets/custom_drop_down_button.dar
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_text_field.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
+import 'package:chandrima_real_estate/features/profile/models/profile_model.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
@@ -25,7 +27,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _houseNoController = TextEditingController();
-  final TextEditingController _flatNoController = TextEditingController();
+  //final TextEditingController _flatNoController = TextEditingController();
   final TextEditingController _advanceRentController = TextEditingController();
   final TextEditingController _rentPerMonthController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
@@ -34,6 +36,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
   final TextEditingController _document2TitleController = TextEditingController();
   String? rentYear = '';
   String? rentMonth = '';
+  String? selectedFlatNo = '';
 
   @override
   void initState() {
@@ -137,7 +140,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                     inputType: TextInputType.text,
                   ),
                   const SizedBox(height: 15),
-                  CustomTextField(
+                 /* CustomTextField(
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter your flat number';
@@ -148,8 +151,54 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                     hintText: 'Enter Flat No',
                      prefixIcon: TablerIcons.home_2,
                     inputType: TextInputType.text,
-                  ),
-                  const SizedBox(height: 15),
+                  ),*/
+
+
+                      DropdownButtonFormField2<AllFlatModel>(
+                        validator: (value) {
+                          if (value == null  ) {
+                            return 'Please select a flat number';
+                          }
+                          return null;
+                        },
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: AppColors.grey.withValues(alpha: 0.2),
+                        ),
+                        iconStyleData: const IconStyleData(
+                          icon: Icon(Icons.arrow_drop_down, color: AppColors.black, size: 30),
+                        ),
+                        dropdownStyleData: DropdownStyleData(
+                          maxHeight: 300,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(Dimensions.radiusFive),
+                          ),
+                        ),
+                        menuItemStyleData: const MenuItemStyleData(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                        ),
+
+                        hint: const Text('Select Flat No'),
+                       // value: selectedFlatNo!.isNotEmpty ? selectedFlatNo : null,
+                        items: profileController.profileDetails?.data?.flats
+                            ?.map((flat) => DropdownMenuItem<AllFlatModel>(
+                          value: flat,
+                          child: Text('${flat.flatNo} - (House : ${flat.houseNumber})'), // Display houseNo and flatNo
+                        ))
+                            .toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            selectedFlatNo = value!.id.toString() ?? '';
+                          });
+                        },
+                      ),
+
+                      const SizedBox(height: 15),
                   CustomTextField(
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -235,11 +284,12 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                     ]),
                   ),
 
-                  SizedBox(height: 15),
+                  SizedBox(height: 20),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Add NID Images (Front & Rare)", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 20)),
-                          Spacer(),
+                          Expanded(child: Text("Add NID Images (Front & Rare)", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 20))),
+
                           IconButton(onPressed: (){
                             profileController.pickNidImage();
                           }, icon:Icon(Icons.add_circle_outlined,color: AppColors.primary,size: 33,))
@@ -353,7 +403,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("Attach Documents",style: poppinsMedium,),
+                                Text("Attach Documents",style: poppinsMedium,overflow: TextOverflow.ellipsis,),
 
                                 IconButton(onPressed: (){
                                   profileController.pickFile1();
@@ -365,7 +415,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
 
                             profileController.document1==null?SizedBox() : Row(
                               children: [
-                                Text("${profileController.document1!.path.split('/').last}",style: poppinsRegular.copyWith(color: AppColors.black,fontSize: 15),),
+                                Expanded(child: Text("${profileController.document1!.path.split('/').last}",style: poppinsRegular.copyWith(color: AppColors.black,fontSize: 15),overflow: TextOverflow.ellipsis,)),
 
                                 Spacer(),
                                 IconButton(onPressed: (){
@@ -423,7 +473,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
 
                             profileController.document2==null?SizedBox() : Row(
                               children: [
-                                Text("${profileController.document2!.path.split('/').last}",style: poppinsRegular.copyWith(color: AppColors.black,fontSize: 15),),
+                                Expanded(child: Text("${profileController.document2!.path.split('/').last}",style: poppinsRegular.copyWith(color: AppColors.black,fontSize: 15),overflow: TextOverflow.ellipsis,)),
 
                                 Spacer(),
                                 IconButton(onPressed: (){
@@ -458,7 +508,7 @@ class _AddTenantScreenState extends State<AddTenantScreen> {
                         mobile: _phoneController.text.toString(),
                         email: _emailController.text.toString(),
                         houseNumber: _houseNoController.text.toString(),
-                        flatNo: _flatNoController.text.toString(),
+                        flatNo: selectedFlatNo,
                         advanceRent: _advanceRentController.text.toString(),
                         rentPerMonth: _rentPerMonthController.text.toString(),
                         rentMonth: rentMonth,

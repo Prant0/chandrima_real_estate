@@ -16,6 +16,14 @@ class ProfileRepository{
     return await apiClient.getData("${AppConstants.userInvoiceList}?page=$page");
   }
 
+  Future<Response> getEventList({required int page}) async {
+    return await apiClient.getData("${AppConstants.eventList}?page=$page");
+  }
+
+  Future<Response> getTenantList({required int page}) async {
+    return await apiClient.getData("${AppConstants.tenantListUri}?page=$page");
+  }
+
   Future<Response> addFamilyMember({required Map<String, String> body, XFile? image,nidFront,nidRare,documents1,documents2}) async{
     return await apiClient.postMultipartData(AppConstants.addFamilyMember, body, [
       MultipartBody('photo', image,),
@@ -29,6 +37,13 @@ class ProfileRepository{
 
   Future<Response> updateFamilyMember({required Map<String, String> body, XFile? image}) async{
     return await apiClient.postMultipartData(AppConstants.updateFamilyMember, body, [MultipartBody('photo', image)]);
+  }
+
+
+Future<Response> addIdCardRequestTenant({required Map<String, String> body, }) async{
+    return await apiClient.postData(AppConstants.tenantIdCardRequest, body, );
+  }Future<Response> addIdCardRequestFamilyMember({required Map<String, String> body, }) async{
+    return await apiClient.postData(AppConstants.familyIdCardRequest, body, );
   }
 
   Future<Response> requestFamilyIDCard({required Map<String, String> body,  }) async{

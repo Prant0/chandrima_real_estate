@@ -1,7 +1,9 @@
 import 'package:chandrima_real_estate/features/auth/controller/auth_controller.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/routes/routes_name.dart';
+import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/images.dart';
+import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,7 +48,12 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Container(
                 child: Image.asset(Images.logo, height: 150, width: 500,fit: BoxFit.cover,)),
-            Center(child: Text("Welcome to Chandrima Model Town", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold), textAlign: TextAlign.center)),
+            SizedBox(
+              height: 30,
+            ),
+            Center(child: Text("Welcome to \nChandrima Model Town", style: poppinsMedium.copyWith(
+                color: Colors.white,fontSize: Dimensions.fontSizeTwentyFour,fontWeight: FontWeight.w600
+            ), textAlign: TextAlign.center)),
             SizedBox(height: 50),
             const CircularProgressIndicator(),
           ],

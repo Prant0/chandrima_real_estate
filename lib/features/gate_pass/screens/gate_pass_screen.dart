@@ -16,13 +16,22 @@ class GatePassScreen extends StatefulWidget {
 }
 
 class _GatePassScreenState extends State<GatePassScreen> {
+  late ScrollController _scrollController;
   @override
   void initState() {
     super.initState();
-    Get.find<GatePassController>().getGatePassList();
+    _scrollController = ScrollController();
+    Get.find<GatePassController>().getGatePassList(page: page);
     Get.find<GatePassController>().getGatePassType();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent && !Get.find<GatePassController>().isLoading) {
+        Get.find<GatePassController>().loadMoreGatePass(page=page+1);
+      }
+    });
   }
 
+
+  int page=1 ;
 
 
   @override
@@ -40,6 +49,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
         return gatePassController.gatePassList != null ? gatePassController.gatePassList!.isNotEmpty ? ListView.builder(
           padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
           itemCount: gatePassController.gatePassList!.length,
+          controller: _scrollController,
           itemBuilder: (context, index) {
             var gatePass = gatePassController.gatePassList![index];
             return GestureDetector(
@@ -112,7 +122,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
                         ],
                       ),
                     ),
-                    RichText(
+                  /*  RichText(
                       text: TextSpan(
                         text: 'Address: ',
                         style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
@@ -122,7 +132,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
                             style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
                           ),
                         ],
-                      ),),
+                      ),),*/
 
                     gatePass.visitPurpose==null?SizedBox(): RichText(
                       text: TextSpan(
@@ -181,7 +191,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                         gatePassController.deleteGatePass(gatePassId: gatePass.id!);
+                                         gatePassController.deleteGatePass(gatePassId: gatePass.id!,index: index);
                                         Navigator.of(context).pop();
                                       },
                                       child: const Text('Delete'),

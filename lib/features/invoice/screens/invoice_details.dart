@@ -1,5 +1,6 @@
 import 'package:chandrima_real_estate/common/widgets/custom_button.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_card.dart';
+import 'package:chandrima_real_estate/features/payment/screen/make_payment_screen.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/features/profile/models/UserInvoiceModel.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
@@ -263,7 +264,7 @@ class InvoiceDetails extends StatelessWidget {
               //isLoading: profileController.isLoading,
               buttonText: 'Make Payment',
               onPressed: () {
-      
+                Get.to(MakePaymentScreen(paymentId: userInvoice.invoiceId.toString()) );
               },
             ),
           ),

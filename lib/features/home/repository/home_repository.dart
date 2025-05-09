@@ -31,8 +31,12 @@ class HomeRepository {
     return await apiClient.getData('${AppConstants.advertisementDetails}/$id');
   }
 
-  Future<Response> addAdvertise({required Map<String, String> body, XFile? image,video}) async{
-    return await apiClient.postMultipartData(AppConstants.addAdvertise, body, [MultipartBody('image', image),MultipartBody('video', video)]);
+  Future<Response> addAdvertise({required Map<String, String> body, XFile? image,paymentDocument,video}) async{
+    return await apiClient.postMultipartData(AppConstants.addAdvertise, body, [MultipartBody('image', image),MultipartBody('payment_documents[]', paymentDocument),MultipartBody('video', video)]);
+  }
+
+  Future<Response> updateAdvertise({required Map<String, String> body, XFile? image,video}) async{
+    return await apiClient.postMultipartData(AppConstants.updateAdvertise, body, [MultipartBody('image', image),MultipartBody('video', video)]);
   }
 
   Future<Response> getAdvertiseNotificationDetails(String uri) async {
@@ -42,5 +46,7 @@ class HomeRepository {
   Future<Response> getServiceChargeNotificationDetails(String uri)async {
     return await apiClient.getData(uri);
   }
-
+  Future<Response> deleteAdvertise({required int id}) async {
+    return await apiClient.getData('${AppConstants.deleteAdvertise}/$id');
+  }
 }

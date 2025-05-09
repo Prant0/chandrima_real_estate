@@ -7,6 +7,8 @@ import 'package:chandrima_real_estate/features/gate_pass/controller/gate_pass_co
 import 'package:chandrima_real_estate/features/gate_pass/repository/gate_pass_repository.dart';
 import 'package:chandrima_real_estate/features/home/controller/home_controller.dart';
 import 'package:chandrima_real_estate/features/home/repository/home_repository.dart';
+import 'package:chandrima_real_estate/features/payment/controller/payment_controller.dart';
+import 'package:chandrima_real_estate/features/payment/repository/payment_repository.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/features/profile/repository/profile_repository.dart';
 import 'package:chandrima_real_estate/utils/app_constants.dart';
@@ -25,6 +27,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => HomeRepository(apiClient: Get.find()));
   Get.lazyPut(() => ComplainRepository(apiClient: Get.find()));
   Get.lazyPut(() => GatePassRepository(apiClient: Get.find()));
+  Get.lazyPut(() => PaymentRepository(apiClient: Get.find()));
 
   /// Controller
   Get.lazyPut(() => AuthController(authRepository: Get.find()));
@@ -32,6 +35,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => HomeController(homeRepository: Get.find()));
   Get.lazyPut(() => ComplainController(complainRepository: Get.find()));
   Get.lazyPut(() => GatePassController(gatePassRepository: Get.find()));
+  Get.lazyPut(() => PaymentController(paymentRepository: Get.find()));
 
   /// Retrieving localized data
   Map<String, Map<String, String>> di = {};

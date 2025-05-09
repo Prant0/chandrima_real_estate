@@ -24,6 +24,7 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _bloodGroupController = TextEditingController();
   String? dateOfBirth = '';
 
   @override
@@ -49,10 +50,10 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
                 Center(child: Stack(children: [
 
                   ClipOval(child: profileController.pickedFile != null ? GetPlatform.isWeb ? Image.network(
-                    profileController.pickedFile!.path, width: 80, height: 80, fit: BoxFit.cover) : Image.file(
-                    File(profileController.pickedFile!.path), width: 80, height: 80, fit: BoxFit.cover) : const CustomNetworkImage(
+                    profileController.pickedFile!.path, width: 120, height: 120, fit: BoxFit.cover) : Image.file(
+                    File(profileController.pickedFile!.path), width: 120, height: 120, fit: BoxFit.cover) : const CustomNetworkImage(
                     image: '',
-                    height: 80, width: 80, fit: BoxFit.cover,
+                    height: 120, width: 120, fit: BoxFit.cover,
                   )),
 
                   Positioned(
@@ -93,6 +94,12 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
                   hintText: 'Enter Phone Number',
                   prefixIcon: TablerIcons.phone,
                   inputType: TextInputType.phone,
+                ),
+                const SizedBox(height: 15),
+                CustomTextField(
+                  controller: _bloodGroupController,
+                  hintText: 'Enter Blood Group',
+                  prefixIcon: TablerIcons.loader,
                 ),
                 const SizedBox(height: 15),
 
@@ -161,7 +168,7 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
                 String name = _nameController.text;
                 String mobile = _phoneController.text;
 
-                profileController.addFamilyMember(name: name, mobile: mobile, dob: dateOfBirth);
+                profileController.addFamilyMember(name: name, mobile: mobile, dob: dateOfBirth,bloodGroup: _bloodGroupController.text.toString());
               },
             ),
           ),

@@ -7,6 +7,7 @@ import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_text_field.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/features/profile/models/profile_model.dart';
+import 'package:chandrima_real_estate/features/profile/models/tenant_model.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
@@ -15,7 +16,7 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 
 class UpdateTenantScreen extends StatefulWidget {
-  final Tenants tenants;
+  final TenantModel tenants;
   const UpdateTenantScreen({super.key, required this.tenants});
 
   @override
@@ -238,115 +239,7 @@ class _UpdateTenantScreenState extends State<UpdateTenantScreen> {
                     const SizedBox(height: 15),
                     Text("NID Front Image", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 17)),
                     const SizedBox(height: 10),
-                    /*Center(
-                      child: Stack(
-                        children: [
-                          profileController.pickedNidFront != null
-                              ? GetPlatform.isWeb
-                              ? Image.network(
-                            profileController.pickedNidFront!.path,
-                            width: 200,
-                            height: 150,
-                            fit: BoxFit.cover,
-                          )
-                              : Image.file(
-                            File(profileController.pickedNidFront!.path),
-                            width: 200,
-                            height: 150,
-                            fit: BoxFit.cover,
-                          )
-                              : CustomNetworkImage(
-                            image: widget.tenants.nidImage?[0] ?? '',
-                            height: 150,
-                            width: 200,
-                            fit: BoxFit.cover,
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            top: 0,
-                            left: 0,
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () => profileController.pickNidFrontImage(),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withValues(alpha: 0.2),
-                                  border: Border.all(width: 1, color: AppColors.primary),
-                                ),
-                                child: profileController.pickedNidFront != null
-                                    ? const SizedBox()
-                                    : Container(
-                                  margin: const EdgeInsets.all(Dimensions.marginSizeFifteen),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(width: 2, color: AppColors.white),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(Icons.camera_alt, color: AppColors.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Text("NID Rare Image", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 17)),
-                    const SizedBox(height: 10),
-                    Center(
-                      child: Stack(
-                        children: [
-                          profileController.pickedNidRare != null
-                              ? GetPlatform.isWeb
-                              ? Image.network(
-                            profileController.pickedNidRare!.path,
-                            width: 200,
-                            height: 150,
-                            fit: BoxFit.cover,
-                          )
-                              : Image.file(
-                            File(profileController.pickedNidRare!.path),
-                            width: 200,
-                            height: 150,
-                            fit: BoxFit.cover,
-                          )
-                              : CustomNetworkImage(
-                            image: widget.tenants.nidImage?[0] ?? '',
-                            height: 150,
-                            width: 200,
-                            fit: BoxFit.cover,
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            top: 0,
-                            left: 0,
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () => profileController.pickNidRareImage(),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withValues(alpha: 0.2),
-                                  border: Border.all(width: 1, color: AppColors.primary),
-                                ),
-                                child: profileController.pickedNidRare != null
-                                    ? const SizedBox()
-                                    : Container(
-                                  margin: const EdgeInsets.all(Dimensions.marginSizeFifteen),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(width: 2, color: AppColors.white),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(Icons.camera_alt, color: AppColors.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),*/
+
                   ],
                 ),
               ),

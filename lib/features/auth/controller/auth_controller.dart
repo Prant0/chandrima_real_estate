@@ -22,7 +22,7 @@ class AuthController extends GetxController implements GetxService {
     update();
 
     Map<String, dynamic> data = {
-      "mobile": phone,
+      "emailOrMobile": phone,
       "otp_code": password,
     };
 
@@ -79,7 +79,7 @@ class AuthController extends GetxController implements GetxService {
     _isLoading = true;
     update();
     Map<String, String?> data ={
-      "mobile": "$phoneNumber",
+      "emailOrMobile": "$phoneNumber",
     };
     dynamic response = await authRepository.sendOtp(data);
 

@@ -2,11 +2,13 @@ import 'package:chandrima_real_estate/common/widgets/custom_card.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
 import 'package:chandrima_real_estate/features/auth/controller/auth_controller.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
+import 'package:chandrima_real_estate/features/profile/screens/tenant_details_screen.dart';
 import 'package:chandrima_real_estate/features/profile/widgets/build_details_row.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 
 class GeneralInfoTab extends StatelessWidget {
@@ -121,7 +123,56 @@ class GeneralInfoTab extends StatelessWidget {
             ),
 
             SizedBox(height: 16),
-           /* MaterialButton(
+
+            Text(
+              'Documents',
+              style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen),
+            ),
+            const SizedBox(height: 12),
+            profileController.profileDetails?.data!.documents!=null?  CustomCard(
+              child: Column(
+                  children: [
+              ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: profileController.profileDetails?.data!.documents!.length ?? 0,
+                  itemBuilder: (context,index){
+                    var data=profileController.profileDetails?.data!.documents![index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Document ${index+1}: ${data!.title}', style: poppinsSemiMedium.copyWith(fontSize: Dimensions.fontSizeSixteen)),
+                      SizedBox(height: 100,
+                        child: ListView.builder(
+                          
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context,index){
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Column(
+                              children: [
+
+                                IconButton(onPressed: (){
+                                  openDocumentInBrowser("${data.documents![index]}");
+                                }, icon: Icon(TablerIcons.download, color: AppColors.primary,)),
+                                Text("${index+1}"),
+                              ],
+                            ),
+                          );
+                        }, itemCount: data.documents!.length, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),),
+                      )
+                    ],
+                  ),
+                );
+              })
+              ]),
+            ):SizedBox(),
+
+
+            MaterialButton(
               onPressed: () {
                 // profileController.logout();
               showDialog(
@@ -158,7 +209,7 @@ class GeneralInfoTab extends StatelessWidget {
                   Icon(Icons.logout, color: AppColors.red),
                 ],
               ),
-            ),*/
+            ),
             const SizedBox(height: 16),
           ],
         ),

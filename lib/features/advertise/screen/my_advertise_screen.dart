@@ -1,10 +1,13 @@
 import 'package:chandrima_real_estate/common/widgets/custom_app_bar.dart';
+import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
 import 'package:chandrima_real_estate/features/advertise/screen/add_advertise.dart';
+import 'package:chandrima_real_estate/features/advertise/screen/edit_advertise_screen.dart';
 import 'package:chandrima_real_estate/features/home/controller/home_controller.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -49,6 +52,7 @@ class _MyAdvertiseScreenState extends State<MyAdvertiseScreen> {
         Get.to(AddAdvertiseScreen())!.then((ba){
           page=1;
           HomeController homeController = Get.find<HomeController>();
+          homeController.myAdvertiseModel!.clear();
           homeController.getMyAdvertise(page: 1);
         });
       },
@@ -115,7 +119,7 @@ class _MyAdvertiseScreenState extends State<MyAdvertiseScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   ClipRRect(
-                                      child: Image.network("${data!.image}",height: 100,width: 80,fit: BoxFit.cover,),
+                                      child: CustomNetworkImage(image:"${data!.image}",height: 100,width: 80,fit: BoxFit.cover,),
                                   borderRadius: BorderRadius.circular(16),
                                   ),
                                   SizedBox(width: 22,),
@@ -125,33 +129,17 @@ class _MyAdvertiseScreenState extends State<MyAdvertiseScreen> {
                                         children: [
                                           Text("Sl No: ${index+1}", style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.primary,fontWeight: FontWeight.w700),),
                                           SizedBox(height: 4,),
-                                          RichText(
-                                            text: TextSpan(
-                                              text: 'Title : ',
-                                              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
-                                              children: <TextSpan>[
-                                                TextSpan(
-                                                  text: '${data?.title}',
-                                                  style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
-                                                ),
-                                              ],
-                                            ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text("Title : ",style: poppinsBold.copyWith(color: AppColors.primary),),
+                                              Expanded(
+                                                child: Text("${data?.title}",style: poppinsSemiMedium.copyWith(color: AppColors.black),),
+                                              ),
+                                            ],
                                           ),
                                           SizedBox(height: 4,),
 
-                                          /* SizedBox(height: 4,),
-                                      RichText(
-                                            text: TextSpan(
-                                              text: 'Status : ',
-                                              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
-                                              children: <TextSpan>[
-                                                TextSpan(
-                                                  text: '${data?.status}',
-                                                  style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
-                                                ),
-                                              ],
-                                            ),
-                                          ),*/
 
                                           SizedBox(height: 4,),
                                           RichText(
@@ -166,15 +154,63 @@ class _MyAdvertiseScreenState extends State<MyAdvertiseScreen> {
                                               ],
                                             ),
                                           ),
-                                          Container(
-                                            margin: EdgeInsets.only(top: 6),
-                                            padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeTen, vertical: Dimensions.paddingSizeFive),
-                                            decoration: BoxDecoration(
+                                          Row(
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.only(top: 6),
+                                                padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeTen, vertical: Dimensions.paddingSizeFive),
+                                                decoration: BoxDecoration(
 
-                                              color: data?.status == 'pending' ? Colors.blue : data?.status == 'active' ? AppColors.green : AppColors.grey,
-                                              borderRadius: BorderRadius.circular(5),
-                                            ),
-                                            child: Text("${data?.status}", style: poppinsRegular.copyWith(color: Colors.white),),
+                                                  color: data?.status == 'pending' ? Colors.blue : data?.status == 'active' ? AppColors.green : AppColors.grey,
+                                                  borderRadius: BorderRadius.circular(5),
+                                                ),
+                                                child: Text("${data?.status}", style: poppinsRegular.copyWith(color: Colors.white),),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                                child: InkWell(
+                                                  onTap: (){
+                                                    Get.to(() => EditAdvertiseScreen(advertiseModel: data))!.then((c){
+                                                      page=1;
+                                                      HomeController homeController = Get.find<HomeController>();
+                                                      homeController.myAdvertiseModel!.clear();
+                                                      homeController.getMyAdvertise(page: 1);
+                                                    });
+                                                  },
+                                                  child: Icon(Icons.edit,color: Colors.blue,size: 25,),
+                                                ),
+                                              ),
+                                              InkWell(
+                                                  onTap: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext context) {
+                                                        return AlertDialog(
+                                                          title: const Text('Delete Tenant'),
+                                                          content: const Text('Are you sure you want to delete this Tenant?'),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                              child: const Text('Cancel'),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                homeController.deleteAdvertise(id: data.id!,index: index);
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                              child: const Text('Delete'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                    // gatePassController.deleteGatePass(gatePassId: gatePass.id!);
+                                                  },
+                                                  child: Icon(Icons.delete_outline,color: Colors.red,size: 25,)),
+
+                                            ],
                                           )
                                         ]),
                                   ),

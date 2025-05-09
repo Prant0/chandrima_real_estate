@@ -3,8 +3,9 @@ import 'package:chandrima_real_estate/data/api/api_checker.dart';
 import 'package:chandrima_real_estate/features/advertise/model/advertise_notification.dart';
 import 'package:chandrima_real_estate/features/advertise/model/advertises_list_model.dart';
 import 'package:chandrima_real_estate/features/advertise/model/my_advertise_model.dart';
- import 'package:chandrima_real_estate/features/home/model/heml_line_model.dart';
+ import 'package:chandrima_real_estate/features/home/model/help_line_model.dart';
 import 'package:chandrima_real_estate/features/home/model/notification_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:chandrima_real_estate/features/home/repository/home_repository.dart';
 import 'package:image_picker/image_picker.dart';
@@ -67,6 +68,17 @@ class HomeController extends GetxController implements GetxService {
   }
 
 
+  Future<void> deleteAdvertise({required int id,int? index}) async {
+    final response = await homeRepository.deleteAdvertise(id: id);
+    if(response.statusCode == 200){
+      showCustomSnackBar('Advertise deleted successfully', isError: false);
+      _myAdvertiseModel!.removeAt(index!);
+      update();
+    }else{
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
 
 
 
@@ -74,8 +86,11 @@ class HomeController extends GetxController implements GetxService {
   List<NotificationModel>? get notificationModel => _notificationModel;
 
   Future<void> getNotification({required int page}) async {
-    _isLoading=true;
-    update();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _isLoading=true;
+      update(); // Ensure this is called after the build phase
+    });
     Response response = await homeRepository.getNotificationList(page: page);
     print("Notification Response: ${response.body}");
     _isLoading=false;
@@ -144,7 +159,14 @@ class HomeController extends GetxController implements GetxService {
   }
 
 
-  Future<void> addAdvertise({required String title, required String description,required String ad_type,XFile ?video}) async{
+  XFile? _pickedPaymentDocument;
+  XFile? get pickedPaymentDocument => _pickedPaymentDocument;
+  void pickPaymentDocumentImage() async {
+    _pickedPaymentDocument = await ImagePicker().pickImage(source: ImageSource.gallery);
+    update();
+  }
+
+  Future<void> updateAdvertise({required String title, required String description,required String ad_type,XFile ?video}) async{
     _isLoading = true;
     update();
 
@@ -155,8 +177,40 @@ class HomeController extends GetxController implements GetxService {
       'ad_type' : ad_type ?? '',
     });
 
+    Response response = await homeRepository.updateAdvertise(body: body,image: _pickedFile,video: video);
+    if(response.statusCode == 200){
+      _pickedFile = null;
+
+      update();
+      Get.back();
+      showCustomSnackBar('Advertise Request updated successfully', isError: false);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+
+    _isLoading = false;
+    update();
+  }
+
+
+
+  Future<void> addAdvertise({required String title, required String description,paymentMethod,paymentDetails,startDate,endDate,required String ad_type,XFile ?video}) async{
+    _isLoading = true;
+    update();
+
+    Map<String, String> body = {};
+    body.addAll({
+      'title' : title,
+      'description' : description,
+      'ad_type' : ad_type ?? '',
+      'payment_method' : paymentMethod ?? '',
+      'payment_details' : paymentDetails ?? '',
+      'start_date' : startDate ?? '',
+      'end_date' : endDate ?? '',
+    });
+
     Response response = await homeRepository.addAdvertise(
-        body: body, image: _pickedFile,video: video);
+        body: body, image: _pickedFile,video: video,paymentDocument: _pickedPaymentDocument);
     if(response.statusCode == 200){
       _pickedFile = null;
       _myAdvertiseModel=[];

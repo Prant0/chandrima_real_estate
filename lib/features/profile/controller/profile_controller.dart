@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:chandrima_real_estate/common/widgets/custom_snackbar.dart';
 import 'package:chandrima_real_estate/data/api/api_checker.dart';
+import 'package:chandrima_real_estate/features/home/model/event_model.dart';
 import 'package:chandrima_real_estate/features/profile/models/UserInvoiceModel.dart';
 import 'package:chandrima_real_estate/features/profile/models/profile_model.dart';
+import 'package:chandrima_real_estate/features/profile/models/tenant_model.dart';
 import 'package:chandrima_real_estate/features/profile/repository/profile_repository.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:open_filex/open_filex.dart';
@@ -19,8 +22,7 @@ class ProfileController extends GetxController implements GetxService{
   ProfileModel? _profileDetails;
   ProfileModel? get profileDetails => _profileDetails;
 
-  List<UserInvoiceModel>? _userInvoiceModel= [];
-  List<UserInvoiceModel>? get userInvoiceModel => _userInvoiceModel;
+
 
   XFile? _pickedFile;
   XFile? get pickedFile => _pickedFile;
@@ -49,10 +51,13 @@ class ProfileController extends GetxController implements GetxService{
     }
     update();
   }
-
+  List<UserInvoiceModel>? _userInvoiceModel= [];
+  List<UserInvoiceModel>? get userInvoiceModel => _userInvoiceModel;
   Future<void> getUserInvoiceList({required int page}) async {
     _isLoading=true;
-    update();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      update(); // Ensure this is called after the build phase
+    });
     Response response = await profileRepository.getUserInvoiceList(page: page);
     if(response.statusCode == 200){
       if (response.body["data"]["data"].isNotEmpty) {
@@ -113,7 +118,7 @@ class ProfileController extends GetxController implements GetxService{
     }
   }
 
-  Future<void> addFamilyMember({required String name, required String mobile, String? dob}) async{
+  Future<void> addFamilyMember({required String name, required String mobile, String? dob,bloodGroup}) async{
     _isLoading = true;
     update();
 
@@ -124,6 +129,7 @@ class ProfileController extends GetxController implements GetxService{
       'birthday' : dob ?? '',
       'gender' : _selectedGender ?? '',
       'relation' : _selectedRelation ?? '',
+      'blood_group' : bloodGroup ?? '',
     });
 
     Response response = await profileRepository.addFamilyMember(body: body, image: _pickedFile);
@@ -138,6 +144,36 @@ class ProfileController extends GetxController implements GetxService{
     _isLoading = false;
     update();
   }
+
+
+  List<TenantModel>? _tenantList= [];
+  List<TenantModel>? get tenantList => _tenantList;
+  Future<void> getTenantList({required int page}) async {
+    print("start getting tenant data");
+    _isLoading=true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      update(); // Ensure this is called after the build phase
+    });
+    Response response = await profileRepository.getTenantList(page: page);
+    if(response.statusCode == 200){
+      if (response.body["data"]["data"].isNotEmpty) {
+        _tenantList?.addAll(response.body["data"]["data"].map<TenantModel>((data) => TenantModel.fromJson(data)).toList());
+        update();
+      } else {
+        showCustomSnackBar("No Tenant Data Available", isError: false);
+      }
+    }else{
+      ApiChecker.checkApi(response);
+    }
+    _isLoading=false;
+    update();
+  }
+
+  void loadMoreTenants(int pageNo) {
+    getTenantList(page: pageNo);
+  }
+
+
 
   Future<void> updateFamilyMember({required String name, required String mobile, String? dob, required int id}) async{
     _isLoading = true;
@@ -165,6 +201,53 @@ class ProfileController extends GetxController implements GetxService{
     _isLoading = false;
     update();
   }
+
+
+  Future<void> addIdCardRequestTenant({required String id, details}) async{
+    _isLoading = true;
+    update();
+
+    Map<String, String> body = {};
+    body.addAll({
+      'tenant_id' : id,
+      'details' : details,
+    });
+
+    Response response = await profileRepository.addIdCardRequestTenant(body: body);
+    if(response.statusCode == 200){
+
+      showCustomSnackBar('Id Card Request send Successfully', isError: false);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+
+    _isLoading = false;
+    update();
+  }
+
+Future<void> addIdCardRequestFamilyMember({required String id, details}) async{
+    _isLoading = true;
+    update();
+
+    Map<String, String> body = {};
+    body.addAll({
+      'family_member_id' : id,
+      'details' : details,
+    });
+
+    Response response = await profileRepository.addIdCardRequestFamilyMember(body: body);
+    if(response.statusCode == 200){
+
+      showCustomSnackBar('Id Card Request send Successfully', isError: false);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+
+    _isLoading = false;
+    update();
+  }
+
+
 
   List<XFile>? _nidImages;
   List<XFile>? get  nidImages => _nidImages;
@@ -207,7 +290,7 @@ class ProfileController extends GetxController implements GetxService{
 
     );
     if(response.statusCode == 200){
-      getProfileDetails();
+      _tenantList!.clear();
       Get.back();
       showCustomSnackBar('Tenant added successfully', isError: false);
     }else{
@@ -390,12 +473,41 @@ class ProfileController extends GetxController implements GetxService{
     final response = await profileRepository.deleteTenantMember(id: id);
     if(response.statusCode == 200){
       showCustomSnackBar('Tenant Member deleted successfully', isError: false);
-      _profileDetails?.data?.tenants!.removeAt(index!);
+      _tenantList!.removeAt(index!);
       update();
     }else{
       ApiChecker.checkApi(response);
     }
     update();
   }
+
+
+
+  List<EventModel>? _eventList= [];
+  List<EventModel>? get eventList => _eventList;
+  Future<void> getEventList({required int page}) async {
+    _isLoading=true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      update(); // Ensure this is called after the build phase
+    });
+    Response response = await profileRepository.getEventList(page: page);
+    if(response.statusCode == 200){
+      if (response.body["data"]["data"].isNotEmpty) {
+        _eventList?.addAll(response.body["data"]["data"].map<EventModel>((data) => EventModel.fromJson(data)).toList());
+        update();
+      } else {
+        showCustomSnackBar("No Data Available", isError: false);
+      }
+    }else{
+      ApiChecker.checkApi(response);
+    }
+    _isLoading=false;
+    update();
+  }
+
+  void loadMoreEventData(int pageNo) {
+    getEventList(page: pageNo);
+  }
+
 
 }

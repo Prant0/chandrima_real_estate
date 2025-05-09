@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:chandrima_real_estate/common/widgets/custom_card.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
+import 'package:chandrima_real_estate/common/widgets/custom_text_field.dart';
 import 'package:chandrima_real_estate/features/complain/screens/complain_details_screen.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/features/profile/models/profile_model.dart';
+import 'package:chandrima_real_estate/features/profile/models/tenant_model.dart';
+import 'package:chandrima_real_estate/features/profile/screens/tenant_details_screen.dart';
 import 'package:chandrima_real_estate/features/profile/screens/update_tenant_screen.dart';
 import 'package:chandrima_real_estate/routes/routes_name.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
@@ -13,18 +16,42 @@ import 'package:chandrima_real_estate/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TenantTab extends StatelessWidget {
+class TenantTab extends StatefulWidget {
   const TenantTab({super.key});
+
+  @override
+  State<TenantTab> createState() => _TenantTabState();
+}
+
+class _TenantTabState extends State<TenantTab> {
+
+  late ScrollController _scrollController;
+  int page=1 ;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+
+    Get.find<ProfileController>().getTenantList(page:page=1);
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent && !Get.find<ProfileController>().isLoading) {
+        Get.find<ProfileController>().loadMoreTenants(page=page+1);
+      }
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(builder: (profileController) {
-      final tenant = profileController.profileDetails?.data?.tenants;
+      final tenant = profileController.tenantList;
 
       return Stack(
        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           tenant != null && tenant.isNotEmpty ? ListView.builder(
+            controller: _scrollController,
             padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
             itemCount: tenant.length,
             itemBuilder: (context, index) {
@@ -32,7 +59,8 @@ class TenantTab extends StatelessWidget {
 
               return InkWell(
                 onTap: (){
-                  showTenantDetails(context,tenants);
+                  Get.to(TenantDetailsScreen(tenants: tenants));
+                //  showTenantDetails(context,tenants);
                 },
                 child: CustomCard(
 
@@ -60,12 +88,84 @@ class TenantTab extends StatelessWidget {
                               buildDetailRow('Name :', tenants.name),
                               buildDetailRow('Mobile No :', tenants.mobile),
                               buildDetailRow('Flat No :', tenants.flatNo),
-                              buildDetailRow('Address :', tenants.permanentAddress??"N/A"),
+                             // buildDetailRow('Address :', tenants.permanentAddress??"N/A"),
+                            tenants.idCardStatus=="approve"?Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color:  Colors.green.withOpacity(0.8),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Text(
+                                "Print ID Card",
+                                style: poppinsRegular.copyWith(color: Colors.white),
+                              ),
+                            ):  InkWell(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      TextEditingController detailsController = TextEditingController();
+
+                                      return AlertDialog(
+                                        title: const Text('Apply for ID Card'),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+
+                                            CustomTextField(
+                                              controller: detailsController,
+                                              hintText: "Enter Details",
+                                              prefixIcon: Icons.description,
+                                              maxLines: 5,
+                                            ),
+                                          ],
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              profileController.addIdCardRequestTenant(
+                                                id: tenants.tenantId.toString(),
+                                                details: detailsController.text,
+                                              ).then((v){
+                                                profileController.getTenantList(page: page);
+                                                Navigator.of(context).pop();
+                                              });
+
+                                            },
+                                            child: const Text('Submit'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color:  Colors.red.withOpacity(0.8),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Text(
+                                    "ID Card Request",
+                                    style: poppinsRegular.copyWith(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 5),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
+
+
                                   InkWell(onTap: (){
-                                    showTenantDetails(context,tenants);
+                                    Get.to(TenantDetailsScreen(tenants: tenants));
+                                    //showTenantDetails(context,tenants);
                                   }, child: Icon(Icons.remove_red_eye_outlined,color: Colors.blue,size: 25,)),
 
                                   Padding(
@@ -109,7 +209,8 @@ class TenantTab extends StatelessWidget {
                                       child: Icon(Icons.delete_outline,color: Colors.red,size: 25,)),
 
                                 ],
-                              )
+                              ),
+
                             ],
                           ),
                         ),
@@ -137,7 +238,11 @@ class TenantTab extends StatelessWidget {
                 SizedBox(height: 16,),
                 FloatingActionButton(
                   onPressed: () {
-                    Get.toNamed(RoutesName.getAddTenantScreen());
+                    Get.toNamed(RoutesName.getAddTenantScreen())!.then((value) {
+                      page=1;
+                        profileController.getTenantList(page: page);
+
+                    });
                   },
                   backgroundColor: AppColors.primary,
                   child: const Icon(Icons.add_circle, color: AppColors.white),
@@ -167,7 +272,7 @@ class TenantTab extends StatelessWidget {
     );
   }
 
-    showTenantDetails(BuildContext context,Tenants tenants){
+    showTenantDetails(BuildContext context,TenantModel tenants){
     return showDialog(context: context, builder: (context){
       return Dialog(
         backgroundColor: Colors.white,
@@ -224,5 +329,4 @@ class TenantTab extends StatelessWidget {
       );
     });
   }
-
 }

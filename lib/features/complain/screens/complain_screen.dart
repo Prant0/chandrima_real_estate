@@ -130,20 +130,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                               ],
                                             ),
                                           ),
-                                     /* SizedBox(height: 4,),
-                                      RichText(
-                                            text: TextSpan(
-                                              text: 'Status : ',
-                                              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
-                                              children: <TextSpan>[
-                                                TextSpan(
-                                                  text: '${data?.status}',
-                                                  style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
-                                                ),
-                                              ],
-                                            ),
-                                          ),*/
-                
+
                                       SizedBox(height: 4,),
                                           RichText(
                                             text: TextSpan(
@@ -170,45 +157,7 @@ class _ComplainScreenState extends State<ComplainScreen> {
                                   )
                 
                 
-                                  /*Column(
-                                    children: [
-                                      InkWell(
-                                        child: Icon(Icons.delete, color: AppColors.red),
-                                        onTap: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text('Delete Complaint'),
-                                                content: Text('Are you sure you want to delete this complaint?'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.of(context).pop(); // Close the dialog
-                                                    },
-                                                    child: Text('No'),
-                                                  ),
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      complainController.deleteComplainList(data!.id.toString(), index);
-                                                      Navigator.of(context).pop(); // Close the dialog
-                                                    },
-                                                    child: Text('Yes'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                     *//* SizedBox(height: 18,),
-                                      InkWell(
-                                          onTap: (){
-                
-                                          },
-                                          child: Icon(Icons.edit,color: AppColors.primary,)),*//*
-                                    ],
-                                  ),*/
+
                                 ],
                               ),
                             ),

@@ -9,13 +9,36 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 
-class EventsScreen extends StatelessWidget {
+class EventsScreen extends StatefulWidget {
   const EventsScreen({super.key});
 
   @override
+  State<EventsScreen> createState() => _EventsScreenState();
+}
+
+class _EventsScreenState extends State<EventsScreen> {
+
+  late ScrollController _scrollController;
+  int page=1 ;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    Get.find<ProfileController>().eventList!.clear();
+    Get.find<ProfileController>().getEventList(page: page);
+    /// Manage scroll
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent && !Get.find<ProfileController>().isLoading) {
+        Get.find<ProfileController>().loadMore(page=page+1);
+      }
+    });
+
+  }
+  @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(builder: (profileController) {
-      final events = profileController.profileDetails?.data?.events;
+      final events = profileController.eventList;
 
       return Scaffold(
         appBar:   CustomAppBar(title: 'Events',),
@@ -23,29 +46,125 @@ class EventsScreen extends StatelessWidget {
           children: [
             events != null && events.isNotEmpty ? Expanded(
               child: ListView.builder(
+                controller: _scrollController,
                 padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
                 itemCount: events.length,
                 itemBuilder: (context, index) {
                   final event = events[index];
 
-                  return  Card(
-
-                    margin: EdgeInsets.only(bottom: index == events.length - 1 ? 0 : Dimensions.paddingSizeFifteen),
-                    child:  Container(
-                      padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                        // boxShadow:  [BoxShadow(color: Colors.black12, spreadRadius: 0.5, blurRadius: 5)],
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Event Details', style: poppinsMedium.copyWith(fontSize: 18)),
+                            content: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomRichText(title: 'Sl No:', value: (index + 1).toString()),
+                                  CustomRichText(title: 'Event Name:', value: event.title ?? "N/A"),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 3),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Description : ',
+                                          style: poppinsMedium.copyWith(
+                                            color: AppColors.primary,
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 5),
+                                        Expanded(
+                                          child: Text(
+                                            event.description ?? "N/A",
+                                            style: poppinsMedium.copyWith(
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 17,
+                                            ),
+                                            maxLines: 3,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  CustomRichText(
+                                    title: 'Date:',
+                                    value: event.sendingDate != null
+                                        ? DateFormat('dd-MM-yyyy').format(event.sendingDate!)
+                                        : 'N/A',
+                                  ),
+                                ],
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Close', style: poppinsMedium.copyWith(color: AppColors.primary)),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Card(
+                      margin: EdgeInsets.only(
+                        bottom: index == events.length - 1 ? 0 : Dimensions.paddingSizeFifteen,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomRichText(title: 'Sl No:', value: (index + 1).toString()),
-                          CustomRichText(title: 'Event Name:', value: event.title??"N/A"),
-                          CustomRichText(title: 'Description:', value: event.description??""),
-                          CustomRichText(title: 'Date:', value:event.sendingDate != null ? DateFormat('dd-MM-yyyy').format(event.sendingDate!) : 'N/A'),
-                        ],
+                      child: Container(
+                        padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(Dimensions.radiusTen),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomRichText(title: 'Sl No:', value: (index + 1).toString()),
+                            CustomRichText(title: 'Event Name:', value: event.title ?? "N/A"),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 3),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Description : ',
+                                    style: poppinsMedium.copyWith(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Expanded(
+                                    child: Text(
+                                      event.description ?? "N/A",
+                                      style: poppinsMedium.copyWith(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 17,
+                                      ),
+                                      maxLines: 3,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            CustomRichText(
+                              title: 'Date:',
+                              value: event.sendingDate != null
+                                  ? DateFormat('dd-MM-yyyy').format(event.sendingDate!)
+                                  : 'N/A',
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -77,5 +196,4 @@ class EventsScreen extends StatelessWidget {
       ),
     );
   }
-
 }

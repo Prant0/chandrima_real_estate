@@ -7,8 +7,8 @@ class GatePassRepository {
   final ApiClient apiClient;
   const GatePassRepository({required this.apiClient});
 
-  Future<Response> getGatePassList() async {
-    return await apiClient.getData(AppConstants.gatePassList);
+  Future<Response> getGatePassList(int page) async {
+    return await apiClient.getData(AppConstants.gatePassList + '?page=$page');
   }
 
 
