@@ -132,7 +132,7 @@ class _EditAdvertiseScreenState extends State<EditAdvertiseScreen> {
                                   onTap: () => homeController.pickImage(),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.black.withValues(alpha: 0.2),
+                                      color: Colors.black.withOpacity(0.2),
                                       border: Border.all(width: 1, color: AppColors.primary),
                                     ),
                                     child: homeController.pickedFile != null ? const SizedBox() : Container(

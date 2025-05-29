@@ -2,6 +2,7 @@ import 'package:chandrima_real_estate/common/widgets/custom_card.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
 import 'package:chandrima_real_estate/features/auth/controller/auth_controller.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
+import 'package:chandrima_real_estate/features/profile/screens/extra.dart';
 import 'package:chandrima_real_estate/features/profile/screens/tenant_details_screen.dart';
 import 'package:chandrima_real_estate/features/profile/widgets/build_details_row.dart';
 import 'package:chandrima_real_estate/utils/app_color.dart';
@@ -156,7 +157,10 @@ class GeneralInfoTab extends StatelessWidget {
                               children: [
 
                                 IconButton(onPressed: (){
-                                  openDocumentInBrowser("${data.documents![index]}");
+
+                                 Get.to( FileViewerWebView(
+                                    url:data.documents![index],
+                                 ));
                                 }, icon: Icon(TablerIcons.download, color: AppColors.primary,)),
                                 Text("${index+1}"),
                               ],
@@ -191,6 +195,7 @@ class GeneralInfoTab extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           Get.find<AuthController>().removeToken();
+
                           Navigator.of(context).pop(); // Dismiss the dialog
                         },
                         child: const Text('Logout'),

@@ -72,105 +72,103 @@ class _ComplainScreenState extends State<ComplainScreen> {
           builder: (complainController) {
             return Padding(
               padding: const EdgeInsets.all(Dimensions.paddingSizeTen),
-              child: complainController.complainModelList==null?SizedBox(): SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+              child: complainController.complainModelList==null?Text("No Data Found"): ListView(
+                physics: const BouncingScrollPhysics(),
                 controller: _scrollController,
-                child: Column(
-                  children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: complainController.complainModelList!.length,
-                      padding: EdgeInsets.zero,
-                      itemBuilder: (context, index) {
-                        var data= complainController.complainModelList?[index];
-                        return InkWell(
-                          onTap: (){
-                             Get.to(ComplainDetailsScreen(complaints: data));
-                          },
-                          child: Card(
-                            child: Container(
-                              padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
-                              decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                                // boxShadow:  [BoxShadow(color: Colors.black12, spreadRadius: 0.5, blurRadius: 5)],
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                      Text("Sl No: ${index+1}", style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.primary,fontWeight: FontWeight.w700),),
-                                      SizedBox(height: 4,),
-                                        RichText(
-                                            text: TextSpan(
-                                              text: 'Title : ',
-                                              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
-                                              children: <TextSpan>[
-                                                TextSpan(
-                                                  text: '${data?.title}',
-                                                  style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                      SizedBox(height: 4,),
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: complainController.complainModelList!.length,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      var data= complainController.complainModelList?[index];
+                      return InkWell(
+                        onTap: (){
+                           Get.to(ComplainDetailsScreen(complaints: data));
+                        },
+                        child: Card(
+                          child: Container(
+                            padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(Dimensions.radiusTen),
+                              // boxShadow:  [BoxShadow(color: Colors.black12, spreadRadius: 0.5, blurRadius: 5)],
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                    Text("Sl No: ${index+1}", style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.primary,fontWeight: FontWeight.w700),),
+                                    SizedBox(height: 4,),
                                       RichText(
-                                            text: TextSpan(
-                                              text: 'Category : ',
-                                              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
-                                              children: <TextSpan>[
-                                                TextSpan(
-                                                  text: '${data?.complaintCategory}',
-                                                  style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
-                                                ),
-                                              ],
-                                            ),
+                                          text: TextSpan(
+                                            text: 'Title : ',
+                                            style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                text: '${data?.title}',
+                                                style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                                              ),
+                                            ],
                                           ),
+                                        ),
+                                    SizedBox(height: 4,),
+                                    RichText(
+                                          text: TextSpan(
+                                            text: 'Category : ',
+                                            style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                text: '${data?.complaintCategory}',
+                                                style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
 
-                                      SizedBox(height: 4,),
-                                          RichText(
-                                            text: TextSpan(
-                                              text: 'Date : ',
-                                              style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
-                                              children: <TextSpan>[
-                                                TextSpan(
-                                                  text: '${DateFormat('M-d-yyyy').format(DateTime.parse("${data?.createdAt}"))}',
-                                                  style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
-                                                ),
-                                              ],
-                                            ),
+                                    SizedBox(height: 4,),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: 'Date : ',
+                                            style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                text: '${DateFormat('M-d-yyyy').format(DateTime.parse("${data?.createdAt}"))}',
+                                                style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
+                                              ),
+                                            ],
                                           ),
-                                     ]),
+                                        ),
+                                   ]),
+                                ),
+
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeTen, vertical: Dimensions.paddingSizeFive),
+                                  decoration: BoxDecoration(
+                                    color: data?.status == 'In Progress' ? Colors.blue : data?.status == 'On Hold' ? AppColors.red : data?.status == 'Resolved' ?Colors.green: data?.status == 'Completed' ?Colors.green:data?.status == 'Open' ?Colors.orange: AppColors.grey,
+                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeTen, vertical: Dimensions.paddingSizeFive),
-                                    decoration: BoxDecoration(
-                                      color: data?.status == 'In Progress' ? Colors.blue : data?.status == 'On Hold' ? AppColors.red : data?.status == 'Resolved' ?Colors.green: data?.status == 'Completed' ?Colors.green:data?.status == 'Open' ?Colors.orange: AppColors.grey,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Text("${data?.status}", style: poppinsRegular.copyWith(color: Colors.white),),
-                                  )
-                
-                
+                                  child: Text("${data?.status}", style: poppinsRegular.copyWith(color: Colors.white),),
+                                )
 
-                                ],
-                              ),
+
+
+                              ],
                             ),
                           ),
-                        );
-                      },
-                    ),
-                
-                    complainController.isLoading?Padding(padding: EdgeInsets.symmetric(vertical: 25),
-                    child: CircularProgressIndicator(),
-                    ):SizedBox(height: 25,)
-                  ],
-                ),
+                        ),
+                      );
+                    },
+                  ),
+
+                  complainController.isLoading?Padding(padding: EdgeInsets.symmetric(vertical: 25),
+                  child: Center(child: CircularProgressIndicator()),
+                  ):SizedBox(height: 25,)
+                ],
               ),
             );
           }

@@ -22,11 +22,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
+      statusBarColor:AppColors.primary,
       statusBarIconBrightness: Brightness.dark,
       statusBarBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
+
     ));
 
     return GetBuilder<AuthController>(builder: (authController) {

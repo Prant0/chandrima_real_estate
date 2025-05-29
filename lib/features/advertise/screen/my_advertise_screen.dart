@@ -88,7 +88,7 @@ class _MyAdvertiseScreenState extends State<MyAdvertiseScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text('Title: ${data?.title}'),
-                                      Text('Date: ${DateFormat('M-d-yyyy').format(DateTime.parse("${data?.createdAt}"))}'),
+                                      Text('Date: ${DateFormat('d-M-yyyy').format(DateTime.parse("${data?.createdAt}"))}'),
                                       Text('Status: ${data?.status}'),
                                       Text('Details: ${data?.description}'),
 
@@ -148,7 +148,7 @@ class _MyAdvertiseScreenState extends State<MyAdvertiseScreen> {
                                               style: poppinsRegular.copyWith(fontSize: Dimensions.fontSizeSixteen, color: AppColors.primary,fontWeight: FontWeight.w800),
                                               children: <TextSpan>[
                                                 TextSpan(
-                                                  text: '${DateFormat('M-d-yyyy').format(DateTime.parse("${data?.createdAt}"))}',
+                                                  text: '${DateFormat('d-M-yyyy').format(DateTime.parse("${data?.createdAt}"))}',
                                                   style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeSixteen,color: AppColors.black),
                                                 ),
                                               ],

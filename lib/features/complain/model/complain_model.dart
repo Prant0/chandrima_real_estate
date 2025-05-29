@@ -26,8 +26,8 @@ class ComplainModelList {
   String? complaintCategory;
   int? id;
   String? title;
-  int? complaintCategoryId;
-  int? memberId;
+  dynamic? complaintCategoryId;
+  dynamic? memberId;
   String? description;
   List<String>? document;
   DateTime? date;

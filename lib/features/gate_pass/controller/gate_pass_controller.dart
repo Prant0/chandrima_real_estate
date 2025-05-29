@@ -14,7 +14,7 @@ class GatePassController extends GetxController implements GetxService{
   final GatePassRepository gatePassRepository;
   GatePassController({required this.gatePassRepository});
 
-  List<GatePassData>? _gatePassList;
+  List<GatePassData> _gatePassList=[];
   List<GatePassData>? get gatePassList => _gatePassList;
 
 
@@ -25,12 +25,15 @@ class GatePassController extends GetxController implements GetxService{
 
 
   Future<void> getGatePassList({required int page}) async {
+    print("startttttttttt");
     final response = await gatePassRepository.getGatePassList(page);
 
     if(response.statusCode == 200){
       if (response.body["data"]["data"].isNotEmpty) {
-        _gatePassList?.addAll(response.body["data"]["data"].map<GatePassData>((data) => GatePassData.fromJson(data)).toList());
+        _gatePassList.addAll(response.body["data"]["data"].map<GatePassData>((data) => GatePassData.fromJson(data)).toList());
         update();
+        print("Gate Pass List: ${response.body}");
+        print("Gate Pass List: ${_gatePassList?.length}");
       } else {
         showCustomSnackBar("No Data Available", isError: false);
       }

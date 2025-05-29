@@ -3,8 +3,10 @@ import 'package:chandrima_real_estate/data/api/api_checker.dart';
 import 'package:chandrima_real_estate/features/advertise/model/advertise_notification.dart';
 import 'package:chandrima_real_estate/features/advertise/model/advertises_list_model.dart';
 import 'package:chandrima_real_estate/features/advertise/model/my_advertise_model.dart';
+import 'package:chandrima_real_estate/features/home/model/advertise_settings_model.dart';
  import 'package:chandrima_real_estate/features/home/model/help_line_model.dart';
 import 'package:chandrima_real_estate/features/home/model/notification_model.dart';
+import 'package:chandrima_real_estate/features/payment/controller/payment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:chandrima_real_estate/features/home/repository/home_repository.dart';
@@ -194,7 +196,7 @@ class HomeController extends GetxController implements GetxService {
 
 
 
-  Future<void> addAdvertise({required String title, required String description,paymentMethod,paymentDetails,startDate,endDate,required String ad_type,XFile ?video}) async{
+  Future<bool> addAdvertise({required String title, required String description,paymentMethod,paymentDetails,startDate,endDate,required String ad_type,XFile ?video}) async{
     _isLoading = true;
     update();
 
@@ -214,15 +216,25 @@ class HomeController extends GetxController implements GetxService {
     if(response.statusCode == 200){
       _pickedFile = null;
       _myAdvertiseModel=[];
+      _pickedPaymentDocument = null;
+      _isLoading = false;
       update();
-      Get.back();
       showCustomSnackBar('Advertise Request added successfully', isError: false);
+      var data= response.body['data']["invoice_id"];
+
+     Get.find<PaymentController>().makePayment(paymentId: data ,paymentFrom:  'advertise');
+
+      //Get.back();
+      return true;
     }else{
+
+      _isLoading = false;
+      update();
+
       ApiChecker.checkApi(response);
+      return false;
     }
 
-    _isLoading = false;
-    update();
   }
 
   Future<void> getAdvertiseNotificationDetails(String uri) async {
@@ -235,4 +247,19 @@ class HomeController extends GetxController implements GetxService {
     update();
   }
 
+  AdvertiseSettingsModel ? _advertiseSettingsModel;
+  AdvertiseSettingsModel ? get advertiseSettingsModel => _advertiseSettingsModel;
+
+  Future<void> getAdvertiseSettings() async {
+    Response response = await homeRepository.getAdvertiseSettings();
+    if (response.statusCode == 200) {
+      _advertiseSettingsModel = AdvertiseSettingsModel.fromJson(response.body);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
+
 }
+
+

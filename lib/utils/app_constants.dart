@@ -1,3 +1,5 @@
+
+import 'package:html/parser.dart' as html_parser;
 class AppConstants  {
   static const String appName = 'Chandrima Real Estate';
   static const double appVersion = 1.0;
@@ -41,10 +43,25 @@ class AppConstants  {
   static const String landInfoDownload = '/member/land-info/download';
 
   static const String tenantInfoDownload = '/member/tenant-info/download';
+  static const String advertiseSettings = '/advertise/post';
 
 
   static const String makePaymentUri = '/payment/create/';
   static const String checkPaymentUri = '/payment/check/';
 
+
+  static const String privacyPolicyUri = '/page/privacy-policy';
+  static const String refundPolicyUri = '/page/refund-policy';
+  static const String aboutUsUri = '/page/about-us';
+  static const String termsConditionUri = '/page/terms-condition';
+
   static const String token = 'chandrima_token';
+}
+
+
+
+
+String htmlToString(String htmlContent) {
+  final document = html_parser.parse(htmlContent);
+  return document.documentElement?.text ?? '';
 }

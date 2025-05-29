@@ -103,7 +103,7 @@ class _UpdateTenantScreenState extends State<UpdateTenantScreen> {
                               onTap: () => profileController.pickImage(),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withValues(alpha: 0.2),
+                                  color: Colors.black.withOpacity(0.2),
                                   shape: BoxShape.circle,
                                   border: Border.all(width: 1, color: AppColors.primary),
                                 ),
@@ -198,7 +198,7 @@ class _UpdateTenantScreenState extends State<UpdateTenantScreen> {
                     Container(
                       height: 55,
                       decoration: BoxDecoration(
-                        color: AppColors.grey.withValues(alpha: 0.2),
+                        color: AppColors.grey.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
                       ),
                       child: Row(

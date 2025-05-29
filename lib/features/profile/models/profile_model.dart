@@ -230,7 +230,7 @@ class Plots {
 class GetFlats {
   int? id;
   String? memberId;
-  int? plotId;
+  dynamic? plotId;
   String? flatSize;
   String? flatNo,flat_id;
   String? flatType;

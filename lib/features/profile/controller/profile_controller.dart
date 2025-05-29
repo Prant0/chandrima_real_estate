@@ -510,4 +510,21 @@ Future<void> addIdCardRequestFamilyMember({required String id, details}) async{
   }
 
 
+
+  void clearData() {
+    _profileDetails = null;
+    _userInvoiceModel?.clear();
+    _isLoading = false;
+    _pickedFile = null;
+    _selectedGender = null;
+    _selectedRelation = null;
+    _nidImages?.clear();
+    _document1 = null;
+    _document2 = null;
+    _tenantList?.clear();
+    _eventList?.clear();
+
+    update();
+  }
+
 }

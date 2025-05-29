@@ -7,8 +7,8 @@ class UserInvoiceModel {
   List<Service>? services;
   dynamic serviceType;
   dynamic discount;
-  int? paidAmount;
-  int? totalAmount;
+  dynamic? paidAmount;
+  dynamic? totalAmount;
   dynamic partialPayment;
   DateTime? paymentDate;
   String? paymentMethod;

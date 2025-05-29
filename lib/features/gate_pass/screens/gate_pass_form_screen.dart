@@ -61,7 +61,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
       appBar:   CustomAppBar(title: 'Add Gate Pass'),
       body: GetBuilder<GatePassController>(builder: (gatePassController) {
 
-        return gatePassController.isLoading?Center(child: CircularProgressIndicator()): Form(
+        return  Form(
           key: _key,
           child: Container(
             padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
@@ -73,7 +73,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                   Container(
                     height: 55,
                     decoration: BoxDecoration(
-                      color: AppColors.grey.withValues(alpha: 0.2),
+                      color: AppColors.grey.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
                     ),
                     child: Align(
@@ -201,7 +201,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                   Container(
                     height: 55,
                     decoration: BoxDecoration(
-                      color: AppColors.grey.withValues(alpha: 0.2),
+                      color: AppColors.grey.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
                     ),
                     child: Row(children: [
@@ -232,38 +232,43 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                   ),
                   const SizedBox(height: 15),
 
-                  Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      color: AppColors.grey.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
-                    ),
-                    child: Row(children: [
-                      Expanded(child: Padding(
-                        padding: const EdgeInsets.only(left: 28),
-                        child: Text(expiredDate!.isEmpty ? 'Expired Date' : expiredDate!, style: poppinsRegular.copyWith(color: AppColors.black, fontSize: 15)),
-                      )),
-                      IconButton(
-                        icon: const Icon(Icons.calendar_month),
-                        onPressed: () {
-                          showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime(2030),
-                          ).then((value) {
-                            if (value != null) {
-                              setState(() {
-                                expiredDate = '${value.year}-${value.month.toString().padLeft(2, '0')}-${value.day.toString().padLeft(2, '0')}';
+                  durationType==  "Temporary"?SizedBox():   Column(
+                    children: [
+
+                      Container(
+                        height: 55,
+                        decoration: BoxDecoration(
+                          color: AppColors.grey.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
+                        ),
+                        child: Row(children: [
+                          Expanded(child: Padding(
+                            padding: const EdgeInsets.only(left: 28),
+                            child: Text(expiredDate!.isEmpty ? 'Expired Date' : expiredDate!, style: poppinsRegular.copyWith(color: AppColors.black, fontSize: 15)),
+                          )),
+                          IconButton(
+                            icon: const Icon(Icons.calendar_month),
+                            onPressed: () {
+                              showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2030),
+                              ).then((value) {
+                                if (value != null) {
+                                  setState(() {
+                                    expiredDate = '${value.year}-${value.month.toString().padLeft(2, '0')}-${value.day.toString().padLeft(2, '0')}';
+                                  });
+                                }
                               });
-                            }
-                          });
-                        },
+                            },
+                          ),
+                          const SizedBox(width: 12),
+                        ]),
                       ),
-                      const SizedBox(width: 12),
-                    ]),
+                      const SizedBox(height: 15),
+                    ],
                   ),
-                  const SizedBox(height: 15),
 
 
 
@@ -283,39 +288,11 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                       ):SizedBox(),
                       SizedBox(height: widget.gatePassType=="Vehicle"? 15:0),
 
-                      priceAmount==0?  SizedBox(): Container(
-                        height: 55,
-                        margin: const EdgeInsets.only(bottom: 15),
-                        decoration: BoxDecoration(
-                          color: AppColors.grey.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
-                        ),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("      Total Amount : ${priceAmount} Tk", style: poppinsRegular.copyWith(color: AppColors.black, fontSize: 15 ))),
-                      ),
-
-                      widget.gatePassType!="Visitor"? Column(
-                        children: [
-                          CustomDropdownButton(
-                            hintText: 'Choose Payment Method',
-                            items: gatePassController.gatePassTypeModel!.data!.getPaymentMethods!.toJson().keys.toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                _paymentMethod = value.toString();
-                              });
-                            },
-                            selectedValue: _paymentMethod,
-                          ),
-                          SizedBox(height: 15),
-                        ],
-                      ):SizedBox(height: 0,),
 
 
 
 
-
-                      widget.gatePassType!="Visitor"?  Column(
+                     /* widget.gatePassType!="Visitor"?  Column(
                         children: [
                           CustomTextField(
                             controller: _paymentDetailsController,
@@ -324,7 +301,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                           ),
                           SizedBox(height: 15),
                         ],
-                      ):SizedBox(),
+                      ):SizedBox(),*/
 
                     ],
                   ),
@@ -344,7 +321,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
 
 
 
-                  widget.gatePassType=="Vehicle"? Row(
+                  /*widget.gatePassType=="Vehicle"? Row(
                     children: [
                       Text("Payment Document", style: poppinsMedium.copyWith(color: AppColors.black, fontSize: 20)),
                       SizedBox(width: 20),
@@ -387,7 +364,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: Colors.black.withValues(alpha: 0.2),
+                                        color: Colors.black.withOpacity(0.2),
                                         border: Border.all(width: 1, color: AppColors.primary),
                                       ),
                                       child: gatePassController.paymentDocument != null ? const SizedBox() : Container(
@@ -428,14 +405,30 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                           })
 
                   ):SizedBox(),
+                  SizedBox(height: 15),*/
+
+
+
+                  priceAmount==0?  SizedBox(): Container(
+                    height: 55,
+                    margin: const EdgeInsets.only(bottom: 15),
+                    decoration: BoxDecoration(
+                      color: AppColors.grey.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
+                    ),
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text("      Total Amount : ${priceAmount} Tk", style: poppinsRegular.copyWith(color: AppColors.black, fontSize: 15 ))),
+                  ),
+
                   SizedBox(height: 15),
-                  Container(
+               gatePassController.isLoading?Center(child: CircularProgressIndicator(),):   Container(
                     padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withValues(alpha: 0.5),
+                          color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 1,
                           blurRadius: 5,
                           offset: const Offset(0, 3),
@@ -479,7 +472,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                               'vehicle_model': _vehicleModelController.text,
                               //'driving_license': _drivingLicenseController.text,
                               //'payment_status': _paymentStatus!,
-                              "payment_method":_paymentMethod!,
+                             // "payment_method":_paymentMethod!,
                               'payment_details': _paymentDetailsController.text,
                               'note': _noteController.text,
                             }): gatePassController.addGatePass({
@@ -494,7 +487,7 @@ class _GatePassFormScreenState extends State<GatePassFormScreen> {
                               //'vehicle_model': _vehicleModelController.text,
                               // 'driving_license': _drivingLicenseController.text,
                               //'payment_status': _paymentStatus.toString(),
-                              "payment_method":_paymentMethod!,
+                              //"payment_method":_paymentMethod!,
                               //'payment_details': _paymentDetailsController.text,
                               'note': _noteController.text,
                             });

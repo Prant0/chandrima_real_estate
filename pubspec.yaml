@@ -2,7 +2,7 @@ name: chandrima_real_estate
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 2.0.5+11
+version: 2.0.6+1
 
 environment:
   sdk: ^3.5.4
@@ -30,11 +30,14 @@ dependencies:
   dropdown_button2: ^2.3.9
   carousel_slider: ^5.0.0
   path_provider: ^2.1.5
-  open_filex: ^4.6.0
+  open_filex:
   photo_view:
   flutter_html:
   video_player:
-  flutter_inappwebview: ^6.1.5
+  flutter_inappwebview:
+  pull_to_refresh_flutter3: ^2.0.2
+  webview_flutter:
+  html: ^0.15.4
 
 
 dev_dependencies:

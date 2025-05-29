@@ -35,4 +35,20 @@ class AuthRepository {
     apiClient.token = '';
   }
 
+  Future<Response> getPrivacyPolicy() async {
+    return apiClient.getData(AppConstants.privacyPolicyUri);
+  }
+
+  Future<Response> getRefundPolicy() async {
+    return apiClient.getData(AppConstants.refundPolicyUri);
+  }
+
+  Future<Response> getAboutUs() async {
+    return apiClient.getData(AppConstants.aboutUsUri);
+  }
+
+  Future<Response> getTermsCondition() async {
+    return apiClient.getData(AppConstants.termsConditionUri);
+  }
+
 }

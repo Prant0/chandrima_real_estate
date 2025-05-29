@@ -7,22 +7,25 @@ import 'package:get/get.dart';
 
 class PaymentController extends GetxController implements GetxService {
   final PaymentRepository paymentRepository;
-  PaymentController({required this.paymentRepository});
+  PaymentController({required this.paymentRepository,  this.paymentFromm});
 
+  String ?paymentFromm;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   String? _paymentUrl;
   String? get paymentUrl => _paymentUrl;
 
-  Future<void> makePayment({required String paymentId}) async{
+  Future<void> makePayment({required String paymentId,paymentFrom}) async{
     _isLoading = true;
+    paymentFromm = paymentFrom;
+    print("Payment from $paymentFromm");
     update();
 
     Response response = await paymentRepository.makePayment(paymentId: paymentId);
     if(response.statusCode == 200 && response.body["status"]=="success"){
        _paymentUrl = response.body['data'];
-       Get.to(() => PaymentScreen(redirectUrl: _paymentUrl!, paymentId: paymentId));
+       Get.off(() => PaymentScreen(redirectUrl: _paymentUrl!, paymentId: paymentId));
      }else{
       ApiChecker.checkApi(response);
     }
@@ -57,6 +60,7 @@ class PaymentController extends GetxController implements GetxService {
       if (isSuccess) {
         checkPayment(paymentId: paymentId).then((success) {
           if (success) {
+
             Get.off(() => const PaymentSuccessScreen(isSuccess: true));
           } else {
             Get.off(() => const PaymentSuccessScreen(isSuccess: false));

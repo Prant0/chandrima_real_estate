@@ -35,8 +35,15 @@ class _AddAdvertiseScreenState extends State<AddAdvertiseScreen> {
   String? startDate = '';
   String? endDate = '';
   String ?paymentStatus,paymentMethod;
+  int daysDifference=1;
+  dynamic totalPayment;
 
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    Get.find<HomeController>().getAdvertiseSettings();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +132,23 @@ class _AddAdvertiseScreenState extends State<AddAdvertiseScreen> {
                                     endDate = DateFormat('dd-MM-yyyy').format(pickedDate);
                                   });
                                 }
+
+                                if (daysDifference < 0) {
+                                  Get.snackbar('Error', 'End date cannot be before start date',
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white,
+                                      duration: const Duration(seconds: 2));
+                                }
+                                endDate = DateFormat('dd-MM-yyyy').format(pickedDate!);
+                                setState(() {
+
+                                });
+                                daysDifference = DateFormat('dd-MM-yyyy').parse(endDate!).difference(DateFormat('dd-MM-yyyy').parse(startDate!)).inDays;
+                                print("Days Difference: $daysDifference");
+                                totalPayment= int.parse(homeController.advertiseSettingsModel!.perdayPrice!)*daysDifference;
+                                if(totalPayment==0){
+                                  totalPayment=homeController.advertiseSettingsModel!.perdayPrice;
+                                }
                               },
                             ),
                           ],
@@ -196,7 +220,7 @@ class _AddAdvertiseScreenState extends State<AddAdvertiseScreen> {
                                   onTap: () => homeController.pickPaymentDocumentImage(),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.black.withValues(alpha: 0.2),
+                                      color: Colors.black.withOpacity(0.2),
                                       border: Border.all(width: 1, color: AppColors.primary),
                                     ),
                                     child: homeController.pickedPaymentDocument != null ? const SizedBox() : Container(
@@ -278,7 +302,7 @@ class _AddAdvertiseScreenState extends State<AddAdvertiseScreen> {
                               onTap: () => homeController.pickImage(),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withValues(alpha: 0.2),
+                                  color: Colors.black.withOpacity(0.2),
                                   border: Border.all(width: 1, color: AppColors.primary),
                                 ),
                                 child: homeController.pickedFile != null ? const SizedBox() : Container(
@@ -342,13 +366,30 @@ class _AddAdvertiseScreenState extends State<AddAdvertiseScreen> {
 
 
 
+                  Row(
+                    children: [
+                      Text("Total Days",style: poppinsRegular.copyWith(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 20),),
+                      const Spacer(),
+                      Text("${daysDifference==0?"1":daysDifference} Days",style: poppinsRegular.copyWith(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 20),),
+                    ],
+                  ),
+ Row(
+                    children: [
+                      Text("Payment Summary",style: poppinsRegular.copyWith(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 20),),
+                      const Spacer(),
+                      Text("${totalPayment??"0"} BDT",style: poppinsRegular.copyWith(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 20),),
+                    ],
+                  ),
 
-                    CustomCard(
+
+
+                  CustomCard(
                       padding: Dimensions.paddingSizeFifteen,
                       child: CustomButton(
                         isLoading: homeController.isLoading,
                         buttonText: 'Add Advertise',
                         onPressed: () {
+                          bool responce;
                             if(mediaValue==null){
                               Get.snackbar('Error', 'Please select media type',
                                   backgroundColor: Colors.red,

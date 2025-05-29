@@ -40,13 +40,13 @@ class _GatePassScreenState extends State<GatePassScreen> {
       appBar:   CustomAppBar(title: 'Gate Pass',),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(() => const AddGatePassScreen());
+          Get.to(() => AddGatePassScreen());
         },
         backgroundColor: AppColors.purpleColor,
         child: const Icon(Icons.add, color: Colors.white),
       ),
       body: GetBuilder<GatePassController>(builder: (gatePassController) {
-        return gatePassController.gatePassList != null ? gatePassController.gatePassList!.isNotEmpty ? ListView.builder(
+        return gatePassController.gatePassList!=null ? ListView.builder(
           padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
           itemCount: gatePassController.gatePassList!.length,
           controller: _scrollController,
@@ -64,7 +64,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.5),
+                      color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 1,
                       blurRadius: 5,
                       offset: const Offset(0, 3),
@@ -225,7 +225,7 @@ class _GatePassScreenState extends State<GatePassScreen> {
               ),
             );
           },
-        ) : const Center(child: Text('No Gate Pass found')) : const Center(child: CircularProgressIndicator());
+        ) : const Center(child: Text('No Gate Pass Found', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),));
       }),
     );
   }

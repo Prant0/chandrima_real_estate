@@ -66,7 +66,7 @@ class _UpdateFamilyMemberScreenState extends State<UpdateFamilyMemberScreen> {
                       onTap: () => profileController.pickImage(),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.2), shape: BoxShape.circle,
+                          color: Colors.black.withOpacity(0.2), shape: BoxShape.circle,
                           border: Border.all(width: 1, color: AppColors.primary),
                         ),
                         child: profileController.pickedFile != null ? const SizedBox() : Container(
@@ -107,7 +107,7 @@ class _UpdateFamilyMemberScreenState extends State<UpdateFamilyMemberScreen> {
                 Container(
                   height: 55,
                   decoration: BoxDecoration(
-                    color: AppColors.grey.withValues(alpha: 0.2),
+                    color: AppColors.grey.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
                   ),
                   child: Row(children: [

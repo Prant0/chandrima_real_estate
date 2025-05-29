@@ -1,6 +1,8 @@
 import 'package:chandrima_real_estate/common/widgets/custom_app_bar.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_button.dart';
 import 'package:chandrima_real_estate/features/dashboard/screens/dashboard_screen.dart';
+import 'package:chandrima_real_estate/features/home/screens/home_screen.dart';
+import 'package:chandrima_real_estate/features/payment/controller/payment_controller.dart';
 import 'package:chandrima_real_estate/features/profile/controller/profile_controller.dart';
 import 'package:chandrima_real_estate/utils/dimensions.dart';
 import 'package:chandrima_real_estate/utils/styles.dart';
@@ -22,7 +24,8 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
     super.initState();
 
     if(widget.isSuccess) {
-      Get.find<ProfileController>().getUserInvoiceList(page: 1);
+      Get.find<ProfileController>().userInvoiceModel?.clear();
+     // Get.find<ProfileController>().getUserInvoiceList(page: 1);
     }
   }
 
@@ -58,11 +61,24 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
                 ),
                 const SizedBox(height: 20),
 
-                CustomButton(
-                  buttonText: 'Go to Home',
-                  onPressed: () {
-                    Get.offAll(() => const DashboardScreen(pageIndex: 0, profilePageIndex: 0));
-                  },
+                GetBuilder<PaymentController>(
+                  builder: (paymentController) {
+                    return CustomButton(
+                      buttonText: 'Go to Home',
+                      onPressed: () {
+                        if(paymentController.paymentFromm=="invoice"){
+                          Get.offAll(() =>   DashboardScreen(pageIndex: 1, profilePageIndex: 0));
+                        }else if(paymentController.paymentFromm=="advertise"){
+                          Get.back();
+                          Get.back();
+
+                        }else{
+                          Get.offAll(() => const DashboardScreen(pageIndex: 0, profilePageIndex: 0));
+                        }
+                      // paymentController.paymentFromm=="invoice"? Get.offAll(() =>   DashboardScreen(pageIndex: 1, profilePageIndex: 0)):paymentController.paymentFromm=="advertise"?Get.offAll(DashboardScreen(pageIndex: 0, profilePageIndex: 0)):Get.offAll(() => const DashboardScreen(pageIndex: 0, profilePageIndex: 0));
+                      },
+                    );
+                  }
                 ),
 
               ],

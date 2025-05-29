@@ -100,5 +100,70 @@ class AuthController extends GetxController implements GetxService {
     return isSuccess;
   }
 
+  String _aboutUs = '';
+  String get aboutUs => _aboutUs;
+
+  String _privacyPolicy = '';
+  String get privacyPolicy => _privacyPolicy;
+
+  String _refundPolicy = '';
+  String get refundPolicy => _refundPolicy;
+
+  String _termsAndCondition = '';
+  String get termsAndCondition => _termsAndCondition;
+
+
+  Future<void> getPrivacyPolicies() async {
+    Response response = await authRepository.getPrivacyPolicy();
+    if (response.statusCode == 200) {
+      _privacyPolicy = response.body['data']["description"] ?? '';
+      update();
+      print("Privacy Policyyy: $_privacyPolicy");
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
+
+
+  Future<void> getRefundPolicies() async {
+    Response response = await authRepository.getRefundPolicy();
+    if (response.statusCode == 200) {
+      _refundPolicy = response.body['data']["description"] ?? '';
+      update();
+      print("Refund Policyyy: $_refundPolicy");
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
+
+
+  Future<void> getAboutUs() async {
+    Response response = await authRepository.getAboutUs();
+    if (response.statusCode == 200) {
+      _aboutUs = response.body['data']["description"] ?? '';
+      update();
+      print("About Us: $_aboutUs");
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
+
+
+  Future<void> getTermsAndCondition() async {
+    Response response = await authRepository.getTermsCondition();
+    if (response.statusCode == 200) {
+      _termsAndCondition = response.body['data']["description"] ?? '';
+      update();
+      print("Terms and Condition: $_termsAndCondition");
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    update();
+  }
+
+
 
 }

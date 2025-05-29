@@ -42,6 +42,9 @@ class HomeRepository {
   Future<Response> getAdvertiseNotificationDetails(String uri) async {
     return await apiClient.getData(uri);
   }
+  Future<Response> getAdvertiseSettings() async {
+    return await apiClient.getData(AppConstants.advertiseSettings);
+  }
 
   Future<Response> getServiceChargeNotificationDetails(String uri)async {
     return await apiClient.getData(uri);

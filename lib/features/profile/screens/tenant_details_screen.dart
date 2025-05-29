@@ -152,7 +152,7 @@ Widget buildDetailRow(String title, String? value) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '$title  ', style: poppinsRegular.copyWith(color: Colors.black87.withValues(alpha: 0.7),fontWeight: FontWeight.bold),
+          '$title  ', style: poppinsRegular.copyWith(color: Colors.black87.withOpacity(0.7),fontWeight: FontWeight.bold),
         ),
         Expanded(
           child: Text(value ?? 'N/A', style: poppinsRegular.copyWith(color: Colors.black54), overflow: TextOverflow.ellipsis, maxLines: 1),
@@ -184,7 +184,9 @@ Future<void> downloadDocument(BuildContext context,String title,value) async {
 Future<void> openDocumentInBrowser(String documentUrl) async {
   final Uri url = Uri.parse(documentUrl);
   if (await canLaunchUrl(url)) {
-    await launchUrl(url, mode: LaunchMode.externalApplication);
+    await launchUrl(url, mode: LaunchMode.inAppBrowserView,browserConfiguration:   BrowserConfiguration(
+
+    ));
   } else {
     throw 'Could not launch $documentUrl';
   }

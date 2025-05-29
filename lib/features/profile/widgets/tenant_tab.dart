@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:chandrima_real_estate/common/widgets/custom_button.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_card.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_network_image.dart';
 import 'package:chandrima_real_estate/common/widgets/custom_text_field.dart';
@@ -88,75 +89,57 @@ class _TenantTabState extends State<TenantTab> {
                               buildDetailRow('Name :', tenants.name),
                               buildDetailRow('Mobile No :', tenants.mobile),
                               buildDetailRow('Flat No :', tenants.flatNo),
+                              buildDetailRow('Status :',tenants.idCardStatus??"N/A"),
                              // buildDetailRow('Address :', tenants.permanentAddress??"N/A"),
-                            tenants.idCardStatus=="approve"?Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color:  Colors.green.withOpacity(0.8),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Text(
-                                "Print ID Card",
-                                style: poppinsRegular.copyWith(color: Colors.white),
-                              ),
-                            ):  InkWell(
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      TextEditingController detailsController = TextEditingController();
+                            tenants.idCardStatus?.toLowerCase()!="approve"? InkWell(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    TextEditingController detailsController = TextEditingController();
 
-                                      return AlertDialog(
-                                        title: const Text('Apply for ID Card'),
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
+                                    return AlertDialog(
+                                      title: const Text('Apply for ID Card'),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
 
-                                            CustomTextField(
-                                              controller: detailsController,
-                                              hintText: "Enter Details",
-                                              prefixIcon: Icons.description,
-                                              maxLines: 5,
-                                            ),
-                                          ],
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              profileController.addIdCardRequestTenant(
-                                                id: tenants.tenantId.toString(),
-                                                details: detailsController.text,
-                                              ).then((v){
-                                                profileController.getTenantList(page: page);
-                                                Navigator.of(context).pop();
-                                              });
-
-                                            },
-                                            child: const Text('Submit'),
+                                          CustomTextField(
+                                            controller: detailsController,
+                                            hintText: "Enter Details",
+                                            prefixIcon: Icons.description,
+                                            maxLines: 5,
                                           ),
                                         ],
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                  decoration: BoxDecoration(
-                                    color:  Colors.red.withOpacity(0.8),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Text(
-                                    "ID Card Request",
-                                    style: poppinsRegular.copyWith(color: Colors.white),
-                                  ),
-                                ),
-                              ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            profileController.addIdCardRequestTenant(
+                                              id: tenants.tenantId.toString(),
+                                              details: detailsController.text,
+                                            ).then((v){
+                                              profileController.tenantList?.clear();
+                                              profileController.getTenantList(page: page);
+                                              Navigator.of(context).pop();
+                                            });
+
+                                          },
+                                          child: const Text('Submit'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              child:  CustomButton(buttonText: "Id Card Request",height: 30,width: 160,),
+                            ):SizedBox(),
                               const SizedBox(height: 5),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -229,6 +212,7 @@ class _TenantTabState extends State<TenantTab> {
             child: Column(
               children: [
                 FloatingActionButton(
+                  heroTag: 'uniqueTag1',
                   onPressed: () {
                     profileController.downloadTenantInfo();
                   },
@@ -237,6 +221,7 @@ class _TenantTabState extends State<TenantTab> {
                 ),
                 SizedBox(height: 16,),
                 FloatingActionButton(
+                  heroTag: 'uniqueTag1',
                   onPressed: () {
                     Get.toNamed(RoutesName.getAddTenantScreen())!.then((value) {
                       page=1;
@@ -262,7 +247,7 @@ class _TenantTabState extends State<TenantTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$title  ', style: poppinsRegular.copyWith(color: Colors.black87.withValues(alpha: 0.7),fontWeight: FontWeight.bold),
+            '$title  ', style: poppinsRegular.copyWith(color: Colors.black87.withOpacity(0.7),fontWeight: FontWeight.bold),
           ),
           Expanded(
             child: Text(value ?? 'N/A', style: poppinsRegular.copyWith(color: Colors.black54), overflow: TextOverflow.ellipsis, maxLines: 1),

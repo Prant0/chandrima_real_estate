@@ -4,7 +4,7 @@ class NotificationModel {
   String? type;
   String? itemId;
   String? notify,date;
-  int? read;
+  dynamic? read;
   DateTime? createdAt;
   String? link;
 

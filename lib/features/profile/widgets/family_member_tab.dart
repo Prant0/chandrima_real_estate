@@ -53,15 +53,8 @@ class FamilyMemberTab extends StatelessWidget {
                               buildDetailRow('Relation :', familyMembers.relation),
                               buildDetailRow('Gender :', familyMembers.gender),
                               familyMembers.idCardStatus=="approve"?Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color:  Colors.green.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Text(
-                                  "Print ID Card",
-                                  style: poppinsRegular.copyWith(color: Colors.white),
-                                ),
+
+                                child :buildDetailRow('Status :', familyMembers.idCardStatus),
                               ):  InkWell(
                                 onTap: () {
                                   showDialog(
@@ -70,15 +63,15 @@ class FamilyMemberTab extends StatelessWidget {
                                       TextEditingController detailsController = TextEditingController();
 
                                       return AlertDialog(
-                                        title: const Text('Apply for ID Card'),
+                                        title: const Text('Enter Details'),
                                         content: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
 
                                             CustomTextField(
                                               controller: detailsController,
-                                              hintText: "Enter Details",
-                                              prefixIcon: Icons.description,
+
+                                              hintText: "Enter details here",
                                               maxLines: 5,
                                             ),
                                           ],
@@ -308,7 +301,7 @@ class FamilyMemberTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$title ', style: poppinsRegular.copyWith(color: Colors.black87.withValues(alpha: 0.7),fontWeight: FontWeight.bold),
+            '$title ', style: poppinsRegular.copyWith(color: Colors.black87.withOpacity(0.7),fontWeight: FontWeight.bold),
           ),
           Expanded(
             child: Text(value ?? 'N/A', style: poppinsRegular.copyWith(color:Colors.black54), overflow: TextOverflow.ellipsis, maxLines: 1),

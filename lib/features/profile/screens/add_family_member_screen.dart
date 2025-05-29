@@ -34,6 +34,7 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
 
     profileController.initData();
   }
+  var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,138 +42,163 @@ class _AddFamilyMemberScreenState extends State<AddFamilyMemberScreen> {
       appBar: const CustomAppBar(title: 'Add Family Member'),
 
       body: GetBuilder<ProfileController>(builder: (profileController) {
-        return Column(children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
-              child: Column(children: [
+        return Form(
+          key: formKey,
+          child: Column(children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(Dimensions.paddingSizeFifteen),
+                child: Column(children: [
 
-                Center(child: Stack(children: [
+                  Center(child: Stack(children: [
 
-                  ClipOval(child: profileController.pickedFile != null ? GetPlatform.isWeb ? Image.network(
-                    profileController.pickedFile!.path, width: 120, height: 120, fit: BoxFit.cover) : Image.file(
-                    File(profileController.pickedFile!.path), width: 120, height: 120, fit: BoxFit.cover) : const CustomNetworkImage(
-                    image: '',
-                    height: 120, width: 120, fit: BoxFit.cover,
-                  )),
+                    ClipOval(child: profileController.pickedFile != null ? GetPlatform.isWeb ? Image.network(
+                      profileController.pickedFile!.path, width: 120, height: 120, fit: BoxFit.cover) : Image.file(
+                      File(profileController.pickedFile!.path), width: 120, height: 120, fit: BoxFit.cover) : const CustomNetworkImage(
+                      image: '',
+                      height: 120, width: 120, fit: BoxFit.cover,
+                    )),
 
-                  Positioned(
-                    bottom: 0, right: 0, top: 0, left: 0,
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () => profileController.pickImage(),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.2), shape: BoxShape.circle,
-                          border: Border.all(width: 1, color: AppColors.primary),
-                        ),
-                        child: profileController.pickedFile != null ? const SizedBox() : Container(
-                          margin: const EdgeInsets.all(Dimensions.marginSizeFifteen),
+                    Positioned(
+                      bottom: 0, right: 0, top: 0, left: 0,
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () => profileController.pickImage(),
+                        child: Container(
                           decoration: BoxDecoration(
-                            border: Border.all(width: 2, color: AppColors.white),
-                            shape: BoxShape.circle,
+                            color: Colors.black.withOpacity(0.2), shape: BoxShape.circle,
+                            border: Border.all(width: 1, color: AppColors.primary),
                           ),
-                          child: const Icon(Icons.camera_alt, color: AppColors.white),
+                          child: profileController.pickedFile != null ? const SizedBox() : Container(
+                            margin: const EdgeInsets.all(Dimensions.marginSizeFifteen),
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 2, color: AppColors.white),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(Icons.camera_alt, color: AppColors.white),
+                          ),
                         ),
                       ),
                     ),
+
+                  ])),
+                  const SizedBox(height: 20),
+
+                  CustomTextField(
+                    validator: (value){
+                      if(value!.isEmpty){
+                        return 'Please Enter Full Name';
+                      }
+                      return null;
+                    },
+                    controller: _nameController,
+                    hintText: 'Enter Full Name',
+                    prefixIcon: TablerIcons.user,
                   ),
+                  const SizedBox(height: 15),
 
-                ])),
-                const SizedBox(height: 20),
-
-                CustomTextField(
-                  controller: _nameController,
-                  hintText: 'Enter Full Name',
-                  prefixIcon: TablerIcons.user,
-                ),
-                const SizedBox(height: 15),
-
-                CustomTextField(
-                  controller: _phoneController,
-                  hintText: 'Enter Phone Number',
-                  prefixIcon: TablerIcons.phone,
-                  inputType: TextInputType.phone,
-                ),
-                const SizedBox(height: 15),
-                CustomTextField(
-                  controller: _bloodGroupController,
-                  hintText: 'Enter Blood Group',
-                  prefixIcon: TablerIcons.loader,
-                ),
-                const SizedBox(height: 15),
-
-                CustomDropdownButton(
-                  hintText: 'Select Gender',
-                  items: const ['Male', 'Female', 'Other'],
-                  onChanged: (value) {
-                    profileController.setSelectedGender(value!);
-                  },
-                  selectedValue: profileController.selectedGender,
-                ),
-                const SizedBox(height: 15),
-
-                Container(
-                  height: 55,
-                  decoration: BoxDecoration(
-                    color: AppColors.grey.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
+                  CustomTextField(
+                    validator: (value){
+                      if(value!.isEmpty){
+                        return 'Please Enter Phone Number';
+                      }
+                      return null;
+                    },
+                    controller: _phoneController,
+                    hintText: 'Enter Phone Number',
+                    prefixIcon: TablerIcons.phone,
+                    inputType: TextInputType.phone,
                   ),
-                  child: Row(children: [
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.only(left: 28),
-                      child: Text(dateOfBirth!.isEmpty ? 'Select Date of Birth' : dateOfBirth!, style: poppinsRegular.copyWith(color: AppColors.black, fontSize: 15)),
-                    )),
-                    IconButton(
-                      icon: const Icon(Icons.calendar_month),
-                      onPressed: () {
-                        showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now(),
-                        ).then((value) {
-                          if (value != null) {
-                            setState(() {
-                              dateOfBirth = '${value.year}-${value.month.toString().padLeft(2, '0')}-${value.day.toString().padLeft(2, '0')}';
-                            });
-                          }
-                        });
-                      },
+                  const SizedBox(height: 15),
+                  CustomTextField(
+                    controller: _bloodGroupController,
+                    hintText: 'Enter Blood Group',
+                    prefixIcon: TablerIcons.loader,
+                  ),
+                  const SizedBox(height: 15),
+
+                  CustomDropdownButton(
+
+                    hintText: 'Select Gender',
+                    items: const ['Male', 'Female', 'Other'],
+                    onChanged: (value) {
+                      profileController.setSelectedGender(value!);
+                    },
+                    validator: (value){
+                      if(value!.isEmpty){
+                        return 'Please Select';
+                      }
+                    },
+                    selectedValue: profileController.selectedGender,
+
+                  ),
+                  const SizedBox(height: 15),
+
+                  Container(
+                    height: 55,
+                    decoration: BoxDecoration(
+                      color: AppColors.grey.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(Dimensions.radiusFifteen),
                     ),
-                    const SizedBox(width: 12),
-                  ]),
-                ),
-                const SizedBox(height: 15),
+                    child: Row(children: [
+                      Expanded(child: Padding(
+                        padding: const EdgeInsets.only(left: 28),
+                        child: Text(dateOfBirth!.isEmpty ? 'Select Date of Birth' : dateOfBirth!, style: poppinsRegular.copyWith(color: AppColors.black, fontSize: 15)),
+                      )),
+                      IconButton(
+                        icon: const Icon(Icons.calendar_month),
+                        onPressed: () {
+                          showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                          ).then((value) {
+                            if (value != null) {
+                              setState(() {
+                                dateOfBirth = '${value.year}-${value.month.toString().padLeft(2, '0')}-${value.day.toString().padLeft(2, '0')}';
+                              });
+                            }
+                          });
+                        },
+                      ),
+                      const SizedBox(width: 12),
+                    ]),
+                  ),
+                  const SizedBox(height: 15),
 
-                CustomDropdownButton(
-                  hintText: 'Select Relation',
-                  items: const ['Owner Family', 'Care Taker', 'Driver', 'Buya'],
-                  onChanged: (value) {
-                    profileController.setSelectedRelation(value!);
-                  },
-                  selectedValue: profileController.selectedRelation,
-                ),
+                  CustomDropdownButton(
+                    hintText: 'Select Relation',
+                    items: const ['Owner Family', 'Care Taker', 'Driver', 'Buya'],
+                    onChanged: (value) {
+                      profileController.setSelectedRelation(value!);
+                    },
+                    selectedValue: profileController.selectedRelation,
+                  ),
 
-              ]),
+                ]),
+              ),
             ),
-          ),
 
-          CustomCard(
-            padding: Dimensions.paddingSizeFifteen,
-            child: CustomButton(
-              isLoading: profileController.isLoading,
-              buttonText: 'Add Member',
-              onPressed: () {
-                String name = _nameController.text;
-                String mobile = _phoneController.text;
+            CustomCard(
+              padding: Dimensions.paddingSizeFifteen,
+              child: CustomButton(
+                isLoading: profileController.isLoading,
+                buttonText: 'Add Member',
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    String name = _nameController.text;
+                    String mobile = _phoneController.text;
 
-                profileController.addFamilyMember(name: name, mobile: mobile, dob: dateOfBirth,bloodGroup: _bloodGroupController.text.toString());
-              },
+                    profileController.addFamilyMember(name: name, mobile: mobile, dob: dateOfBirth,bloodGroup: _bloodGroupController.text.toString());
+
+                  }
+                },
+              ),
             ),
-          ),
-        ]);
+          ]),
+        );
       }),
     );
   }

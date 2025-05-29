@@ -97,9 +97,9 @@ class InvoiceDetails extends StatelessWidget {
                                     Container(
                                       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                                       decoration: BoxDecoration(
-                                        color:userInvoice.paymentStatus!.toUpperCase()=="PAID"? Colors.green.withValues(alpha: 0.8):Colors.orange,
+                                        color:userInvoice.paymentStatus!.toUpperCase()=="PAID"? Colors.green.withOpacity(0.8):Colors.orange,
                                         borderRadius: BorderRadius.circular(Dimensions.radiusTen),
-                                        border: Border.all(color:  userInvoice.paymentStatus!.toUpperCase()=="PAID"? Colors.green.withValues(alpha: 0.8):Colors.orange,width: 1),
+                                        border: Border.all(color:  userInvoice.paymentStatus!.toUpperCase()=="PAID"? Colors.green.withOpacity(0.8):Colors.orange,width: 1),
                                       ),
                                       child: Text('${userInvoice.paymentStatus=="null"?"Pending":userInvoice.paymentStatus}'.toUpperCase(), style: poppinsMedium.copyWith(fontSize: Dimensions.fontSizeFourteen,color: Colors.white,)),
                                     ),
@@ -266,7 +266,7 @@ class InvoiceDetails extends StatelessWidget {
                   isLoading: paymentController.isLoading,
                   buttonText: 'Make Payment',
                   onPressed: () {
-                    paymentController.makePayment(paymentId: userInvoice.invoiceId ?? '');
+                    paymentController.makePayment(paymentId: userInvoice.invoiceId ?? '',paymentFrom: "invoice");
                   },
                 ),
               );

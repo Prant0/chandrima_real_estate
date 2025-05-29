@@ -74,6 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         }
       },
       child: Scaffold(
+        backgroundColor: AppColors.primary,
       //  body: _pages[_selectedIndex],
         body: IndexedStack(
           index: _selectedIndex,

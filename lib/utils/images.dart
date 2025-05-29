@@ -11,6 +11,12 @@ class Images {
   static String get land_info => 'land_info'.jpeg;
   static String get family => 'family'.jpeg;
   static String get event => 'event'.jpeg;
+  static String get post => 'post'.png;
+  static String get vote => 'vote'.png;
+  static String get news => 'news'.png;
+  static String get service => 'service'.png;
+  static String get helpline => 'helpline'.png;
+  static String get ads => 'ads'.png;
 
 }
 

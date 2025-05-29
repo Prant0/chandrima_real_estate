@@ -14,7 +14,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "com.chandrima_real_estate"
     compileSdk = 35
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "25.1.8937393"
     splits {
         abi {
             enable false
@@ -61,7 +61,7 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             crunchPngs false
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 }
