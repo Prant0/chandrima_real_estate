@@ -99,16 +99,11 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.only(bottom: 50),
               child: Column(
                 children: [
-                  Center(
-                    child: Text(
-                      "All rights and reserved by : Chandrima Real Estate PVT.LTD",
-                      style: poppinsRegular,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: 20,),
+
 
                   Wrap(
+                    alignment: WrapAlignment.center,
+                    runAlignment: WrapAlignment.center,
                     spacing: 0,
                     runSpacing: 0,
                     direction: Axis.horizontal,
@@ -135,7 +130,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             Get.to(TermsCondition());
                           }, child: Text("Terms & Condition",style: poppinsMedium.copyWith(color: AppColors.primary),)),
                     ],
-                  )
+                  ),
+
+                  SizedBox(height: 20,),
+                  Center(
+                    child: Text(
+                      "All rights and reserved by : Chandrima Real Estate PVT.LTD",
+                      style: poppinsRegular,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ],
               ),
             ),
